@@ -3,10 +3,10 @@ package websx.spring.test.springtest.entity;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Date;
+import java.util.Date;
 
-@Data
 @Builder
+@Data
 public class Account {
     private Long id;
     private Long uid;
@@ -16,4 +16,5 @@ public class Account {
     private String phone;
     private Date time;
     private Integer type;
+    private String logo;
 }

@@ -10,8 +10,4 @@ import java.util.List;
 public interface IGameService {
 
     List<Game> findAllGame();
-
-    Game findByIdGame(Long id);
-
-    Game saveGame(Game game);
 }

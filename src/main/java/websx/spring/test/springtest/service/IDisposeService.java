@@ -3,12 +3,11 @@ package websx.spring.test.springtest.service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import websx.spring.test.springtest.entity.Dispose;
-import websx.spring.test.springtest.mapper.IDisposeMapper;
+
+import java.util.List;
 
 @Transactional(propagation = Propagation.REQUIRED)
 public interface IDisposeService {
 
-    Dispose findByGidDispose(Long gid);
-
-    Dispose saveDispose(Dispose dispose);
+    List<Dispose> findAllDispose();
 }

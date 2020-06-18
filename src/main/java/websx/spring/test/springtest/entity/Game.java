@@ -3,23 +3,17 @@ package websx.spring.test.springtest.entity;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Builder
 @Data
 public class Game {
     private Long id;
     private String name;
-    private double money;
     private String describes;
-    private Integer download;
-    private Integer comment;
-    private Integer grade;
-    private Integer good;
-    private Integer bad;
-    private Object video;
-    private Object img;
-    private Object type;
+    private Object videos;
+    private Object imgs;
+    private Object types;
     private Integer pType;
     private String developer;
     private String publisher;

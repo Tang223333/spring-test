@@ -7,5 +7,5 @@ import lombok.Data;
 @Data
 public class Type {
     private String tKeys;
-    private String value;
+    private Integer value;
 }

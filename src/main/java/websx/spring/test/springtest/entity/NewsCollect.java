@@ -3,14 +3,13 @@ package websx.spring.test.springtest.entity;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Builder
 @Data
-public class Order {
+public class NewsCollect {
     private Long id;
+    private Long nid;
     private Long aid;
-    private Long gid;
-    private Integer type;
     private Date time;
 }

@@ -18,17 +18,4 @@ public class GameService implements IGameService {
     public List<Game> findAllGame() {
         return iGameMapper.findAllGame();
     }
-
-    @Override
-    public Game findByIdGame(Long id) {
-        return iGameMapper.findByIdGame(id);
-    }
-
-    @Override
-    public Game saveGame(Game game) {
-        iGameMapper.saveGame(game);
-        game=null;
-        game=iGameMapper.findAllGame().get(iGameMapper.findAllGame().size()-1);
-        return game;
-    }
 }

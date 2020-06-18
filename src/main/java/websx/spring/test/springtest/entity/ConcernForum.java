@@ -3,13 +3,13 @@ package websx.spring.test.springtest.entity;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Date;
+
 @Builder
 @Data
-public class G_Comment {
+public class ConcernForum {
     private Long id;
     private Long gid;
-    private Long uid;
-    private String content;
-    private Integer goodOrBad;
-    private Integer grade;
+    private Long aid;
+    private Date time;
 }
