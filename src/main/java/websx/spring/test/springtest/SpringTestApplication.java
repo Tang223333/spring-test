@@ -4,7 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@MapperScan("websx.spring.test.springtest.dao")
+@MapperScan("websx.spring.test.springtest.mapper")
 @SpringBootApplication
 public class SpringTestApplication {
 

@@ -21,20 +21,13 @@ public class OrderController {
     @RequestMapping("/getmap")
     public Map<String,Object> getOrderMap(){
         List<Order> allOrder = orderService.findAllOrder();
-        if (allOrder != null) {
-            return JsonUtils.getJson(allOrder,0);
-        }else {
-            return JsonUtils.getJson("[]",1);
-        }
+        return JsonUtils.getJson(allOrder,allOrder!=null?0:1);
     }
 
     @RequestMapping("/save")
     public Map<String,Object> saveOrder(){
-        Order order = orderService.saveOrder(Order.builder().aid((long) 1).gid((long) 1).time(new Date(new java.util.Date().getTime())).type(2).build());
-        if (order != null) {
-            return JsonUtils.getJson(order,0);
-        }else {
-            return JsonUtils.getJson(order,1);
-        }
+        Order order = null;
+        order = orderService.saveOrder(Order.builder().aid((long) 1).gid((long) 1).time(new Date(new java.util.Date().getTime())).type(2).build());
+        return JsonUtils.getJson(order,order!=null?0:1);
     }
 }

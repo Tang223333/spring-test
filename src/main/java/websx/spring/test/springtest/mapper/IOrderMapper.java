@@ -1,6 +1,5 @@
-package websx.spring.test.springtest.dao;
+package websx.spring.test.springtest.mapper;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -9,7 +8,7 @@ import websx.spring.test.springtest.entity.Order;
 import java.util.List;
 
 @Repository
-public interface IOrderDao {
+public interface IOrderMapper {
 
     @Select("select * from orders;")
     List<Order> findAllOrder();

@@ -1,23 +1,26 @@
 package websx.spring.test.springtest.service;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import websx.spring.test.springtest.dao.IOrderDao;
+import org.springframework.transaction.annotation.Transactional;
+import websx.spring.test.springtest.mapper.IOrderMapper;
 import websx.spring.test.springtest.entity.Order;
 
 import java.util.List;
 
 @Service
-public class OrderService {
+public class OrderService implements IOrderService {
 
     @Autowired
-    public IOrderDao iOrderDao;
+    public IOrderMapper iOrderDao;
 
+    @Override
     public List<Order> findAllOrder(){
        return iOrderDao.findAllOrder();
     }
 
+    @Override
     public Order saveOrder(Order order){
         iOrderDao.saveOrder(order);
         Order order1=iOrderDao.findAllOrder().get(iOrderDao.findAllOrder().size()-1);
