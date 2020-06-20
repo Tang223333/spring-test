@@ -39,7 +39,7 @@ public class NewsController {
 
     @RequestMapping(value = "/findByAid",method = RequestMethod.POST)
     public Map<String,Object> findByAidNews(@PathParam("aid") Long aid){
-        List<News> byAidNews = newsService.findByAidNews(aid);//
+        List<News> byAidNews = newsService.findByAidNews(aid);
         return JsonUtils.getJson(byAidNews,byAidNews!=null?0:1);
     }
 
