@@ -18,4 +18,37 @@ public class ImgService implements IImgService {
     public List<Img> findAllImg() {
         return iImgMapper.findAllImg();
     }
+
+    @Override
+    public Img findByIdImg(Long id) {
+        return iImgMapper.findByIdImg(id);
+    }
+
+    @Override
+    public List<Img> findByKeyImg(String iKeys) {
+        return iImgMapper.findByKeyImg(iKeys);
+    }
+
+    @Override
+    public Img saveImg(Img img) {
+        iImgMapper.saveImg(img);
+        img=iImgMapper.findAllImg().get(iImgMapper.findAllImg().size()-1);
+        return img;
+    }
+
+    @Override
+    public Img deleteByIdImg(Long id) {
+        Img img=iImgMapper.findByIdImg(id);
+        iImgMapper.deleteByIdImg(id);
+        return img;
+    }
+
+    @Override
+    public List<Img> deleteImg(String iKeys) {
+        List<Img> imgs=iImgMapper.findByKeyImg(iKeys);
+        iImgMapper.deleteByKeyImg(iKeys);
+        return imgs;
+    }
+
+
 }

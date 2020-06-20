@@ -10,4 +10,12 @@ import java.util.List;
 public interface IConcernForumService {
 
     List<ConcernForum> findAllConcernForum();
+
+    ConcernForum findByIdConcernForum(Long id);
+
+    List<ConcernForum> findByAidGidConcernForum(Long aid);
+
+    ConcernForum saveConcernForum(ConcernForum concernForum);
+
+    ConcernForum deleteConcernForum(Long id);
 }

@@ -19,4 +19,35 @@ public class NewsService implements INewsService {
     public List<News> findAllNews() {
         return iNewsMapper.findAllNews();
     }
+
+    @Override
+    public News findByIdNews(Long id) {
+        return iNewsMapper.findByIdNews(id);
+    }
+
+    @Override
+    public List<News> findByAidNews(Long aid) {
+        return iNewsMapper.findByAidNews(aid);
+    }
+
+    @Override
+    public News saveNews(News news) {
+        iNewsMapper.saveNews(news);
+        news=iNewsMapper.findAllNews().get(iNewsMapper.findAllNews().size()-1);
+        return news;
+    }
+
+    @Override
+    public News updateNews(News news) {
+        iNewsMapper.updateNews(news);
+        news=iNewsMapper.findByIdNews(news.getId());
+        return news;
+    }
+
+    @Override
+    public News deleteNews(Long id) {
+        News news=iNewsMapper.findByIdNews(id);
+        iNewsMapper.deleteNews(id);
+        return news;
+    }
 }

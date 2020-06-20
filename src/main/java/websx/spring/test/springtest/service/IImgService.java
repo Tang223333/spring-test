@@ -11,4 +11,14 @@ import java.util.List;
 public interface IImgService {
 
     List<Img> findAllImg();
+
+    Img findByIdImg(Long id);
+
+    List<Img> findByKeyImg(String iKeys);
+
+    Img saveImg(Img img);
+
+    Img deleteByIdImg(Long id);
+
+    List<Img> deleteImg(String iKeys);
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 @Builder
 @Data
 public class Type {
+    private Long id;
     private String tKeys;
-    private Integer value;
+    private String value;
 }

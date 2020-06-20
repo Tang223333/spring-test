@@ -18,4 +18,31 @@ public class UserService implements IUserService {
     public List<User> findAllUser() {
         return iUserMapper.findAllUser();
     }
+
+    @Override
+    public User findByIdUser(Long id) {
+        return iUserMapper.findByIdUser(id);
+    }
+
+    @Override
+    public User saveUser(User user) {
+        iUserMapper.saveUser(user);
+        user=iUserMapper.findAllUser().get(iUserMapper.findAllUser().size()-1);
+        return user;
+    }
+
+    @Override
+    public User updateUser(User user) {
+        iUserMapper.update(user);
+        user=iUserMapper.findByIdUser(user.getId());
+        return user;
+    }
+
+    @Override
+    public User deleteUser(Long id) {
+        User user=iUserMapper.findByIdUser(id);
+        iUserMapper.delete(id);
+        return user;
+    }
+
 }

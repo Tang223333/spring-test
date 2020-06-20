@@ -10,4 +10,12 @@ import java.util.List;
 public interface IDisposeService {
 
     List<Dispose> findAllDispose();
+
+    Dispose findAllByGidDispose(Long gid);
+
+    Dispose saveDispose(Dispose dispose);
+
+    Dispose updateDispose(Dispose dispose);
+
+    Dispose deleteDispose(Long gid);
 }

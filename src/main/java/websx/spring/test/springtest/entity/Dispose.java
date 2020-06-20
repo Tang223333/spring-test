@@ -6,7 +6,6 @@ import lombok.Data;
 @Builder
 @Data
 public class Dispose {
-    private Long id;
     private Long gid;
     private String systemDown;
     private String handlerDown;

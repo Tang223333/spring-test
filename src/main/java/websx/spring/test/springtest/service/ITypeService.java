@@ -10,4 +10,14 @@ import java.util.List;
 public interface ITypeService {
 
     List<Type> findAllType();
+
+    Type findByIdType(Long id);
+
+    List<Type> findByKeyType(String tKeys);
+
+    Type saveType(Type type);
+
+    Type deleteByIdType(Long id);
+
+    List<Type> deleteByKeyType(String tKeys);
 }

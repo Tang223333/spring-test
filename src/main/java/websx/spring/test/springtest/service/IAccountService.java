@@ -10,4 +10,20 @@ import java.util.List;
 public interface IAccountService {
 
     List<Account> findAllAccount();
+
+    Account findByIdAccount(Long id);
+
+    Account findByUidAccount(Long uid);
+
+    Account findByNameAccount(String name);
+
+    Account findByEmailAccount(String email);
+
+    Account findByPhoneAccount(String phone);
+
+    Account saveAccount(Account account);
+
+    Account updateAccount(Account account);
+
+    Account deleteAccount(Long id);
 }

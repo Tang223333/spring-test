@@ -3,6 +3,7 @@ package websx.spring.test.springtest.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import websx.spring.test.springtest.entity.Type;
+import websx.spring.test.springtest.entity.Video;
 import websx.spring.test.springtest.mapper.ITypeMapper;
 import websx.spring.test.springtest.service.ITypeService;
 
@@ -17,5 +18,36 @@ public class TypeService implements ITypeService {
     @Override
     public List<Type> findAllType() {
         return iTypeMapper.findAllType();
+    }
+
+    @Override
+    public Type findByIdType(Long id) {
+        return iTypeMapper.findByIdType(id);
+    }
+
+    @Override
+    public List<Type> findByKeyType(String tKeys) {
+        return iTypeMapper.findAllKeyType(tKeys);
+    }
+
+    @Override
+    public Type saveType(Type type) {
+        iTypeMapper.saveType(type);
+        type=iTypeMapper.findAllType().get(iTypeMapper.findAllType().size()-1);
+        return type;
+    }
+
+    @Override
+    public Type deleteByIdType(Long id) {
+        Type type=iTypeMapper.findByIdType(id);
+        iTypeMapper.deleteByIdType(id);
+        return type;
+    }
+
+    @Override
+    public List<Type> deleteByKeyType(String tKeys) {
+        List<Type> types=iTypeMapper.findAllKeyType(tKeys);
+        iTypeMapper.deleteByKeyType(tKeys);
+        return types;
     }
 }

@@ -10,4 +10,14 @@ import java.util.List;
 public interface INewsService {
 
     List<News> findAllNews();
+
+    News findByIdNews(Long id);
+
+    List<News> findByAidNews(Long aid);
+
+    News saveNews(News news);
+
+    News updateNews(News news);
+
+    News deleteNews(Long id);
 }

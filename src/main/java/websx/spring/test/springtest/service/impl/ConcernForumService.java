@@ -18,4 +18,28 @@ public class ConcernForumService implements IConcernForumService {
     public List<ConcernForum> findAllConcernForum() {
         return iConcernForumMapper.findAllConcernForum();
     }
+
+    @Override
+    public ConcernForum findByIdConcernForum(Long id) {
+        return iConcernForumMapper.findByIdConcernForum(id);
+    }
+
+    @Override
+    public List<ConcernForum> findByAidGidConcernForum(Long aid) {
+        return iConcernForumMapper.findByAidGidConcernForum(aid);
+    }
+
+    @Override
+    public ConcernForum saveConcernForum(ConcernForum concernForum) {
+        iConcernForumMapper.saveConcernForum(concernForum);
+        concernForum=iConcernForumMapper.findAllConcernForum().get(iConcernForumMapper.findAllConcernForum().size()-1);
+        return concernForum;
+    }
+
+    @Override
+    public ConcernForum deleteConcernForum(Long id) {
+        ConcernForum byIdConcernForum = iConcernForumMapper.findByIdConcernForum(id);
+        iConcernForumMapper.deleteConcernForum(id);
+        return byIdConcernForum;
+    }
 }

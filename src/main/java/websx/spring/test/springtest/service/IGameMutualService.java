@@ -12,4 +12,12 @@ import java.util.List;
 public interface IGameMutualService {
 
     List<GameMutual> findAllGameMutual();
+
+    GameMutual findByGidGameMutual(Long gid);
+
+    GameMutual saveGameMutual(GameMutual gameMutual);
+
+    GameMutual updateGameMutual(GameMutual gameMutual);
+
+    GameMutual deleteGameMutual(Long gid);
 }

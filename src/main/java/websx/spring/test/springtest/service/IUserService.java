@@ -10,4 +10,12 @@ import java.util.List;
 public interface IUserService {
 
     List<User> findAllUser();
+
+    User findByIdUser(Long id);
+
+    User saveUser(User user);
+
+    User updateUser(User user);
+
+    User deleteUser(Long id);
 }

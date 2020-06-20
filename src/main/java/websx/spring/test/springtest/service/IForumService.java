@@ -10,4 +10,14 @@ import java.util.List;
 public interface IForumService {
 
     List<Forum> findAllForum();
+
+    Forum findByIdForum(Long id);
+
+    List<Forum> findByAidForum(Long aid);
+
+    Forum saveForum(Forum forum);
+
+    Forum updateForum(Forum forum);
+
+    Forum deleteForum(Long id);
 }

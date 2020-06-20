@@ -10,4 +10,16 @@ import java.util.List;
 public interface IGameCommentService {
 
     List<GameComment> findAllGameComment();
+
+    GameComment findByIdGameComment(Long id);
+
+    List<GameComment> findByGidGameComment(Long gid);
+
+    List<GameComment> findByAidGameComment(Long aid);
+
+    GameComment saveGameComment(GameComment gameComment);
+
+    GameComment updateGameComment(GameComment gameComment);
+
+    GameComment deleteGameComment(Long id);
 }

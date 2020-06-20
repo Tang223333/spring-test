@@ -20,4 +20,30 @@ public class GameMutualService implements IGameMutualService {
     public List<GameMutual> findAllGameMutual() {
         return iGameMutualMapper.findAllGameMutual();
     }
+
+    @Override
+    public GameMutual findByGidGameMutual(Long gid) {
+        return iGameMutualMapper.findByGidGameMutual(gid);
+    }
+
+    @Override
+    public GameMutual saveGameMutual(GameMutual gameMutual) {
+        iGameMutualMapper.saveGameMutual(gameMutual);
+        gameMutual=iGameMutualMapper.findAllGameMutual().get(iGameMutualMapper.findAllGameMutual().size()-1);
+        return gameMutual;
+    }
+
+    @Override
+    public GameMutual updateGameMutual(GameMutual gameMutual) {
+        iGameMutualMapper.updateGameMutual(gameMutual);
+        gameMutual=iGameMutualMapper.findByGidGameMutual(gameMutual.getGid());
+        return gameMutual;
+    }
+
+    @Override
+    public GameMutual deleteGameMutual(Long gid) {
+        GameMutual gameMutual=iGameMutualMapper.findByGidGameMutual(gid);
+        iGameMutualMapper.deleteGameMutual(gid);
+        return gameMutual;
+    }
 }

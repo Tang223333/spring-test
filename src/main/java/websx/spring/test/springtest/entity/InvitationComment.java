@@ -13,7 +13,7 @@ public class InvitationComment {
     private Long aid;
     private String content;
     private Date time;
-    private Object img;
-    private Object video;
+    private Object imgs;
+    private Object videos;
     private String ip;
 }

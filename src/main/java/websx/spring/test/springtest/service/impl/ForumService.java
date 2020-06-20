@@ -18,4 +18,35 @@ public class ForumService implements IForumService {
     public List<Forum> findAllForum() {
         return iForumMapper.findAllForum();
     }
+
+    @Override
+    public Forum findByIdForum(Long id) {
+        return iForumMapper.findByIdForum(id);
+    }
+
+    @Override
+    public List<Forum> findByAidForum(Long aid) {
+        return iForumMapper.findByAidForum(aid);
+    }
+
+    @Override
+    public Forum saveForum(Forum forum) {
+        iForumMapper.saveForum(forum);
+        forum=iForumMapper.findAllForum().get(iForumMapper.findAllForum().size()-1);
+        return forum;
+    }
+
+    @Override
+    public Forum updateForum(Forum forum) {
+        iForumMapper.updateForum(forum);
+        forum=iForumMapper.findByIdForum(forum.getId());
+        return forum;
+    }
+
+    @Override
+    public Forum deleteForum(Long id) {
+        Forum byIdForum = iForumMapper.findByIdForum(id);
+        iForumMapper.deleteForum(id);
+        return byIdForum;
+    }
 }

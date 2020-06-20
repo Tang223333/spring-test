@@ -20,4 +20,40 @@ public class GameCommentService implements IGameCommentService {
     public List<GameComment> findAllGameComment() {
         return iGameCommentMapper.findAllGameComment();
     }
+
+    @Override
+    public GameComment findByIdGameComment(Long id) {
+        return iGameCommentMapper.findByIdGameComment(id);
+    }
+
+    @Override
+    public List<GameComment> findByGidGameComment(Long gid) {
+        return iGameCommentMapper.findByGidGameComment(gid);
+    }
+
+    @Override
+    public List<GameComment> findByAidGameComment(Long aid) {
+        return iGameCommentMapper.findByAidGameComment(aid);
+    }
+
+    @Override
+    public GameComment saveGameComment(GameComment gameComment) {
+        iGameCommentMapper.saveGameComment(gameComment);
+        gameComment=iGameCommentMapper.findAllGameComment().get(iGameCommentMapper.findAllGameComment().size()-1);
+        return gameComment;
+    }
+
+    @Override
+    public GameComment updateGameComment(GameComment gameComment) {
+        iGameCommentMapper.updateGameComment(gameComment);
+        gameComment=iGameCommentMapper.findByIdGameComment(gameComment.getId());
+        return gameComment;
+    }
+
+    @Override
+    public GameComment deleteGameComment(Long id) {
+        GameComment gameComment=iGameCommentMapper.findByIdGameComment(id);
+        iGameCommentMapper.deleteGameComment(id);
+        return gameComment;
+    }
 }

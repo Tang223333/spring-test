@@ -15,7 +15,7 @@ public class Invitation {
     private Integer goods;
     private Integer bads;
     private Date time;
-    private Object img;
-    private Object video;
+    private Object imgs;
+    private Object videos;
     private String ip;
 }

@@ -2,8 +2,9 @@ package websx.spring.test.springtest.entity;
 
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Builder
 @Data

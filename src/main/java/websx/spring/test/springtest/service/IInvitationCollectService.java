@@ -3,6 +3,7 @@ package websx.spring.test.springtest.service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import websx.spring.test.springtest.entity.InvitationCollect;
+import websx.spring.test.springtest.entity.InvitationCollect;
 
 import java.util.List;
 
@@ -10,4 +11,12 @@ import java.util.List;
 public interface IInvitationCollectService {
 
     List<InvitationCollect> findAllInvitationCollect();
+
+    InvitationCollect findByIdInvitationCollect(Long id);
+
+    List<InvitationCollect> findByAidGidInvitationCollect(Long aid);
+
+    InvitationCollect saveInvitationCollect(InvitationCollect invitationCollect);
+
+    InvitationCollect deleteInvitationCollect(Long id);
 }

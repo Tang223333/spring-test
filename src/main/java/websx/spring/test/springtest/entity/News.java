@@ -9,10 +9,12 @@ import java.util.Date;
 @Data
 public class News {
     private Long id;
+    private Long aid;
     private String title;
     private String writer;
     private Date time;
     private String content;
     private Object videos;
     private Object imgs;
+    private String ip;
 }
