@@ -13,7 +13,9 @@ public interface IGameService {
 
     Game findByIdGame(Long id);
 
-    List<Game> findByNameGame(String name);
+    List<Game> findByLikeNameGame(String name);
+
+    Game findByNameGame(String name);
 
     Game saveGame(Game game);
 

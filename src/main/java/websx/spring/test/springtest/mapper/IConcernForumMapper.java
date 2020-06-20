@@ -18,7 +18,13 @@ public interface IConcernForumMapper {
     ConcernForum findByIdConcernForum(Long id);
 
     @Select("select * from concern_forum where aid=#{aid}")
-    List<ConcernForum> findByAidGidConcernForum(Long aid);
+    List<ConcernForum> findByAidConcernForum(Long aid);
+
+    @Select("select * from concern_forum where gid=#{gid}")
+    List<ConcernForum> findByGidConcernForum(Long gid);
+
+    @Select("select * from concern_forum where aid=#{aid} and gid=#{gid}")
+    ConcernForum findByAidGidConcernForum(Long aid,Long gid);
 
     @Insert("insert into concern_forum(gid,aid,time)" +
             "values(#{gid},#{aid},#{time});")

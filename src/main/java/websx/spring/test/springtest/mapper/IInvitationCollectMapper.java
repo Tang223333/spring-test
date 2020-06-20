@@ -18,8 +18,14 @@ public interface IInvitationCollectMapper {
     @Select("select * from invitation_collect where id=#{id};")
     InvitationCollect findByIdInvitationCollect(Long id);
 
-    @Select("select * from invitation_collect where aid=#{aid} ")
-    List<InvitationCollect> findByAidGidInvitationCollect(Long aid);
+    @Select("select * from invitation_collect where aid=#{aid};")
+    List<InvitationCollect> findByAidInvitationCollect(Long aid);
+
+    @Select("select * from invitation_collect where gid=#{gid};")
+    List<InvitationCollect> findByGidInvitationCollect(Long gid);
+
+    @Select("select * from invitation_collect where aid=#{aid} and gid=#{gid};")
+    InvitationCollect findByAidGidInvitationCollect(Long aid,Long gid);
 
     @Insert("insert into invitation_collect(gid,aid,time)" +
             "values(#{gid},#{aid},#{time});")

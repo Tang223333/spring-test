@@ -30,6 +30,11 @@ public class ForumService implements IForumService {
     }
 
     @Override
+    public Forum findByNameForum(String name) {
+        return iForumMapper.findByNameForum(name);
+    }
+
+    @Override
     public Forum saveForum(Forum forum) {
         iForumMapper.saveForum(forum);
         forum=iForumMapper.findAllForum().get(iForumMapper.findAllForum().size()-1);

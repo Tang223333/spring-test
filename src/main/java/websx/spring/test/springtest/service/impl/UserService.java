@@ -25,6 +25,16 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User findByNameUser(String name) {
+        return iUserMapper.findByNumberUser(name);
+    }
+
+    @Override
+    public User findByNumberUser(String number) {
+        return iUserMapper.findByNumberUser(number);
+    }
+
+    @Override
     public User saveUser(User user) {
         iUserMapper.saveUser(user);
         user=iUserMapper.findAllUser().get(iUserMapper.findAllUser().size()-1);

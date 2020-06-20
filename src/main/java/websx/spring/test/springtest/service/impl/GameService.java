@@ -25,7 +25,12 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public List<Game> findByNameGame(String name) {
+    public List<Game> findByLikeNameGame(String name) {
+        return iGameMapper.findByLikeNameGame(name);
+    }
+
+    @Override
+    public Game findByNameGame(String name) {
         return iGameMapper.findByNameGame(name);
     }
 

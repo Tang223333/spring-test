@@ -33,17 +33,35 @@ public class NewsCollectController {
         return JsonUtils.getJson(newsCollect,newsCollect!=null?0:1);
     }
 
+    @RequestMapping(value = "/findByNid",method = RequestMethod.POST)
+    public Map<String,Object> findByNidNewsCollect(@PathParam("nid") Long nid){
+        List<NewsCollect> newsCollects = newsCollectService.findByNidNewsCollect(nid);
+        return JsonUtils.getJson(newsCollects,newsCollects!=null?0:1);
+    }
+
     @RequestMapping(value = "/findByAid",method = RequestMethod.POST)
     public Map<String,Object> findByAidNewsCollect(@PathParam("aid") Long aid){
-        List<NewsCollect> newsCollects = newsCollectService.findByAidGidNewsCollect(aid);
+        List<NewsCollect> newsCollects = newsCollectService.findByAidNewsCollect(aid);
+        return JsonUtils.getJson(newsCollects,newsCollects!=null?0:1);
+    }
+
+    @RequestMapping(value = "/findByNidAid",method = RequestMethod.POST)
+    public Map<String,Object> findByNidAidNewsCollect(@PathParam("nid") Long nid,
+                                                   @PathParam("aid") Long aid){
+        NewsCollect newsCollects = newsCollectService.findByNidAidNewsCollect(nid,aid);
         return JsonUtils.getJson(newsCollects,newsCollects!=null?0:1);
     }
 
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public Map<String,Object> saveNewsCollect(@PathParam("aid") Long aid,
                                               @PathParam("nid") Long nid){
-        NewsCollect newsCollect=NewsCollect.builder().aid(aid).nid(nid).time(new Date()).build();
-        newsCollect=newsCollectService.saveNewsCollect(newsCollect);
+        NewsCollect newsCollect=newsCollectService.findByNidAidNewsCollect(nid,aid);
+        if (newsCollect != null) {
+            newsCollect=null;
+        }else {
+            newsCollect=NewsCollect.builder().aid(aid).nid(nid).time(new Date()).build();
+            newsCollect=newsCollectService.saveNewsCollect(newsCollect);
+        }
         return JsonUtils.getJson(newsCollect,newsCollect!=null?0:1);
     }
 

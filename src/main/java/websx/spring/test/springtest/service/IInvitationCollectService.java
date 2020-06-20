@@ -14,7 +14,11 @@ public interface IInvitationCollectService {
 
     InvitationCollect findByIdInvitationCollect(Long id);
 
-    List<InvitationCollect> findByAidGidInvitationCollect(Long aid);
+    List<InvitationCollect> findByAidInvitationCollect(Long aid);
+
+    List<InvitationCollect> findByGidInvitationCollect(Long gid);
+
+    InvitationCollect findByAidGidInvitationCollect(Long aid,Long gid);
 
     InvitationCollect saveInvitationCollect(InvitationCollect invitationCollect);
 

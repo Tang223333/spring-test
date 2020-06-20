@@ -1,7 +1,6 @@
 package websx.spring.test.springtest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,10 +32,16 @@ public class GameController {
         return JsonUtils.getJson(byId,(byId!=null)?0:1);
     }
 
+    @RequestMapping(value = "/findByLikeName",method = RequestMethod.POST)
+    public Map<String,Object> findByLikeNameGame(@PathParam("name") String name){
+        name="%"+name+"%";
+        List<Game> games = gameService.findByLikeNameGame(name);
+        return JsonUtils.getJson(games,(games!=null)?0:1);
+    }
+
     @RequestMapping(value = "/findByName",method = RequestMethod.POST)
     public Map<String,Object> findByNameGame(@PathParam("name") String name){
-        name="%"+name+"%";
-        List<Game> games = gameService.findByNameGame(name);
+        List<Game> games = gameService.findByLikeNameGame(name);
         return JsonUtils.getJson(games,(games!=null)?0:1);
     }
 
@@ -46,12 +51,17 @@ public class GameController {
                                        @PathParam("pType") Integer pType,
                                        @PathParam("developer") String developer,
                                        @PathParam("publisher") String publisher,
-                                       @PathParam("team") String team,
-                                       @PathParam("time") Date time){
+                                       @PathParam("team") String team){
         Long i=new java.util.Date().getTime();
-        Game game=Game.builder().name(name).describes(describes).videos("video_"+i).imgs("img_"+i).types("type_"+i).pType(1).developer(developer)
-                .publisher(publisher).team(team).time(time).build();
-        game=gameService.saveGame(game);
+        Game game=gameService.findByNameGame(name);
+        if (game != null) {
+            game=null;
+        }else {
+            game=Game.builder().name(name).describes(describes).videos("video_"+i).imgs("img_"+i).types("type_"+i)
+                    .pType(pType).developer(developer).publisher(publisher).team(team)
+                    .time(new Date(new java.util.Date().getTime())).build();
+            game=gameService.saveGame(game);
+        }
         return JsonUtils.getJson(game,(game!=null)?0:1);
     }
 
@@ -66,7 +76,10 @@ public class GameController {
                                          @PathParam("time") Date time){
         Game game=gameService.findByIdGame(id);
         if (game != null) {
-            game=Game.builder().id(game.getId()).name(name).describes(describes).pType(pType).developer(developer).publisher(publisher).team(team).time(time).build();
+            game=Game.builder().id(game.getId()).name(name!=null?name:game.getName())
+                    .describes(describes!=null?describes:game.getDescribes()).pType(pType!=null?pType:game.getPType())
+                    .developer(developer!=null?developer:game.getDeveloper()).publisher(publisher!=null?publisher:game.getPublisher())
+                    .team(team!=null?team:game.getTeam()).time(time!=null?time:game.getTime()).build();
             game=gameService.updateGame(game);
             return JsonUtils.getJson(game,(game!=null)?0:1);
         }else {

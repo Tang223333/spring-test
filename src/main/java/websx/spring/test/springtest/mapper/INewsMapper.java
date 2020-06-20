@@ -21,6 +21,12 @@ public interface INewsMapper {
     @Select("select * from news where aid=#{aid};")
     List<News> findByAidNews(Long aid);
 
+    @Select("select * from news where title like #{title};")
+    List<News> findByLikeTitleNews(String title);
+
+    @Select("select * from news where aid=#{aid} and title=#{title};")
+    News findByAidTitleNews(Long aid,String title);
+
     @Insert("insert into news(aid,title,writer,time,content,videos,imgs,ip) values" +
             "(#{aid},#{title},#{writer},#{time},#{content},#{videos},#{imgs},#{ip})")
     void saveNews(News news);

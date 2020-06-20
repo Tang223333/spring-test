@@ -37,6 +37,11 @@ public class GameCommentService implements IGameCommentService {
     }
 
     @Override
+    public GameComment findByAidGidGameComment(Long aid, Long gid) {
+        return iGameCommentMapper.findByAidGidGameComment(aid,gid);
+    }
+
+    @Override
     public GameComment saveGameComment(GameComment gameComment) {
         iGameCommentMapper.saveGameComment(gameComment);
         gameComment=iGameCommentMapper.findAllGameComment().get(iGameCommentMapper.findAllGameComment().size()-1);

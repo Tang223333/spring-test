@@ -39,11 +39,29 @@ public class GameCollectController {
         return JsonUtils.getJson(gameCollects,gameCollects!=null?0:1);
     }
 
+    @RequestMapping(value = "/findByGid",method = RequestMethod.POST)
+    public Map<String,Object> findByGidGameCollect(@PathParam("gid") Long gid){
+        List<GameCollect> gameCollects = gameCollectService.findByGidGameCollect(gid);
+        return JsonUtils.getJson(gameCollects,gameCollects!=null?0:1);
+    }
+
+    @RequestMapping(value = "/findByAidGid",method = RequestMethod.POST)
+    public Map<String,Object> findByAidGidGameCollect(@PathParam("aid") Long aid,
+                                                      @PathParam("gid") Long gid){
+        GameCollect gameCollects = gameCollectService.findByAidGidGameCollect(aid,gid);
+        return JsonUtils.getJson(gameCollects,gameCollects!=null?0:1);
+    }
+
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public Map<String,Object> saveGameCollect(@PathParam("aid") Long aid,
                                               @PathParam("gid") Long gid){
-        GameCollect gameCollect=GameCollect.builder().aid(aid).gid(gid).time(new Date()).build();
-        gameCollect=gameCollectService.saveGameCollect(gameCollect);
+        GameCollect gameCollect=gameCollectService.findByAidGidGameCollect(aid,gid);
+        if (gameCollect != null) {
+            gameCollect=null;
+        }else {
+            gameCollect=GameCollect.builder().aid(aid).gid(gid).time(new Date()).build();
+            gameCollect=gameCollectService.saveGameCollect(gameCollect);
+        }
         return JsonUtils.getJson(gameCollect,gameCollect!=null?0:1);
     }
 

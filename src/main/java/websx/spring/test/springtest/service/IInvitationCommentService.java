@@ -18,6 +18,8 @@ public interface IInvitationCommentService {
 
     List<InvitationComment> findByAidInvitationComment(Long aid);
 
+    InvitationComment findByIidAidInvitationComment(Long iid, Long aid);
+
     InvitationComment saveInvitationComment(InvitationComment invitationComment);
 
     InvitationComment updateInvitationComment(InvitationComment invitationComment);

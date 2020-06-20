@@ -35,6 +35,11 @@ public class InvitationService implements IInvitationService {
     }
 
     @Override
+    public Invitation findByFidAidInvitation(Long fid, Long aid) {
+        return iInvitationMapper.findByFidAidInvitation(fid,aid);
+    }
+
+    @Override
     public Invitation saveInvitation(Invitation invitationComment) {
         iInvitationMapper.saveInvitation(invitationComment);
         invitationComment=iInvitationMapper.findAllInvitation().get(iInvitationMapper.findAllInvitation().size()-1);

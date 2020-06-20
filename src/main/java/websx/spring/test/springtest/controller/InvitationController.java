@@ -44,17 +44,26 @@ public class InvitationController {
         return JsonUtils.getJson(Invitations,Invitations!=null?0:1);
     }
 
+    @RequestMapping(value = "/findByFidAid",method = RequestMethod.POST)
+    public Map<String,Object> findByFidAidInvitation(@PathParam("fid") Long fid,
+                                                     @PathParam("aid") Long aid){
+        Invitation Invitations = invitationService.findByFidAidInvitation(fid,aid);
+        return JsonUtils.getJson(Invitations,Invitations!=null?0:1);
+    }
+
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public Map<String,Object> saveInvitation(@PathParam("fid") Long fid,
                                              @PathParam("aid") Long aid,
                                              @PathParam("content") String content,
-                                             @PathParam("imgs") String imgs,
-                                             @PathParam("videos") String videos,
-                                             @PathParam("ip") String ip,
-                                             @PathParam("goods") Integer goods,
-                                             @PathParam("bads") Integer bads){
-        Invitation invitation= Invitation.builder().fid(fid).aid(aid).content(content).imgs(imgs).videos(videos).ip(ip).time(new Date()).goods(goods).bads(bads).build();
-        invitation=invitationService.saveInvitation(invitation);
+                                             @PathParam("ip") String ip){
+        Long i=new Date().getTime();
+        Invitation invitation=invitationService.findByFidAidInvitation(fid,aid);
+        if (invitation != null) {
+            invitation=null;
+        }else {
+            invitation= Invitation.builder().fid(fid).aid(aid).content(content).ip(ip).imgs("img_"+i).videos("video_"+i).time(new Date()).goods(0).bads(0).build();
+            invitation=invitationService.saveInvitation(invitation);
+        }
         return JsonUtils.getJson(invitation,invitation!=null?0:1);
     }
 
@@ -63,19 +72,18 @@ public class InvitationController {
                                                @PathParam("fid") Long fid,
                                                @PathParam("aid") Long aid,
                                                @PathParam("content") String content,
-                                               @PathParam("imgs") String imgs,
-                                               @PathParam("videos") String videos,
                                                @PathParam("ip") String ip,
                                                @PathParam("goods") Integer goods,
                                                @PathParam("bads") Integer bads){
-        Invitation invitation=invitationService.findByIdInvitation(id);
+        Invitation invitation=invitationService.findByFidAidInvitation(fid,aid);
         if (invitation != null) {
-            invitation= Invitation.builder().id(invitation.getId()).fid(fid).aid(aid).content(content).videos(videos).imgs(imgs).ip(ip).time(new Date()).goods(goods).bads(bads).build();
+            invitation= Invitation.builder().id(invitation.getId()).fid(fid!=null?fid:invitation.getFid()).aid(aid!=null?aid:invitation.getAid())
+                    .content(content!=null?content:invitation.getContent()).ip(ip!=null?ip:invitation.getIp()).time(new Date())
+                    .goods(goods!=null?goods:invitation.getGoods()).bads(bads!=null?bads:invitation.getBads()).build();
             invitation=invitationService.updateInvitation(invitation);
-            return JsonUtils.getJson(invitation,invitation!=null?0:1);
         }else {
-            return JsonUtils.getJson(invitation,1);
         }
+        return JsonUtils.getJson(invitation,invitation!=null?0:1);
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST)

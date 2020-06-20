@@ -37,16 +37,25 @@ public class ForumController {
         return JsonUtils.getJson(forums,forums!=null?0:1);
     }
 
+    @RequestMapping(value = "/findByName",method = RequestMethod.POST)
+    public Map<String,Object> findByNameForm(@PathParam("name") String name){
+        Forum byIdForum = forumService.findByNameForum(name);
+        return JsonUtils.getJson(byIdForum,byIdForum!=null?0:1);
+    }
+
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public Map<String,Object> saveForum(@PathParam("aid") Long aid,
-                                        @PathParam("concerns") Integer concerns,
-                                        @PathParam("invitations") Integer invitations,
-                                        @PathParam("views") Integer views,
                                         @PathParam("name") String name,
                                         @PathParam("logo") String logo,
                                         @PathParam("ip") String ip){
-        Forum forum=Forum.builder().aid(aid).concerns(concerns).invitations(invitations).views(views).name(name).logo(logo).ip(ip).build();
-        forum = forumService.saveForum(forum);
+        Forum forum=forumService.findByNameForum(name);
+        if (forum != null) {
+            forum=null;
+        }else {
+            forum=Forum.builder().aid(aid).concerns(0).invitations(0).views(0)
+                    .name(name).logo(logo).ip(ip).build();
+            forum = forumService.saveForum(forum);
+        }
         return JsonUtils.getJson(forum,forum!=null?0:1);
     }
 
@@ -61,11 +70,13 @@ public class ForumController {
                                           @PathParam("ip") String ip){
         Forum forum=forumService.findByIdForum(id);
         if (forum != null) {
-            forum=Forum.builder().id(id).aid(aid).concerns(concerns).invitations(invitations).views(views).name(name).logo(logo).ip(ip).build();
-            return JsonUtils.getJson(forum,forum!=null?0:1);
+            forum=Forum.builder().id(forum.getId()).aid(aid!=null?aid:forum.getAid()).concerns(concerns!=null?concerns:forum.getConcerns())
+                    .invitations(invitations!=null?invitations:forum.getInvitations()).views(views!=null?views:forum.getViews())
+                    .name(name!=null?name:forum.getName()).logo(logo!=null?logo:forum.getLogo()).ip(ip!=null?ip:forum.getIp()).build();
         }else {
-            return JsonUtils.getJson(forum,1);
+            forum=null;
         }
+        return JsonUtils.getJson(forum,forum!=null?0:1);
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST)

@@ -15,6 +15,8 @@ public interface IForumService {
 
     List<Forum> findByAidForum(Long aid);
 
+    Forum findByNameForum(String name);
+
     Forum saveForum(Forum forum);
 
     Forum updateForum(Forum forum);

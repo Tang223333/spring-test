@@ -36,6 +36,20 @@ public class UserController {
         return JsonUtils.getJson(byIdUser,byIdUser!=null?0:1);
     }
 
+    @RequestMapping(value = "/findByName",method = RequestMethod.POST)
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> findByNameUser(@PathParam("name") String name){
+        User byIdUser = userService.findByNameUser(name);
+        return JsonUtils.getJson(byIdUser,byIdUser!=null?0:1);
+    }
+
+    @RequestMapping(value = "/findByNumber",method = RequestMethod.POST)
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> findByNumberUser(@PathParam("number") String number){
+        User byIdUser = userService.findByNumberUser(number);
+        return JsonUtils.getJson(byIdUser,byIdUser!=null?0:1);
+    }
+
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
     public Map<String,Object> saveUser(@PathParam("name") String name,
@@ -44,8 +58,13 @@ public class UserController {
                                        @PathParam("sex") Integer sex,
                                        @PathParam("birthday") Date birthday,
                                        @PathParam("style") String style){
-        User user=User.builder().name(name).number(number).address(address).sex(sex).birthday(birthday).style(style).build();
-        user = userService.saveUser(user);
+        User user=userService.findByNameUser(name);
+        if (user != null) {
+            user=null;
+        }else {
+            user=User.builder().name(name).number(number).address(address).sex(sex).birthday(birthday).style(style).build();
+            user = userService.saveUser(user);
+        }
         return JsonUtils.getJson(user,user!=null?0:1);
     }
 
@@ -58,8 +77,13 @@ public class UserController {
                                          @PathParam("sex") Integer sex,
                                          @PathParam("birthday") Date birthday,
                                          @PathParam("style") String style){
-        User user=User.builder().id(id).name(name).number(number).address(address).sex(sex).birthday(birthday).style(style).build();
-        user = userService.updateUser(user);
+        User user=userService.findByNumberUser(number);
+        if (user != null&&user.getId()==id) {
+            user=User.builder().id(user.getId()).name(name!=null?name:user.getName()).number(number!=null?number:user.getNumber())
+                    .address(address!=null?address:user.getAddress()).sex(sex!=null?sex:user.getSex())
+                    .birthday(birthday!=null?birthday:user.getBirthday()).style(style!=null?style:user.getStyle()).build();
+            user = userService.updateUser(user);
+        }
         return JsonUtils.getJson(user,user!=null?0:1);
     }
 

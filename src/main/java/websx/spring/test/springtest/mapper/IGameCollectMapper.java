@@ -19,7 +19,13 @@ public interface IGameCollectMapper {
     GameCollect findByIdGameCollect(Long id);
 
     @Select("select * from game_collect where aid=#{aid} ")
-    List<GameCollect> findByAidGidGameCollect(Long aid);
+    List<GameCollect> findByAidGameCollect(Long aid);
+
+    @Select("select * from game_collect where gid=#{gid} ")
+    List<GameCollect> findByGidGameCollect(Long gid);
+
+    @Select("select * from game_collect where aid=#{aid} and gid=#{gid}")
+    GameCollect findByAidGidGameCollect(Long aid,Long gid);
 
     @Insert("insert into game_collect(gid,aid,time)" +
             "values(#{gid},#{aid},#{time});")

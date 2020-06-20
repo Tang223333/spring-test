@@ -21,6 +21,9 @@ public interface IForumMapper {
     @Select("select * from forum where aid=#{aid};")
     List<Forum> findByAidForum(Long aid);
 
+    @Select("select * from forum where name=#{name};")
+    Forum findByNameForum(String name);
+
     @Insert("insert into forum(aid,concerns,invitations,views,name,logo,ip) values" +
             "(#{aid},#{concerns},#{invitations},#{views},#{name},#{logo},#{ip});")
     void saveForum(Forum forum);

@@ -25,8 +25,18 @@ public class NewsCollectService implements INewsCollectService {
     }
 
     @Override
-    public List<NewsCollect> findByAidGidNewsCollect(Long aid) {
-        return iNewsCollectMapper.findByAidGidNewsCollect(aid);
+    public List<NewsCollect> findByNidNewsCollect(Long nid) {
+        return iNewsCollectMapper.findByNidNewsCollect(nid);
+    }
+
+    @Override
+    public List<NewsCollect> findByAidNewsCollect(Long aid) {
+        return iNewsCollectMapper.findByAidNewsCollect(aid);
+    }
+
+    @Override
+    public NewsCollect findByNidAidNewsCollect(Long nid, Long aid) {
+        return iNewsCollectMapper.findByNidAidNewsCollect(nid,aid);
     }
 
     @Override

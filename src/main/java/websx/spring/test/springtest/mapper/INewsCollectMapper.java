@@ -18,8 +18,14 @@ public interface INewsCollectMapper {
     @Select("select * from news_collect where id=#{id};")
     NewsCollect findByIdNewsCollect(Long id);
 
-    @Select("select * from news_collect where aid=#{aid} ")
-    List<NewsCollect> findByAidGidNewsCollect(Long aid);
+    @Select("select * from news_collect where nid=#{nid};")
+    List<NewsCollect> findByNidNewsCollect(Long nid);
+
+    @Select("select * from news_collect where aid=#{aid};")
+    List<NewsCollect> findByAidNewsCollect(Long aid);
+
+    @Select("select * from news_collect where nid=#{nid} and aid=#{aid};")
+    NewsCollect findByNidAidNewsCollect(Long nid,Long aid);
 
     @Insert("insert into news_collect(nid,aid,time)" +
             "values(#{nid},#{aid},#{time});")

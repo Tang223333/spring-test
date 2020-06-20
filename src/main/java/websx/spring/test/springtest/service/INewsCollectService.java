@@ -14,7 +14,11 @@ public interface INewsCollectService {
 
     NewsCollect findByIdNewsCollect(Long id);
 
-    List<NewsCollect> findByAidGidNewsCollect(Long aid);
+    List<NewsCollect> findByNidNewsCollect(Long nid);
+
+    List<NewsCollect> findByAidNewsCollect(Long aid);
+
+    NewsCollect findByNidAidNewsCollect(Long nid,Long aid);
 
     NewsCollect saveNewsCollect(NewsCollect newsCollect);
 

@@ -13,7 +13,11 @@ public interface IConcernForumService {
 
     ConcernForum findByIdConcernForum(Long id);
 
-    List<ConcernForum> findByAidGidConcernForum(Long aid);
+    List<ConcernForum> findByAidConcernForum(Long aid);
+
+    List<ConcernForum> findByGidConcernForum(Long gid);
+
+    ConcernForum findByAidGidConcernForum(Long aid,Long gid);
 
     ConcernForum saveConcernForum(ConcernForum concernForum);
 

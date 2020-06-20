@@ -15,6 +15,12 @@ public interface IUserMapper {
     @Select("select * from user where id=#{id};")
     User findByIdUser(Long id);
 
+    @Select("select * from user where name=#{name};")
+    User findByNameUser(String name);
+
+    @Select("select * from user where number=#{number};")
+    User findByNumberUser(String number);
+
     @Insert("insert into user(name,number,address,sex,birthday,style) values(#{name},#{number},#{address},#{sex},#{birthday},#{style});")
     void saveUser(User user);
 

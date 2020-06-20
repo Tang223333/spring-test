@@ -31,6 +31,16 @@ public class NewsService implements INewsService {
     }
 
     @Override
+    public List<News> findByLikeTitleNews(String title) {
+        return iNewsMapper.findByLikeTitleNews(title);
+    }
+
+    @Override
+    public News findByAidTitleNews(Long aid, String title) {
+        return iNewsMapper.findByAidTitleNews(aid,title);
+    }
+
+    @Override
     public News saveNews(News news) {
         iNewsMapper.saveNews(news);
         news=iNewsMapper.findAllNews().get(iNewsMapper.findAllNews().size()-1);

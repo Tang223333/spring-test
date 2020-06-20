@@ -13,6 +13,10 @@ public interface IUserService {
 
     User findByIdUser(Long id);
 
+    User findByNameUser(String name);
+
+    User findByNumberUser(String number);
+
     User saveUser(User user);
 
     User updateUser(User user);

@@ -17,6 +17,8 @@ public interface IGameCommentService {
 
     List<GameComment> findByAidGameComment(Long aid);
 
+    GameComment findByAidGidGameComment(Long aid,Long gid);
+
     GameComment saveGameComment(GameComment gameComment);
 
     GameComment updateGameComment(GameComment gameComment);

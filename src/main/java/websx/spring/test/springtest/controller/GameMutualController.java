@@ -36,14 +36,15 @@ public class GameMutualController {
     }
 
     @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public Map<String,Object> findSaveGameMutual(@PathParam("gid") Long gid,
-                                                 @PathParam("collects") Double collects,
-                                                 @PathParam("comments") Double comments,
-                                                 @PathParam("grades") Integer grades,
-                                                 @PathParam("goods") Double goods,
-                                                 @PathParam("bads") Double bads){
-        GameMutual gameMutual= GameMutual.builder().gid(gid).collects(collects).comments(comments).grades(grades).goods(goods).bads(bads).build();
-        gameMutual=gameMutualService.saveGameMutual(gameMutual);
+    public Map<String,Object> findSaveGameMutual(@PathParam("gid") Long gid){
+        GameMutual gameMutual=gameMutualService.findByGidGameMutual(gid);
+        if (gameMutual != null) {
+            gameMutual=null;
+        }else {
+            gameMutual= GameMutual.builder().gid(gid).collects((double) 0).comments((double) 0)
+                    .grades(0).goods((double) 0).bads((double) 0).build();
+            gameMutual=gameMutualService.saveGameMutual(gameMutual);
+        }
         return JsonUtils.getJson(gameMutual,gameMutual!=null?0:1);
     }
 
@@ -54,8 +55,15 @@ public class GameMutualController {
                                                    @PathParam("grades") Integer grades,
                                                    @PathParam("goods") Double goods,
                                                    @PathParam("bads") Double bads){
-        GameMutual gameMutual= GameMutual.builder().gid(gid).collects(collects).comments(comments).grades(grades).goods(goods).bads(bads).build();
-        gameMutual=gameMutualService.updateGameMutual(gameMutual);
+        GameMutual gameMutual=gameMutualService.findByGidGameMutual(gid);
+        if (gameMutual != null) {
+            gameMutual= GameMutual.builder().gid(gid!=null?gid:gameMutual.getGid()).collects(collects!=null?collects:gameMutual.getCollects())
+                    .comments(comments!=null?comments:gameMutual.getComments()).grades(grades!=null?grades:gameMutual.getGrades())
+                    .goods(goods!=null?goods:gameMutual.getGoods()).bads(bads!=null?bads:gameMutual.getBads()).build();
+            gameMutual=gameMutualService.updateGameMutual(gameMutual);
+        }else {
+            gameMutual=null;
+        }
         return JsonUtils.getJson(gameMutual,gameMutual!=null?0:1);
     }
 

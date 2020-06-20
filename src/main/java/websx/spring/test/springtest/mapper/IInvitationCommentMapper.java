@@ -20,10 +20,13 @@ public interface IInvitationCommentMapper {
     InvitationComment findByIdInvitationComment(Long id);
 
     @Select("select * from invitation_comment where iid=#{iid};")
-    List<InvitationComment> findByGidInvitationComment(Long iid);
+    List<InvitationComment> findByIidInvitationComment(Long iid);
 
     @Select("select * from invitation_comment where aid=#{aid};")
     List<InvitationComment> findByAidInvitationComment(Long aid);
+
+    @Select("select * from invitation_comment where iid=#{iid} and aid=#{aid};")
+    InvitationComment findByIidAidInvitationComment(Long iid,Long aid);
 
     @Insert("insert into invitation_comment(iid,aid,content,videos,imgs,ip,time) " +
             "values(#{iid},#{aid},#{content},#{videos},#{imgs},#{ip},#{time});")

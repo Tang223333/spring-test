@@ -48,13 +48,16 @@ public class DisposeController {
                                           @PathParam("care") String care){
         Dispose dispose=disposeService.findAllByGidDispose(gid);
         if (dispose!=null){
-            return JsonUtils.getJson(dispose,1);
+            dispose=null;
         }else {
-            dispose=Dispose.builder().gid(gid).systemDown(systemDown).handlerDown(handlerDown).ramDown(ramDown).gpuDown(gpuDown).storeDown(storeDown).deviceDown(deviceDown)
-                    .systemUp(systemUp).handlerUp(handlerUp).ramUp(ramUp).gpuUp(gpuUp).storeUp(storeUp).deviceUp(deviceUp).care(care).build();
+            dispose=Dispose.builder().gid(gid).systemDown(systemDown).handlerDown(handlerDown).ramDown(ramDown)
+                    .gpuDown(gpuDown).storeDown(storeDown).deviceDown(deviceDown).systemUp(systemUp)
+                    .handlerUp(handlerUp).ramUp(ramUp).gpuUp(gpuUp).storeUp(storeUp)
+                    .deviceUp(deviceUp).care(care).build();
             dispose = disposeService.saveDispose(dispose);
             return JsonUtils.getJson(dispose,dispose!=null?0:1);
         }
+        return JsonUtils.getJson(dispose,dispose!=null?0:1);
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
@@ -74,13 +77,18 @@ public class DisposeController {
                                             @PathParam("care") String care){
         Dispose dispose=disposeService.findAllByGidDispose(gid);
         if (dispose==null){
-            return JsonUtils.getJson(dispose,1);
+            dispose=null;
         }else {
-            dispose=Dispose.builder().gid(gid).systemDown(systemDown).handlerDown(handlerDown).ramDown(ramDown).gpuDown(gpuDown).storeDown(storeDown).deviceDown(deviceDown)
-                    .systemUp(systemUp).handlerUp(handlerUp).ramUp(ramUp).gpuUp(gpuUp).storeUp(storeUp).deviceUp(deviceUp).care(care).build();
+            dispose=Dispose.builder().gid(gid!=null?gid:dispose.getGid()).systemDown(systemDown!=null?systemDown:dispose.getSystemDown())
+                    .handlerDown(handlerDown!=null?handlerDown:dispose.getHandlerDown()).ramDown(ramDown!=null?ramDown:dispose.getRamDown())
+                    .gpuDown(gpuDown!=null?gpuDown:dispose.getGpuDown()).storeDown(storeDown!=null?systemDown:dispose.getStoreDown())
+                    .deviceDown(deviceDown!=null?deviceDown:dispose.getDeviceDown()).systemUp(systemUp!=null?systemUp:dispose.getSystemUp())
+                    .handlerUp(handlerUp!=null?handlerUp:dispose.getHandlerUp()).ramUp(ramUp!=null?ramUp:dispose.getRamUp())
+                    .gpuUp(gpuUp!=null?gpuUp:dispose.getGpuUp()).storeUp(storeUp!=null?storeUp:dispose.getStoreUp())
+                    .deviceUp(deviceUp!=null?deviceUp:dispose.getDeviceUp()).care(care!=null?care:dispose.getCare()).build();
             dispose = disposeService.updateDispose(dispose);
-            return JsonUtils.getJson(dispose,dispose!=null?0:1);
         }
+        return JsonUtils.getJson(dispose,dispose!=null?0:1);
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST)

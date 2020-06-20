@@ -25,8 +25,18 @@ public class ConcernForumService implements IConcernForumService {
     }
 
     @Override
-    public List<ConcernForum> findByAidGidConcernForum(Long aid) {
-        return iConcernForumMapper.findByAidGidConcernForum(aid);
+    public List<ConcernForum> findByAidConcernForum(Long aid) {
+        return iConcernForumMapper.findByAidConcernForum(aid);
+    }
+
+    @Override
+    public List<ConcernForum> findByGidConcernForum(Long gid) {
+        return iConcernForumMapper.findByGidConcernForum(gid);
+    }
+
+    @Override
+    public ConcernForum findByAidGidConcernForum(Long aid, Long gid) {
+        return iConcernForumMapper.findByAidGidConcernForum(aid,gid);
     }
 
     @Override

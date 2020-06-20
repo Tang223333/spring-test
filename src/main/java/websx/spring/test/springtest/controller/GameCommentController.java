@@ -45,6 +45,13 @@ public class GameCommentController {
         return JsonUtils.getJson(gameComments,gameComments!=null?0:1);
     }
 
+    @RequestMapping(value = "/findByAidGid",method = RequestMethod.POST)
+    public Map<String,Object> findByAidGidGameComment(@PathParam("aid") Long aid,
+                                                      @PathParam("gid") Long gid){
+        GameComment gameComments = gameCommentService.findByAidGidGameComment(aid,gid);
+        return JsonUtils.getJson(gameComments,gameComments!=null?0:1);
+    }
+
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public Map<String,Object> saveGameComment(@PathParam("gid") Long gid,
                                               @PathParam("aid") Long aid,

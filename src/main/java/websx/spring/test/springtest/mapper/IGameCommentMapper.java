@@ -24,6 +24,9 @@ public interface IGameCommentMapper {
     @Select("select * from game_comment where aid=#{aid};")
     List<GameComment> findByAidGameComment(Long aid);
 
+    @Select("select * from game_comment where aid=#{aid} and gid=#{gid};")
+    GameComment findByAidGidGameComment(Long aid,Long gid);
+
     @Insert("insert into game_comment(gid,aid,content,goodOrBad,grade,ip,time) " +
             "values(#{gid},#{aid},#{content},#{goodOrBad},#{grade},#{ip},#{time});")
     void saveGameComment(GameComment gameComment);

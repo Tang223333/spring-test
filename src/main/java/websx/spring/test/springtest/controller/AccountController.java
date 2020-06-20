@@ -61,23 +61,22 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public Map<String,Object> saveAccount(@PathParam("name") String name,
+    public Map<String,Object> saveAccount(@PathParam("uid")Long uid,
+                                          @PathParam("name") String name,
                                           @PathParam("password") String password,
                                           @PathParam("email") String email,
                                           @PathParam("phone") String phone,
                                           @PathParam("type") Integer type,
-                                          @PathParam("logo") String logo,
-                                          @PathParam("username") String username,
-                                          @PathParam("number") String number,
-                                          @PathParam("address") String address,
-                                          @PathParam("sex") Integer sex,
-                                          @PathParam("birthday") Date birthday,
-                                          @PathParam("style") String style){
-        User user=User.builder().name(username).number(number).address(address).sex(sex).birthday(birthday).style(style).build();
-        user = userService.saveUser(user);
-        Account account=Account.builder().uid(user.getId()).name(name).password(password).email(email)
-                .phone(phone).time(new java.util.Date()).type(type!=null?type:1).logo(logo).build();
-        account = accountService.saveAccount(account);
+                                          @PathParam("logo") String logo){
+        Account account=accountService.findByUidAccount(uid);
+        if (account != null) {
+            account=null;
+        }else {
+            account=Account.builder().uid(uid).name(name!=null?name:account.getName()).password(password!=null?password:account.getPassword())
+                    .email(email!=null?email:account.getEmail()).phone(phone!=null?phone:account.getPhone())
+                    .time(new java.util.Date()).type(type!=null?type:1).logo(logo!=null?logo:account.getLogo()).build();
+            account = accountService.saveAccount(account);
+        }
         return JsonUtils.getJson(account,account!=null?0:1);
     }
 
@@ -90,15 +89,19 @@ public class AccountController {
                                             @PathParam("type") Integer type,
                                             @PathParam("logo") String logo){
         Account account=accountService.findByIdAccount(id);
-        account.setType(type!=null?type:account.getType());
-        account.setPhone(phone);
-        account.setEmail(email);
-        account.setName(name);
-        account.setPassword(password);
-        account.setLogo(logo);
-        account.setTime(new java.util.Date());
-        account = accountService.updateAccount(account);
-        return JsonUtils.getJson(account,account!=null?0:1);
+        if (account != null) {
+            account.setType(type!=null?type:account.getType());
+            account.setPhone(phone!=null?phone:account.getPhone());
+            account.setEmail(email!=null?phone:account.getEmail());
+            account.setName(name!=null?phone:account.getName());
+            account.setPassword(password!=null?phone:account.getPassword());
+            account.setLogo(logo!=null?phone:account.getLogo());
+            account.setTime(new java.util.Date());
+            account = accountService.updateAccount(account);
+            return JsonUtils.getJson(account,account!=null?0:1);
+        }else {
+            return JsonUtils.getJson(account,1);
+        }
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST)

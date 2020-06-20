@@ -18,6 +18,8 @@ public interface IInvitationService {
 
     List<Invitation> findByAidInvitation(Long aid);
 
+    Invitation findByFidAidInvitation(Long fid,Long aid);
+
     Invitation saveInvitation(Invitation invitation);
 
     Invitation updateInvitation(Invitation invitation);

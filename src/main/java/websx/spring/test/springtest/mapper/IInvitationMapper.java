@@ -25,6 +25,9 @@ public interface IInvitationMapper {
     @Select("select * from invitation where aid=#{aid};")
     List<Invitation> findByAidInvitation(Long aid);
 
+    @Select("select * from invitation where fid=#{fid} and aid=#{aid};")
+    Invitation findByFidAidInvitation(Long fid,Long aid);
+
     @Insert("insert into invitation(fid,aid,content,videos,imgs,ip,time,goods,bads) " +
             "values(#{fid},#{aid},#{content},#{videos},#{imgs},#{ip},#{time},#{goods},#{bads});")
     void saveInvitation(Invitation invitationComment);

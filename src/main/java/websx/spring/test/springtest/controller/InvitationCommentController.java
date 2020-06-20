@@ -44,15 +44,27 @@ public class InvitationCommentController {
         return JsonUtils.getJson(InvitationComments,InvitationComments!=null?0:1);
     }
 
+    @RequestMapping(value = "/findByIidAid",method = RequestMethod.POST)
+    public Map<String,Object> findByAidInvitationComment(@PathParam("iid") Long iid,
+                                                         @PathParam("aid") Long aid){
+        InvitationComment InvitationComments = invitationCommentService.findByIidAidInvitationComment(iid,aid);
+        return JsonUtils.getJson(InvitationComments,InvitationComments!=null?0:1);
+    }
+
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public Map<String,Object> saveInvitationComment(@PathParam("iid") Long iid,
                                                     @PathParam("aid") Long aid,
                                                     @PathParam("content") String content,
-                                                    @PathParam("imgs") String imgs,
-                                                    @PathParam("videos") String videos,
                                                     @PathParam("ip") String ip){
-        InvitationComment invitationComment= InvitationComment.builder().iid(iid).aid(aid).content(content).imgs(imgs).videos(videos).ip(ip).time(new Date()).build();
-        invitationComment=invitationCommentService.saveInvitationComment(invitationComment);
+        Long i=new Date().getTime();
+        InvitationComment invitationComment=invitationCommentService.findByIidAidInvitationComment(iid,aid);
+        if (invitationComment != null) {
+            invitationComment=null;
+        }else {
+            invitationComment= InvitationComment.builder().iid(iid).aid(aid).content(content)
+                    .imgs("img_"+i).videos("video_"+i).ip(ip).time(new Date()).build();
+            invitationComment=invitationCommentService.saveInvitationComment(invitationComment);
+        }
         return JsonUtils.getJson(invitationComment,invitationComment!=null?0:1);
     }
 
@@ -61,17 +73,17 @@ public class InvitationCommentController {
                                                       @PathParam("iid") Long iid,
                                                       @PathParam("aid") Long aid,
                                                       @PathParam("content") String content,
-                                                      @PathParam("imgs") String imgs,
-                                                      @PathParam("videos") String videos,
                                                       @PathParam("ip") String ip){
         InvitationComment invitationComment=invitationCommentService.findByIdInvitationComment(id);
         if (invitationComment != null) {
-            invitationComment= InvitationComment.builder().id(invitationComment.getId()).iid(iid).aid(aid).content(content).videos(videos).imgs(imgs).ip(ip).time(new Date()).build();
+            invitationComment= InvitationComment.builder().id(invitationComment.getId()).iid(iid!=null?iid:invitationComment.getIid())
+                    .aid(aid!=null?aid:invitationComment.getAid()).time(new Date())
+                    .content(content!=null?content:invitationComment.getContent()).ip(ip!=null?ip:invitationComment.getIp()).build();
             invitationComment=invitationCommentService.updateInvitationComment(invitationComment);
-            return JsonUtils.getJson(invitationComment,invitationComment!=null?0:1);
         }else {
-            return JsonUtils.getJson(invitationComment,1);
+            invitationComment=null;
         }
+        return JsonUtils.getJson(invitationComment,invitationComment!=null?0:1);
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST)

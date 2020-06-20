@@ -27,12 +27,17 @@ public class InvitationCommentService implements IInvitationCommentService {
 
     @Override
     public List<InvitationComment> findByIidInvitationComment(Long iid) {
-        return iInvitationCommentMapper.findByGidInvitationComment(iid);
+        return iInvitationCommentMapper.findByIidInvitationComment(iid);
     }
 
     @Override
     public List<InvitationComment> findByAidInvitationComment(Long aid) {
         return iInvitationCommentMapper.findByAidInvitationComment(aid);
+    }
+
+    @Override
+    public InvitationComment findByIidAidInvitationComment(Long iid, Long aid) {
+        return iInvitationCommentMapper.findByIidAidInvitationComment(iid,aid);
     }
 
     @Override

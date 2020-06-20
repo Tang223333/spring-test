@@ -34,15 +34,33 @@ public class InvitationCollectController {
 
     @RequestMapping(value = "/findByAid",method = RequestMethod.POST)
     public Map<String,Object> findByAidInvitationCollect(@PathParam("aid") Long aid){
-        List<InvitationCollect> invitationCollects = invitationCollectService.findByAidGidInvitationCollect(aid);
+        List<InvitationCollect> invitationCollects = invitationCollectService.findByAidInvitationCollect(aid);
+        return JsonUtils.getJson(invitationCollects,invitationCollects!=null?0:1);
+    }
+
+    @RequestMapping(value = "/findByGid",method = RequestMethod.POST)
+    public Map<String,Object> findByGidInvitationCollect(@PathParam("gid") Long gid){
+        List<InvitationCollect> invitationCollects = invitationCollectService.findByGidInvitationCollect(gid);
+        return JsonUtils.getJson(invitationCollects,invitationCollects!=null?0:1);
+    }
+
+    @RequestMapping(value = "/findByAidGid",method = RequestMethod.POST)
+    public Map<String,Object> findByAidGidInvitationCollect(@PathParam("aid") Long aid,
+                                                         @PathParam("gid") Long gid){
+        InvitationCollect invitationCollects = invitationCollectService.findByAidGidInvitationCollect(aid,gid);
         return JsonUtils.getJson(invitationCollects,invitationCollects!=null?0:1);
     }
 
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public Map<String,Object> saveInvitationCollect(@PathParam("aid") Long aid,
                                               @PathParam("gid") Long gid){
-        InvitationCollect invitationCollect=InvitationCollect.builder().aid(aid).gid(gid).time(new Date()).build();
-        invitationCollect=invitationCollectService.saveInvitationCollect(invitationCollect);
+        InvitationCollect invitationCollect=invitationCollectService.findByAidGidInvitationCollect(aid,gid);
+        if (invitationCollect != null) {
+            invitationCollect=null;
+        }else {
+            invitationCollect=InvitationCollect.builder().aid(aid).gid(gid).time(new Date()).build();
+            invitationCollect=invitationCollectService.saveInvitationCollect(invitationCollect);
+        }
         return JsonUtils.getJson(invitationCollect,invitationCollect!=null?0:1);
     }
 

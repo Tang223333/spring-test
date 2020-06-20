@@ -19,7 +19,10 @@ public interface IGameMapper {
     Game findByIdGame(Long id);
 
     @Select("select * from game where name like #{name};")
-    List<Game> findByNameGame(String name);
+    List<Game> findByLikeNameGame(String name);
+
+    @Select("select * from game where name like #{name};")
+    Game findByNameGame(String name);
 
     @Insert("insert into game(name,describes,videos,imgs,types,pType,developer,publisher,team,time) values" +
             "(#{name},#{describes},#{videos},#{imgs},#{types},#{pType},#{developer},#{publisher},#{team},#{time});")
