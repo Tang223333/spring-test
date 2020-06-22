@@ -1,4 +1,4 @@
-package websx.spring.test.springtest.controller;
+package websx.spring.test.springtest.controller.basis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,7 +59,7 @@ public class GameController {
         }else {
             game=Game.builder().name(name).describes(describes).videos("video_"+i).imgs("img_"+i).types("type_"+i)
                     .pType(pType).developer(developer).publisher(publisher).team(team)
-                    .time(new Date(new java.util.Date().getTime())).build();
+                    .time(new Date(new java.util.Date().getTime())).status(1).build();
             game=gameService.saveGame(game);
         }
         return JsonUtils.getJson(game,(game!=null)?0:1);

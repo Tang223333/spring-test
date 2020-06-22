@@ -25,7 +25,7 @@ public class GameCollectService implements IGameCollectService {
     }
 
     @Override
-    public List<GameCollect> findByAidGidGameCollect(Long aid) {
+    public List<GameCollect> findByAidGameCollect(Long aid) {
         return iGameCollectMapper.findByAidGameCollect(aid);
     }
 

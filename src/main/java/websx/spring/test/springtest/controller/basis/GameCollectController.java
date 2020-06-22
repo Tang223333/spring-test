@@ -1,4 +1,4 @@
-package websx.spring.test.springtest.controller;
+package websx.spring.test.springtest.controller.basis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +35,7 @@ public class GameCollectController {
 
     @RequestMapping(value = "/findByAid",method = RequestMethod.POST)
     public Map<String,Object> findByAidGameCollect(@PathParam("aid") Long aid){
-        List<GameCollect> gameCollects = gameCollectService.findByAidGidGameCollect(aid);
+        List<GameCollect> gameCollects = gameCollectService.findByAidGameCollect(aid);
         return JsonUtils.getJson(gameCollects,gameCollects!=null?0:1);
     }
 

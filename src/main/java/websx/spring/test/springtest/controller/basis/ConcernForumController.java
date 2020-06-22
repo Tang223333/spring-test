@@ -1,4 +1,4 @@
-package websx.spring.test.springtest.controller;
+package websx.spring.test.springtest.controller.basis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
@@ -42,30 +42,30 @@ public class ConcernForumController {
         return JsonUtils.getJson(byAidConcernForum,byAidConcernForum!=null?0:1);
     }
 
-    @RequestMapping(value = "/findByGid",method = RequestMethod.POST)
+    @RequestMapping(value = "/findByFid",method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
-    public Map<String,Object> findByGidConcernForum(@PathParam("gid") Long gid){
-        List<ConcernForum> byGidConcernForum = concernForumService.findByGidConcernForum(gid);
+    public Map<String,Object> findByFidConcernForum(@PathParam("fid") Long fid){
+        List<ConcernForum> byGidConcernForum = concernForumService.findByFidConcernForum(fid);
         return JsonUtils.getJson(byGidConcernForum,byGidConcernForum!=null?0:1);
     }
 
-    @RequestMapping(value = "/findByAidGid",method = RequestMethod.POST)
+    @RequestMapping(value = "/findByAidFid",method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
-    public Map<String,Object> findByGidConcernForum(@PathParam("aid") Long aid,
-                                                    @PathParam("gid") Long gid){
-        ConcernForum byAidGidConcernForum = concernForumService.findByAidGidConcernForum(aid,gid);
+    public Map<String,Object> findByAidFidConcernForum(@PathParam("aid") Long aid,
+                                                       @PathParam("fid") Long fid){
+        ConcernForum byAidGidConcernForum = concernForumService.findByAidFidConcernForum(aid,fid);
         return JsonUtils.getJson(byAidGidConcernForum,byAidGidConcernForum!=null?0:1);
     }
 
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
     public Map<String,Object> saveConcernForum(@PathParam("aid") Long aid,
-                                               @PathParam("gid") Long gid){
-        ConcernForum concernForum=concernForumService.findByAidGidConcernForum(aid,gid);
+                                               @PathParam("fid") Long fid){
+        ConcernForum concernForum=concernForumService.findByAidFidConcernForum(aid,fid);
         if (concernForum != null) {
             concernForum=null;
         }else {
-            concernForum=ConcernForum.builder().aid(aid).gid(gid).time(new Date()).build();
+            concernForum=ConcernForum.builder().aid(aid).fid(fid).time(new Date()).build();
             concernForum=concernForumService.saveConcernForum(concernForum);
         }
         return JsonUtils.getJson(concernForum,concernForum!=null?0:1);

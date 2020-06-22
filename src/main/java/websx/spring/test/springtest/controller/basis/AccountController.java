@@ -1,4 +1,4 @@
-package websx.spring.test.springtest.controller;
+package websx.spring.test.springtest.controller.basis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,6 +69,15 @@ public class AccountController {
                                           @PathParam("type") Integer type,
                                           @PathParam("logo") String logo){
         Account account=accountService.findByUidAccount(uid);
+        if (account == null) {
+            account=accountService.findByNameAccount(name);
+        }
+        if (account == null) {
+            account=accountService.findByEmailAccount(email);
+        }
+        if (account == null) {
+            account=accountService.findByPhoneAccount(phone);
+        }
         if (account != null) {
             account=null;
         }else {
@@ -82,6 +91,7 @@ public class AccountController {
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     public Map<String,Object> updateAccount(@PathParam("id") Long id,
+                                            @PathParam("uid") Long uid,
                                             @PathParam("name") String name,
                                             @PathParam("password") String password,
                                             @PathParam("email") String email,
@@ -98,16 +108,15 @@ public class AccountController {
             account.setLogo(logo!=null?phone:account.getLogo());
             account.setTime(new java.util.Date());
             account = accountService.updateAccount(account);
-            return JsonUtils.getJson(account,account!=null?0:1);
         }else {
-            return JsonUtils.getJson(account,1);
+           account=null;
         }
+        return JsonUtils.getJson(account,account!=null?0:1);
     }
 
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     public Map<String,Object> deleteAccount(@PathParam("id") Long id){
         Account account=accountService.deleteAccount(id);
-        User user = userService.deleteUser(account.getUid());
-        return JsonUtils.getJson2(account,user,(account!=null&&user!=null)?0:1);
+        return JsonUtils.getJson(account,(account!=null)?0:1);
     }
 }

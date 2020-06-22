@@ -21,17 +21,20 @@ public interface INewsMapper {
     @Select("select * from news where aid=#{aid};")
     List<News> findByAidNews(Long aid);
 
+    @Select("select * from news where title=#{title};")
+    News findByTitleNews(String title);
+
     @Select("select * from news where title like #{title};")
     List<News> findByLikeTitleNews(String title);
 
     @Select("select * from news where aid=#{aid} and title=#{title};")
     News findByAidTitleNews(Long aid,String title);
 
-    @Insert("insert into news(aid,title,writer,time,content,videos,imgs,ip) values" +
-            "(#{aid},#{title},#{writer},#{time},#{content},#{videos},#{imgs},#{ip})")
+    @Insert("insert into news(aid,title,writer,time,content,videos,imgs,ip,status) values" +
+            "(#{aid},#{title},#{writer},#{time},#{content},#{videos},#{imgs},#{ip},#{status})")
     void saveNews(News news);
 
-    @Update("update news set aid=#{aid},title=#{title},writer=#{writer},time=#{time},content=#{content},videos=#{videos},imgs=#{imgs},ip=#{ip} where id=#{id};")
+    @Update("update news set aid=#{aid},title=#{title},writer=#{writer},time=#{time},content=#{content},videos=#{videos},imgs=#{imgs},ip=#{ip},status=#{status} where id=#{id};")
     void updateNews(News news);
 
     @Delete("delete from news where id=#{id};")

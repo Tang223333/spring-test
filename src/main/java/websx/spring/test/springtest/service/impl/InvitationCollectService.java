@@ -30,13 +30,13 @@ public class InvitationCollectService implements IInvitationCollectService {
     }
 
     @Override
-    public List<InvitationCollect> findByGidInvitationCollect(Long gid) {
-        return iInvitationCollectMapper.findByGidInvitationCollect(gid);
+    public List<InvitationCollect> findByIidInvitationCollect(Long gid) {
+        return iInvitationCollectMapper.findByIidInvitationCollect(gid);
     }
 
     @Override
-    public InvitationCollect findByAidGidInvitationCollect(Long aid, Long gid) {
-        return iInvitationCollectMapper.findByAidGidInvitationCollect(aid,gid);
+    public InvitationCollect findByAidIidInvitationCollect(Long aid, Long gid) {
+        return iInvitationCollectMapper.findByAidIidInvitationCollect(aid,gid);
     }
 
     @Override

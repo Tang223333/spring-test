@@ -20,4 +20,5 @@ public class Game {
     private String publisher;
     private String team;
     private Date time;
+    private Integer status;
 }

@@ -1,4 +1,4 @@
-package websx.spring.test.springtest.controller;
+package websx.spring.test.springtest.controller.basis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,8 +38,14 @@ public class NewsController {
         return JsonUtils.getJson(byAidNews,byAidNews!=null?0:1);
     }
 
-    @RequestMapping(value = "/findByLikeTitle",method = RequestMethod.POST)
+    @RequestMapping(value = "/findByTitle",method = RequestMethod.POST)
     public Map<String,Object> findByTitleNews(@PathParam("title") String title){
+        News byAidNews = newsService.findByTitleNews(title);
+        return JsonUtils.getJson(byAidNews,byAidNews!=null?0:1);
+    }
+
+    @RequestMapping(value = "/findByLikeTitle",method = RequestMethod.POST)
+    public Map<String,Object> findByLikeTitleNews(@PathParam("title") String title){
         title="%"+title+"%";
         List<News> byAidNews = newsService.findByLikeTitleNews(title);
         return JsonUtils.getJson(byAidNews,byAidNews!=null?0:1);
@@ -64,7 +70,7 @@ public class NewsController {
             news=null;
         }else {
             news=News.builder().aid(aid).title(title).writer(writer).content(content).ip(ip)
-                    .imgs("img_"+i).videos("video_"+i).time(new Date()).build();
+                    .imgs("img_"+i).videos("video_"+i).time(new Date()).status(1).build();
             news = newsService.saveNews(news);
         }
         return JsonUtils.getJson(news,news!=null?0:1);

@@ -1,4 +1,4 @@
-package websx.spring.test.springtest.controller;
+package websx.spring.test.springtest.controller.basis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RequestMapping("/forum")
 @RestController
-public class ForumController {
+public class ForumController{
 
     @Autowired
     private ForumService forumService;

@@ -16,7 +16,7 @@ public interface IUserMapper {
     User findByIdUser(Long id);
 
     @Select("select * from user where name=#{name};")
-    User findByNameUser(String name);
+    List<User> findByNameUser(String name);
 
     @Select("select * from user where number=#{number};")
     User findByNumberUser(String number);

@@ -1,4 +1,4 @@
-package websx.spring.test.springtest.controller;
+package websx.spring.test.springtest.controller.basis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,27 +38,27 @@ public class InvitationCollectController {
         return JsonUtils.getJson(invitationCollects,invitationCollects!=null?0:1);
     }
 
-    @RequestMapping(value = "/findByGid",method = RequestMethod.POST)
-    public Map<String,Object> findByGidInvitationCollect(@PathParam("gid") Long gid){
-        List<InvitationCollect> invitationCollects = invitationCollectService.findByGidInvitationCollect(gid);
+    @RequestMapping(value = "/findByIid",method = RequestMethod.POST)
+    public Map<String,Object> findByIidInvitationCollect(@PathParam("iid") Long iid){
+        List<InvitationCollect> invitationCollects = invitationCollectService.findByIidInvitationCollect(iid);
         return JsonUtils.getJson(invitationCollects,invitationCollects!=null?0:1);
     }
 
-    @RequestMapping(value = "/findByAidGid",method = RequestMethod.POST)
-    public Map<String,Object> findByAidGidInvitationCollect(@PathParam("aid") Long aid,
-                                                         @PathParam("gid") Long gid){
-        InvitationCollect invitationCollects = invitationCollectService.findByAidGidInvitationCollect(aid,gid);
+    @RequestMapping(value = "/findByAidIid",method = RequestMethod.POST)
+    public Map<String,Object> findByAidIidInvitationCollect(@PathParam("aid") Long aid,
+                                                         @PathParam("iid") Long iid){
+        InvitationCollect invitationCollects = invitationCollectService.findByAidIidInvitationCollect(aid,iid);
         return JsonUtils.getJson(invitationCollects,invitationCollects!=null?0:1);
     }
 
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public Map<String,Object> saveInvitationCollect(@PathParam("aid") Long aid,
-                                              @PathParam("gid") Long gid){
-        InvitationCollect invitationCollect=invitationCollectService.findByAidGidInvitationCollect(aid,gid);
+                                              @PathParam("iid") Long iid){
+        InvitationCollect invitationCollect=invitationCollectService.findByAidIidInvitationCollect(aid,iid);
         if (invitationCollect != null) {
             invitationCollect=null;
         }else {
-            invitationCollect=InvitationCollect.builder().aid(aid).gid(gid).time(new Date()).build();
+            invitationCollect=InvitationCollect.builder().aid(aid).iid(iid).time(new Date()).build();
             invitationCollect=invitationCollectService.saveInvitationCollect(invitationCollect);
         }
         return JsonUtils.getJson(invitationCollect,invitationCollect!=null?0:1);

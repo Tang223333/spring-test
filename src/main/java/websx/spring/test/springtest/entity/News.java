@@ -17,4 +17,5 @@ public class News {
     private Object videos;
     private Object imgs;
     private String ip;
+    private Integer status;
 }

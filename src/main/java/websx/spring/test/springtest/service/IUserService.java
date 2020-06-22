@@ -13,7 +13,7 @@ public interface IUserService {
 
     User findByIdUser(Long id);
 
-    User findByNameUser(String name);
+    List<User> findByNameUser(String name);
 
     User findByNumberUser(String number);
 

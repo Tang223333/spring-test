@@ -21,14 +21,14 @@ public interface IInvitationCollectMapper {
     @Select("select * from invitation_collect where aid=#{aid};")
     List<InvitationCollect> findByAidInvitationCollect(Long aid);
 
-    @Select("select * from invitation_collect where gid=#{gid};")
-    List<InvitationCollect> findByGidInvitationCollect(Long gid);
+    @Select("select * from invitation_collect where iid=#{iid};")
+    List<InvitationCollect> findByIidInvitationCollect(Long iid);
 
-    @Select("select * from invitation_collect where aid=#{aid} and gid=#{gid};")
-    InvitationCollect findByAidGidInvitationCollect(Long aid,Long gid);
+    @Select("select * from invitation_collect where aid=#{aid} and iid=#{iid};")
+    InvitationCollect findByAidIidInvitationCollect(Long aid, Long iid);
 
-    @Insert("insert into invitation_collect(gid,aid,time)" +
-            "values(#{gid},#{aid},#{time});")
+    @Insert("insert into invitation_collect(iid,aid,time)" +
+            "values(#{iid},#{aid},#{time});")
     void saveInvitationCollect(InvitationCollect invitationCollect);
 
     @Delete("delete from invitation_collect where id=#{id};")

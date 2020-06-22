@@ -24,12 +24,12 @@ public interface IGameMapper {
     @Select("select * from game where name like #{name};")
     Game findByNameGame(String name);
 
-    @Insert("insert into game(name,describes,videos,imgs,types,pType,developer,publisher,team,time) values" +
-            "(#{name},#{describes},#{videos},#{imgs},#{types},#{pType},#{developer},#{publisher},#{team},#{time});")
+    @Insert("insert into game(name,describes,videos,imgs,types,pType,developer,publisher,team,time,status) values" +
+            "(#{name},#{describes},#{videos},#{imgs},#{types},#{pType},#{developer},#{publisher},#{team},#{time},#{status});")
     void saveGame(Game game);
 
     @Update("update game set name=#{name},describes=#{describes},pType=#{pType}," +
-            "developer=#{developer},publisher=#{publisher},team=#{team},time=#{time} where id=#{id};")
+            "developer=#{developer},publisher=#{publisher},team=#{team},time=#{time},status=#{status} where id=#{id};")
     void updateGame(Game game);
 
     @Delete("delete from game where id=#{id};")

@@ -15,6 +15,8 @@ public interface INewsService {
 
     List<News> findByAidNews(Long aid);
 
+    News findByTitleNews(String title);
+
     List<News> findByLikeTitleNews(String title);
 
     News findByAidTitleNews(Long aid,String title);

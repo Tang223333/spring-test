@@ -1,4 +1,4 @@
-package websx.spring.test.springtest.controller;
+package websx.spring.test.springtest.controller.basis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,7 +61,7 @@ public class InvitationController {
         if (invitation != null) {
             invitation=null;
         }else {
-            invitation= Invitation.builder().fid(fid).aid(aid).content(content).ip(ip).imgs("img_"+i).videos("video_"+i).time(new Date()).goods(0).bads(0).build();
+            invitation= Invitation.builder().fid(fid).aid(aid).content(content).ip(ip).imgs("img_"+i).videos("video_"+i).time(new Date()).goods(0).bads(0).collects(0).comments(0).build();
             invitation=invitationService.saveInvitation(invitation);
         }
         return JsonUtils.getJson(invitation,invitation!=null?0:1);
@@ -74,12 +74,15 @@ public class InvitationController {
                                                @PathParam("content") String content,
                                                @PathParam("ip") String ip,
                                                @PathParam("goods") Integer goods,
-                                               @PathParam("bads") Integer bads){
-        Invitation invitation=invitationService.findByFidAidInvitation(fid,aid);
+                                               @PathParam("bads") Integer bads,
+                                               @PathParam("collects") Integer collects,
+                                               @PathParam("comments") Integer comments){
+        Invitation invitation=invitationService.findByIdInvitation(id);
         if (invitation != null) {
             invitation= Invitation.builder().id(invitation.getId()).fid(fid!=null?fid:invitation.getFid()).aid(aid!=null?aid:invitation.getAid())
                     .content(content!=null?content:invitation.getContent()).ip(ip!=null?ip:invitation.getIp()).time(new Date())
-                    .goods(goods!=null?goods:invitation.getGoods()).bads(bads!=null?bads:invitation.getBads()).build();
+                    .goods(goods!=null?goods:invitation.getGoods()).bads(bads!=null?bads:invitation.getBads())
+                    .collects(collects!=null?collects:invitation.getCollects()).comments(comments!=null?comments:invitation.getComments()).build();
             invitation=invitationService.updateInvitation(invitation);
         }else {
         }

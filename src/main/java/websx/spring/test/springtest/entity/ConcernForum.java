@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 public class ConcernForum {
     private Long id;
-    private Long gid;
+    private Long fid;
     private Long aid;
     private Date time;
 }

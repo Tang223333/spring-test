@@ -15,7 +15,7 @@ public interface IGameCollectService {
 
     GameCollect findByIdGameCollect(Long id);
 
-    List<GameCollect> findByAidGidGameCollect(Long aid);
+    List<GameCollect> findByAidGameCollect(Long aid);
 
     List<GameCollect> findByGidGameCollect(Long gid);
 

@@ -1,4 +1,4 @@
-package websx.spring.test.springtest.controller;
+package websx.spring.test.springtest.controller.basis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
@@ -39,7 +39,8 @@ public class UserController {
     @RequestMapping(value = "/findByName",method = RequestMethod.POST)
     @Transactional(propagation = Propagation.REQUIRED)
     public Map<String,Object> findByNameUser(@PathParam("name") String name){
-        User byIdUser = userService.findByNameUser(name);
+        System.out.println(name);
+        List<User> byIdUser = userService.findByNameUser(name);
         return JsonUtils.getJson(byIdUser,byIdUser!=null?0:1);
     }
 
@@ -58,7 +59,7 @@ public class UserController {
                                        @PathParam("sex") Integer sex,
                                        @PathParam("birthday") Date birthday,
                                        @PathParam("style") String style){
-        User user=userService.findByNameUser(name);
+        User user=userService.findByNumberUser(number);
         if (user != null) {
             user=null;
         }else {
@@ -77,7 +78,12 @@ public class UserController {
                                          @PathParam("sex") Integer sex,
                                          @PathParam("birthday") Date birthday,
                                          @PathParam("style") String style){
-        User user=userService.findByNumberUser(number);
+        User user=null;
+        if (number.equals("")) {
+            user=userService.findByIdUser(id);
+        }else {
+            user=userService.findByNumberUser(number);
+        }
         if (user != null&&user.getId()==id) {
             user=User.builder().id(user.getId()).name(name!=null?name:user.getName()).number(number!=null?number:user.getNumber())
                     .address(address!=null?address:user.getAddress()).sex(sex!=null?sex:user.getSex())

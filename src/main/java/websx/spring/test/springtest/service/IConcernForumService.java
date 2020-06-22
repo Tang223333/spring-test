@@ -15,9 +15,9 @@ public interface IConcernForumService {
 
     List<ConcernForum> findByAidConcernForum(Long aid);
 
-    List<ConcernForum> findByGidConcernForum(Long gid);
+    List<ConcernForum> findByFidConcernForum(Long fid);
 
-    ConcernForum findByAidGidConcernForum(Long aid,Long gid);
+    ConcernForum findByAidFidConcernForum(Long aid, Long fid);
 
     ConcernForum saveConcernForum(ConcernForum concernForum);
 

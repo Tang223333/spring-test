@@ -20,5 +20,5 @@ public interface IImgService {
 
     Img deleteByIdImg(Long id);
 
-    List<Img> deleteImg(String iKeys);
+    List<Img> deleteByKeyImg(String iKeys);
 }

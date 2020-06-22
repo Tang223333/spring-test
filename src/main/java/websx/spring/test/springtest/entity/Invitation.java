@@ -14,6 +14,8 @@ public class Invitation {
     private String content;
     private Integer goods;
     private Integer bads;
+    private Integer collects;
+    private Integer comments;
     private Date time;
     private Object imgs;
     private Object videos;

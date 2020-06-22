@@ -28,12 +28,12 @@ public interface IInvitationMapper {
     @Select("select * from invitation where fid=#{fid} and aid=#{aid};")
     Invitation findByFidAidInvitation(Long fid,Long aid);
 
-    @Insert("insert into invitation(fid,aid,content,videos,imgs,ip,time,goods,bads) " +
-            "values(#{fid},#{aid},#{content},#{videos},#{imgs},#{ip},#{time},#{goods},#{bads});")
+    @Insert("insert into invitation(fid,aid,content,videos,imgs,ip,time,goods,bads,collects,comments) " +
+            "values(#{fid},#{aid},#{content},#{videos},#{imgs},#{ip},#{time},#{goods},#{bads},#{collects},#{comments});")
     void saveInvitation(Invitation invitationComment);
 
     @Update("update invitation set fid=#{fid},aid=#{aid},content=#{content},videos=#{videos}" +
-            ",imgs=#{imgs},ip=#{ip},time=#{time},goods=#{goods},bads=#{bads} where id=#{id};")
+            ",imgs=#{imgs},ip=#{ip},time=#{time},goods=#{goods},bads=#{bads},collects=#{collects},comments=#{comments} where id=#{id};")
     void updateInvitation(Invitation invitationComment);
 
     @Delete("delete from invitation where id=#{id};")

@@ -1,4 +1,4 @@
-package websx.spring.test.springtest.controller;
+package websx.spring.test.springtest.controller.basis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,7 +54,7 @@ public class ImgController {
 
     @RequestMapping(value = "/deleteByKey",method = RequestMethod.POST)
     public Map<String,Object> deleteImg(@PathParam("iKeys")String iKeys){
-        List<Img> imgs = imgService.deleteImg(iKeys);
+        List<Img> imgs = imgService.deleteByKeyImg(iKeys);
         return JsonUtils.getJson(imgs,imgs!=null?0:1);
     }
 }

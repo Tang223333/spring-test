@@ -44,7 +44,7 @@ public class ImgService implements IImgService {
     }
 
     @Override
-    public List<Img> deleteImg(String iKeys) {
+    public List<Img> deleteByKeyImg(String iKeys) {
         List<Img> imgs=iImgMapper.findByKeyImg(iKeys);
         iImgMapper.deleteByKeyImg(iKeys);
         return imgs;
