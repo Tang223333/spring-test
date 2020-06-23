@@ -102,7 +102,7 @@ public class AccountController {
             account.setType(type!=null?type:account.getType());
             account.setStatus(status!=null?status:account.getStatus());
             account.setPhone(phone!=null?phone:account.getPhone());
-            account.setEmail(email!=null?phone:account.getEmail());
+            account.setEmail(email!=null?phone:account.getEmail());//
             account.setName(name!=null?phone:account.getName());
             account.setPassword(password!=null?phone:account.getPassword());
             account.setLogo(logo!=null?phone:account.getLogo());
