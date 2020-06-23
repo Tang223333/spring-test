@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:23 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>登录</title>
+  
+    <link th:href="@{/favicon.ico}" rel="shortcut icon" >
+    <link th:href="@{/css/bootstrap.min14ed.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.min93e3.css}" rel="stylesheet">
+    <link th:href="@{/css/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/css/style.min862f.css}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
+                <h1 class="logo-name">B+</h1>
+            </div>
+            <h3>欢迎使用 Better</h3>
+            <script th:inline="javascript" >
+                var num= [[${msg}]];
+                if (num != null) {
+                    alert(num);
+                }
+
+            </script>
+            <div class="sidebar-container">
+                <ul class="nav nav-tabs navs-3">
+
+                    <li class="active">
+                        <a data-toggle="tab" href="#tab-1">
+                            <i class="fa fa-gear"></i> 主题
+                        </a>
+                    </li>
+                    <li >
+                        <a data-toggle="tab" href="#tab-2">
+                            <i class="fa fa-gear"></i> 邮箱
+                        </a>
+                    </li>
+                    <li >
+                        <a data-toggle="tab" href="#tab-3">
+                            <i class="fa fa-gear"></i> 手机号
+                        </a>
+                    </li>
+
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <form class="m-t" method="post" action="http://localhost:8080/toLogin">
+                            <div class="form-group">
+                                <input name="name" type="text" class="form-control" placeholder="用户名" required="">
+                            </div>
+                            <div class="form-group">
+                                <input name="password" type="password" class="form-control" placeholder="密码" required="">
+                            </div>
+                            <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
+
+                            <p class="text-muted text-center"> <a href="login.html#"><small>忘记密码了？</small></a> | <a href="register">注册一个新账号</a>
+                            </p>
+
+                        </form>
+                    </div>
+                    <div id="tab-2" class="tab-pane">
+                        <form class="m-t"  method="post" action="http://localhost:8080/toLogin">
+                            <div class="form-group">
+                                <input name="email" type="email" class="form-control" placeholder="邮箱" required="">
+                            </div>
+                            <div class="form-group">
+                                <input name="password" type="password" class="form-control" placeholder="密码" required="">
+                            </div>
+                            <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
+
+                            <p class="text-muted text-center"> <a href="login.html#"><small>忘记密码了？</small></a> | <a href="register">注册一个新账号</a>
+                            </p>
+
+                        </form>
+                    </div>
+                    <div id="tab-3" class="tab-pane">
+                        <form class="m-t"  method="post" action="http://localhost:8080/toLogin">
+                            <div class="form-group">
+                                <input name="phone" type="text" class="form-control" placeholder="手机号" required="">
+                            </div>
+                            <div class="form-group">
+                                <input name="password" type="password" class="form-control" placeholder="密码" required="">
+                            </div>
+                            <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
+
+                            <p class="text-muted text-center"> <a href="login.html#"><small>忘记密码了？</small></a> | <a href="register">注册一个新账号</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/login.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:18:23 GMT -->
+</html>

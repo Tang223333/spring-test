@@ -30,11 +30,9 @@ public class UserAccountController extends BaseController {
     public Map<String,Object> create(@PathParam("name") String  name,
                                      @PathParam("password") String  password,
                                      @PathParam("email") String  email,
-                                     @PathParam("phone") String  phone,
-                                     @PathParam("birthday") Date birthday,
-                                     @PathParam("sex") Integer sex){
+                                     @PathParam("phone") String  phone){
         Account account=accountService.findByNameAccount(name);
-        User user=User.builder().sex(sex).birthday(birthday).build();
+        User user=User.builder().sex(2).birthday(null).build();
         if (account == null) {
             account=accountService.findByEmailAccount(email);
             if (account == null) {

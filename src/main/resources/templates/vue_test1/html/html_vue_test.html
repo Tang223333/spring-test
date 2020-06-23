@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" th:src="@{/js/vue.js}" charset="UTF-8"></script>
+	</head>
+	<body>
+		<a id="p1">{{name}}</a>
+		<button id="btn1" v-on:click="onClick">点击</button>
+		<button id="btn2" v-on:click="onClick">点击</button>
+		<hr />
+		<a id="p2">{{methods}}</a>
+		<button id="btn3" v-on:click="onClick">点击1</button>
+		<button id="btn4" v-on:click="onClick">点击2</button>
+		<script type="text/javascript">
+			// var data={
+			// 	name:'',
+			// 	visitCount:0,
+			// 	hideCompletedTodos:false,
+			// 	todos:[],
+			// 	error:null
+			// }
+			
+			var data={name:'1'}
+			
+			var pp1=new Vue({
+				el:"#p1",
+				data:data,
+				beforeCreate:function(){
+					console.log("pp1 beforeCreate")
+				},
+				created:function(){
+					console.log("pp1 created")
+				},
+				beforeMount:function(){
+					console.log("pp1 beforeMount")
+				},
+				mounted:function(){
+					console.log("pp1 mounted")
+				},
+				beforeUpdate:function(){
+					console.log("pp1 beforeUpdate")
+				},
+				updated:function(){
+					console.log("pp1 updated")
+				},
+				beforeDestroy:function(){
+					console.log("pp1 beforeDestroy")
+				},
+				destroyed:function(){
+					console.log("pp1 destroyed")
+				}
+			});
+			
+			var bbtn1=new Vue({
+				el:'#btn1',
+				methods:{
+					onClick:function(){
+						alert(data.name)
+						data.name='321';
+					}
+				}
+			})
+			
+			var bbtn2=new Vue({
+				el:'#btn2',
+				methods:{
+					onClick:function(){
+						pp1.$data.name='123456'
+						pp1.$destroy()
+					}
+				}
+			})
+			
+			pp1.$watch('name',function(newValue,oldValue){
+				alert(newValue+"    "+oldValue)
+			})
+			
+			var obj={
+				methods:'bar'
+			}
+			
+			Object.freeze(obj)
+			
+			var pp2=new Vue({
+				el:"#p2",
+				data:obj
+			})
+			
+			
+			
+			// var bbtn3=new Vue({
+			// 	el:"#btn3",
+			// 	methods:{
+			// 		onClick:function(){
+			// 			obj.methods='rab';
+			// 			alert(obj.methods);
+			// 		}
+			// 	}
+			// })
+			
+			// var bbtn4=new Vue({
+			// 	el:"#btn4",
+			// 	methods:{
+			// 		onClick:function(){
+			// 			pp2.$data.methods='abr'
+			// 		}
+			// 	},
+			// 	created:function(){
+			// 		console.log("pp1 name: "+pp1.$data.name)
+			// 	}
+			// })
+		</script>
+	</body>
+</html>

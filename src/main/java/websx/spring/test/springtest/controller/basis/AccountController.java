@@ -5,13 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import websx.spring.test.springtest.entity.Account;
-import websx.spring.test.springtest.entity.User;
 import websx.spring.test.springtest.service.impl.AccountService;
 import websx.spring.test.springtest.service.impl.UserService;
 import websx.spring.test.springtest.utils.JsonUtils;
 
 import javax.websocket.server.PathParam;
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -81,7 +79,7 @@ public class AccountController {
         if (account != null) {
             account=null;
         }else {
-            account=Account.builder().uid(uid).name(name!=null?name:account.getName()).password(password!=null?password:account.getPassword())
+            account=Account.builder().uid(uid).name(name!=null?name:account.getName()).status(0).password(password!=null?password:account.getPassword())
                     .email(email!=null?email:account.getEmail()).phone(phone!=null?phone:account.getPhone())
                     .time(new java.util.Date()).type(type!=null?type:1).logo(logo!=null?logo:account.getLogo()).build();
             account = accountService.saveAccount(account);
@@ -97,10 +95,12 @@ public class AccountController {
                                             @PathParam("email") String email,
                                             @PathParam("phone") String phone,
                                             @PathParam("type") Integer type,
+                                            @PathParam("status") Integer status,
                                             @PathParam("logo") String logo){
         Account account=accountService.findByIdAccount(id);
         if (account != null) {
             account.setType(type!=null?type:account.getType());
+            account.setStatus(status!=null?status:account.getStatus());
             account.setPhone(phone!=null?phone:account.getPhone());
             account.setEmail(email!=null?phone:account.getEmail());
             account.setName(name!=null?phone:account.getName());

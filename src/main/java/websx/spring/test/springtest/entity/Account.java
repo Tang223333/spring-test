@@ -16,5 +16,6 @@ public class Account {
     private String phone;
     private Date time;
     private Integer type;
+    private Integer status;
     private String logo;
 }

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<script type="text/jscript" th:src="@{/js/vue.js}" charset="UTF-8"></script>
+	<script>
+		
+	</script>
+	<body>
+		<div  v-if="seen" id="app">
+			{{ message }}
+			<hr />
+			{{name}}
+		</div>
+		
+		<script type="text/javascript">
+			var app = new Vue({
+				el:'#app',
+				data:{
+					message:'Hello Vue!',
+					name:'Vue',
+					seen:false
+				}
+			});
+		</script>
+		
+		<div v-if="seen" id="app-2">
+			<span v-bind:title="message">
+				鼠标悬停几秒钟查看此处动态绑定的提示信息!
+			</span>
+		</div>
+		
+		<script v-if="seen" type="text/javascript">
+			var app2=new Vue({
+				el:'#app-2',
+				data:{
+					message:'页面加载于: '+new Date().toLocaleString(),
+					seen:false
+				}
+			})
+		</script>
+		
+		<div id="app-3">
+			<p v-if="seen">现在你看到我了</p>
+		</div>
+		
+		<script>
+			var app3=new Vue({
+				el:'#app-3',
+				data:{
+					seen:false
+				}
+			})
+		</script>
+		
+		<div  v-if="seen" id="app-4">
+			<ol>
+				<li v-for="todo in todos">
+					{{todo.test}}
+				</li>
+			</ol>
+		</div>
+		
+		<script type="text/javascript">
+			var app4=new Vue({
+				el:'#app-4',
+				data:{
+					todos:[
+						{test:'学习 JavaScript'},
+						{test:'学习 Vue'},
+						{test:'整个牛项目'}
+					],
+					seen:false
+				}
+			})
+		</script>
+		
+		<div id="app-5">
+			<p>{{message}}</p>
+			<button v-on:click="reverseMessage">反馈消息</button>
+		</div>
+		
+		<script>
+			var app5=new Vue({
+				el:'#app-5',
+				data:{
+					message:'Hello Vue.js!'
+				},
+				methods:{
+					reverseMessage:function(){
+						this.message=this.message.split('').reverse().join('')
+					}
+				},
+			});
+		</script>
+		
+		<div id="app-6">
+			<p>{{message}}</p>
+			<input v-model="message" />
+		</div>
+		
+		<script type="text/javascript">
+			var app6=new Vue({
+				el:'#app-6',
+				data:{
+					message:'Hello Vue!'
+				}
+			})
+		</script>
+		
+		<div id="app-7">
+			<ol>
+				<todo-item></todo-item>
+			</ol>
+		</div>
+		
+		<script type="text/javascript">
+			Vue.component('todo-item',{
+				template:'<li>这是个代办项</li>'
+			})
+			
+			var app7=new Vue({
+				el:'#app-7'
+			});
+		</script>
+		
+		<div id="app-7-1">
+			<ol>
+				<!-- 现在我们为每个todo-item提供todo对象
+				 todo对象是变量，即其内容可以是动态的。
+				 我们也需要为每个主键提供一个‘key’,稍后再
+				 作详细解释-->
+				<todo-item 
+					v-for="item in groceryList"
+					      v-bind:todo="item"
+					      v-bind:key="item.id"
+				></todo-item>
+			</ol>
+		</div>
+		
+		<script type="text/javascript">
+			Vue.component('todo-item',{
+				// todo-item 主键现在接受一个
+				// "prop",类似于一个自定义 attribute。
+				// 这个 prop 名为 todo
+				props:['todo'],
+				template:'<li>{{ todo.text }}</li>'
+			})
+			
+			var app71=new Vue({
+				el:'#app-7-1',
+				data:{
+					groceryList:[
+						{id:0,text:'蔬菜'},
+						{id:1,text:'水果'},
+						{id:2,text:'米饭'}
+					]
+				}
+			});
+		</script>
+		
+		
+	</body>
+</html>
