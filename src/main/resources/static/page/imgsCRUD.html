@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="../layui/css/layui.css"/>
+		<script src="../layui/layui.js"></script>
+	</head>
+	<body>
+		<label>添加图片</label>
+		<form class="layui-form" action="../index2.html" method="get">
+			<div class="layui-form-item">
+				<label class="layui-form-label">用户名:</label>
+				<div class="layui-input-block">
+					<input type="text" name="username" lay-verify="username" placeholder="请填写用户名" autocomplete="off" />
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">密&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
+				<div class="layui-input-block">
+					<input type="text" name="password" lay-verify="password" placeholder="请填写密码" autocomplete="off" />
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-input-block">
+					<button class="layui-btn layui-btn-radius layui-btn-normal" lay-submit="" lay-filter="demo1">确定</button>
+					&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+					<button type="reset" class="layui-btn layui-btn-radius  layui-btn-danger">重置</button>
+				</div>
+			</div>
+		</form>
+
+	<script>
+		layui.use(['form', 'layedit'], function(){
+			var form = layui.form
+					,layer = layui.layer
+					,layedit = layui.layedit;
+
+			//自定义验证规则
+			form.verify({
+				title: function(value){
+					if(value.length < 5){
+						return '标题至少得5个字符啊';
+					}
+				}
+				,password: [
+					/^[\S]{6,12}$/
+					,'密码必须6到12位，且不能出现空格'
+				]
+				,username:[
+					/^[\S]{2,}$/
+					,'用户名长度必须大于2，且不能出现空格'
+				]
+			});
+		});
+	</script>
+	</body>
+</html>

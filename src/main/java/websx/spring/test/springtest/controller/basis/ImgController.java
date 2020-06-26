@@ -8,7 +8,9 @@ import websx.spring.test.springtest.entity.Img;
 import websx.spring.test.springtest.service.impl.ImgService;
 import websx.spring.test.springtest.utils.JsonUtils;
 
+import javax.swing.*;
 import javax.websocket.server.PathParam;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +25,18 @@ public class ImgController {
     public Map<String,Object> findAllVideo(){
         List<Img> imgs = imgService.findAllImg();
         return JsonUtils.getJson(imgs,imgs!=null?0:1);
+    }
+
+    @RequestMapping("/findAll2")
+    public Map<String,Object> findAll2Video(Integer page,Integer limit){
+        List<Img> imgsall=imgService.findAllImg();
+        List<Img> imgs = imgService.findAll2Img(page,limit);
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",imgsall.size());
+        map.put("data",imgs);
+        return map;
     }
 
     @RequestMapping(value = "/findById",method = RequestMethod.POST)

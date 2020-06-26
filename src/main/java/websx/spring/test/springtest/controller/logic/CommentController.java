@@ -6,17 +6,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import websx.spring.test.springtest.controller.BaseController;
-import websx.spring.test.springtest.entity.GameComment;
-import websx.spring.test.springtest.entity.GameMutual;
-import websx.spring.test.springtest.entity.Invitation;
-import websx.spring.test.springtest.entity.InvitationComment;
+import websx.spring.test.springtest.entity.*;
 import websx.spring.test.springtest.service.impl.*;
 import websx.spring.test.springtest.utils.JsonUtils2;
 
 import javax.websocket.server.PathParam;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequestMapping("/Comment")
 @RestController
@@ -34,6 +29,70 @@ public class CommentController extends BaseController {
     private GameCommentService gameCommentService;
     @Autowired
     private GameMutualService gameMutualService;
+    @Autowired
+    private AccountService accountService;
+    @Autowired
+    private GameService gameService;
+
+    @RequestMapping("/GameCFindALl")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> GameCFindAll(){
+        List<GameComment> gameComments=gameCommentService.findAllGameComment();
+        List<GameCommentAll> gameCommentAlls=new ArrayList<>();
+        for (int i = 0; i < gameComments.size(); i++) {
+            Account account=accountService.findByIdAccount(gameComments.get(i).getAid());
+            Game game=gameService.findByIdGame(gameComments.get(i).getGid());
+            GameCommentAll gameCommentAll=new GameCommentAll();
+            gameCommentAll.setId(gameComments.get(i).getId());
+            gameCommentAll.setGid(gameComments.get(i).getGid());
+            gameCommentAll.setGameName(game.getName());
+            gameCommentAll.setAid(gameComments.get(i).getAid());
+            gameCommentAll.setAccountName(account.getName());
+            gameCommentAll.setAccountLogo(account.getLogo());
+            gameCommentAll.setContent(gameComments.get(i).getContent());
+            gameCommentAll.setGoodOrBad(gameComments.get(i).getGoodOrBad());
+            gameCommentAll.setGrade(gameComments.get(i).getGrade());
+            gameCommentAll.setIp(gameComments.get(i).getIp());
+            gameCommentAll.setTime(gameComments.get(i).getTime());
+            gameCommentAlls.add(gameCommentAll);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",gameCommentAlls.size());
+        map.put("data",gameCommentAlls);
+        return map;
+    }
+
+    @RequestMapping("/InvitationCFindALl")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> InvitationCFindAll(){
+        List<InvitationComment> invitationComments=invitationCommentService.findAllInvitationComment();
+        List<InvitationCommentAll> invitationCommentAlls=new ArrayList<>();
+        for (int i = 0; i < invitationComments.size(); i++) {
+            Account account=accountService.findByIdAccount(invitationComments.get(i).getAid());
+            Invitation invitation=invitationService.findByIdInvitation(invitationComments.get(i).getIid());
+            InvitationCommentAll invitationCommentAll=new InvitationCommentAll();
+            invitationCommentAll.setId(invitationComments.get(i).getId());
+            invitationCommentAll.setIid(invitationComments.get(i).getIid());
+            invitationCommentAll.setInvitationContent(invitation.getContent());
+            invitationCommentAll.setAid(invitationComments.get(i).getAid());
+            invitationCommentAll.setAccountName(account.getName());
+            invitationCommentAll.setAccountLogo(account.getLogo());
+            invitationCommentAll.setContent(invitationComments.get(i).getContent());
+            invitationCommentAll.setImgs(invitationComments.get(i).getImgs());
+            invitationCommentAll.setVideos(invitationComments.get(i).getVideos());
+            invitationCommentAll.setIp(invitationComments.get(i).getIp());
+            invitationCommentAll.setTime(invitationComments.get(i).getTime());
+            invitationCommentAlls.add(invitationCommentAll);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",invitationCommentAlls.size());
+        map.put("data",invitationCommentAlls);
+        return map;
+    }
 
     @RequestMapping("/InvitationCommentOn")
     @Transactional(propagation = Propagation.REQUIRED)

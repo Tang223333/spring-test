@@ -6,15 +6,17 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import websx.spring.test.springtest.controller.BaseController;
+import websx.spring.test.springtest.entity.Account;
 import websx.spring.test.springtest.entity.News;
+import websx.spring.test.springtest.entity.NewsAll;
 import websx.spring.test.springtest.entity.NewsMutual;
+import websx.spring.test.springtest.service.impl.AccountService;
 import websx.spring.test.springtest.service.impl.NewsMutualService;
 import websx.spring.test.springtest.service.impl.NewsService;
 import websx.spring.test.springtest.utils.JsonUtils2;
 
 import javax.websocket.server.PathParam;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 @RequestMapping("/NewsNM")
 @RestController
@@ -24,8 +26,10 @@ public class NewsNewsMutualController extends BaseController {
     private NewsService newsService;
     @Autowired
     private NewsMutualService newsMutualService;
+    @Autowired
+    private AccountService accountService;
 
-    @RequestMapping("create")
+    @RequestMapping("/create")
     @Transactional(propagation = Propagation.REQUIRED)
     public Map<String,Object> create(@PathParam("aid") Long aid,
                                      @PathParam("title") String title,
@@ -51,7 +55,41 @@ public class NewsNewsMutualController extends BaseController {
         return JsonUtils2.getJson2(news,newsMutual,error_code,reason);
     }
 
-    @RequestMapping("delete")
+    @RequestMapping("/findAll")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> findAll(){
+        List<News> news=newsService.findAllNews();
+        List<NewsAll> newsAlls=new ArrayList<>();
+        for (int i = 0; i < news.size(); i++) {
+            NewsMutual newsMutual=newsMutualService.findByNidNewsMutual(news.get(i).getId());
+            Account account=accountService.findByIdAccount(news.get(i).getAid());
+            NewsAll newsAll=new NewsAll();
+            newsAll.setId(news.get(i).getId());
+            newsAll.setAid(news.get(i).getAid());
+            newsAll.setName(account.getName());
+            newsAll.setLogo(account.getLogo());
+            newsAll.setTitle(news.get(i).getTitle());
+            newsAll.setWriter(news.get(i).getWriter());
+            newsAll.setTime(news.get(i).getTime());
+            newsAll.setContent(news.get(i).getContent());
+            newsAll.setVideos(news.get(i).getVideos());
+            newsAll.setImgs(news.get(i).getImgs());
+            newsAll.setIp(news.get(i).getIp());
+            newsAll.setStatus(news.get(i).getStatus());
+            newsAll.setViews(newsMutual.getViews());
+            newsAll.setGoods(newsMutual.getGoods());
+            newsAll.setBads(newsMutual.getBads());
+            newsAlls.add(newsAll);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",newsAlls.size());
+        map.put("data",newsAlls);
+        return map;
+    }
+
+    @RequestMapping("/delete")
     @Transactional(propagation = Propagation.REQUIRED)
     public Map<String,Object> create(@PathParam("id") Long id){
         News news= null;

@@ -10,6 +10,7 @@ import websx.spring.test.springtest.service.impl.VideoService;
 import websx.spring.test.springtest.utils.JsonUtils;
 
 import javax.websocket.server.PathParam;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,17 @@ public class VideoController {
     public Map<String,Object> findAllVideo(){
         List<Video> allVideo = videoService.findAllVideo();
         return JsonUtils.getJson(allVideo,allVideo!=null?0:1);
+    }
+
+    @RequestMapping("/findAll2")
+    public Map<String,Object> findAll2Video(){
+        List<Video> allVideo = videoService.findAllVideo();
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",allVideo.size());
+        map.put("data",allVideo);
+        return map;
     }
 
     @RequestMapping(value = "/findById",method = RequestMethod.POST)

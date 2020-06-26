@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet"  media="all">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+</head>
+
+<body>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-sm" lay-event="add" href="page/imgsCRUD.html">添加</a>
+        <a class="layui-btn layui-btn-sm" lay-event="update">修改</a>
+        <a class="layui-btn layui-btn-sm" lay-event="delete">删除</a>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit" th:href="@{/page/imgsCRUD.html}">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element', 'slider'], function(){
+        var laydate = layui.laydate //日期
+            ,laypage = layui.laypage //分页
+            ,layer = layui.layer //弹层
+            ,table = layui.table //表格
+
+
+        table.render({
+            elem: '#test'
+            ,url:'type/findAll2'
+            ,toolbar: '#toolbarDemo'
+            ,tool: '#barDemo'
+            ,title: '新闻数据表'
+            ,totalRow: true
+            ,cols: [ [
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title:'ID', width:200, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
+                ,{field:'tkeys', title:'使用key', width:200}
+                ,{field:'value', title:'值', width:200}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200},
+            ] ]
+            ,page: true
+        });
+
+        //工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id)
+                ,data=checkStatus.data;
+            switch(obj.event){
+                case 'add':
+                    break;
+                case 'update':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时编辑一个');
+                    } else {
+                        var userdata =  data[0];
+                    }
+                    break;
+                case 'delete':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else {
+                        layer.confirm("是否确认删除？",function () {
+                            for(var i=0;i<data.length;i++){
+                                var uid = data[i].id;
+                                console.log(uid);
+                                // $.ajax({
+                                //     type:"post",
+                                //     url:'delete/'
+                                // });
+                                // window.location.reload();
+                            }
+                        });
+                    }
+                    break;
+            };
+        });
+
+        //监听工具条
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail'){
+                layer.msg('ID：'+ data.id + ' 的查看操作');
+            } else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.alert('编辑行：<br>'+ JSON.stringify(data))
+            }
+        });
+    });
+</script>
+</body>
+</html>

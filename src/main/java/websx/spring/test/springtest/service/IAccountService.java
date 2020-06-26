@@ -11,6 +11,8 @@ public interface IAccountService {
 
     List<Account> findAllAccount();
 
+    List<Account> findAll2Account(Integer page,Integer limit);
+
     Account findByIdAccount(Long id);
 
     Account findByUidAccount(Long uid);

@@ -11,8 +11,7 @@ import websx.spring.test.springtest.service.impl.*;
 import websx.spring.test.springtest.utils.JsonUtils2;
 
 import javax.websocket.server.PathParam;
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
 @RequestMapping("/CollectConcern")
 @RestController
@@ -36,6 +35,121 @@ public class CollectConcernController extends BaseController {
     private ConcernForumService concernForumService;
     @Autowired
     private ForumService forumService;
+    @Autowired
+    private AccountService accountService;
+    @Autowired
+    private GameService gameService;
+
+    @RequestMapping("/newsCfindAll")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> newsCfindAll(){
+        List<NewsCollect> newsCollects=newsCollectService.findAllNewsCollect();
+        List<NewsCollectAll> newsCollectAlls=new ArrayList<>();
+        for (int i = 0; i < newsCollects.size(); i++) {
+            News news=newsService.findByIdNews(newsCollects.get(i).getNid());
+            Account account=accountService.findByIdAccount(newsCollects.get(i).getAid());
+            NewsCollectAll newsCollect=new NewsCollectAll();
+            newsCollect.setId(newsCollects.get(i).getId());
+            newsCollect.setNid(newsCollects.get(i).getNid());
+            newsCollect.setNewsTitle(news.getTitle());
+            newsCollect.setNewsWriter(news.getWriter());
+            newsCollect.setNewsContent(news.getContent());
+            newsCollect.setAid(newsCollects.get(i).getAid());
+            newsCollect.setAccountName(account.getName());
+            newsCollect.setAccountLogo(account.getLogo());
+            newsCollect.setTime(newsCollects.get(i).getTime());
+            newsCollectAlls.add(newsCollect);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",newsCollectAlls.size());
+        map.put("data",newsCollectAlls);
+        return map;
+    }
+
+    @RequestMapping("/gameCfindAll")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> gameCfindAll(){
+        List<GameCollect> gameCollects=gameCollectService.findAllGameCollect();
+        List<GameCollectAll> gameCollectAlls=new ArrayList<>();
+        for (int i = 0; i < gameCollects.size(); i++) {
+            Game game=gameService.findByIdGame(gameCollects.get(i).getGid());
+            Account account=accountService.findByIdAccount(gameCollects.get(i).getAid());
+            GameCollectAll gameCollectAll=new GameCollectAll();
+            gameCollectAll.setId(gameCollects.get(i).getId());
+            gameCollectAll.setGid(gameCollects.get(i).getGid());
+            gameCollectAll.setGameName(game.getName());
+            gameCollectAll.setGameDeveloper(game.getDeveloper());
+            gameCollectAll.setGamePublisher(game.getPublisher());
+            gameCollectAll.setGameTeam(game.getTeam());
+            gameCollectAll.setAid(gameCollects.get(i).getAid());
+            gameCollectAll.setAccountName(account.getName());
+            gameCollectAll.setAccountLogo(account.getLogo());
+            gameCollectAll.setTime(gameCollects.get(i).getTime());
+            gameCollectAlls.add(gameCollectAll);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",gameCollectAlls.size());
+        map.put("data",gameCollectAlls);
+        return map;
+    }
+
+    @RequestMapping("/invitationCfindAll")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> invitationCfindAll(){
+        List<InvitationCollect> invitationCollects=invitationCollectService.findAllInvitationCollect();
+        List<InvitationCollectAll> invitationCollectAlls=new ArrayList<>();
+        for (int i = 0; i < invitationCollects.size(); i++) {
+            Invitation invitation=invitationService.findByIdInvitation(invitationCollects.get(i).getIid());
+            Account account=accountService.findByIdAccount(invitationCollects.get(i).getAid());
+            InvitationCollectAll invitationCollectAll=new InvitationCollectAll();
+            invitationCollectAll.setId(invitationCollects.get(i).getId());
+            invitationCollectAll.setIid(invitationCollects.get(i).getIid());
+            invitationCollectAll.setInvitationContent(invitation.getContent());
+            invitationCollectAll.setAid(invitationCollects.get(i).getAid());
+            invitationCollectAll.setAccountName(account.getName());
+            invitationCollectAll.setAccountLogo(account.getLogo());
+            invitationCollectAll.setTime(invitationCollects.get(i).getTime());
+            invitationCollectAlls.add(invitationCollectAll);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",invitationCollectAlls.size());
+        map.put("data",invitationCollectAlls);
+        return map;
+    }
+
+    @RequestMapping("/forumCfindAll")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> forumCfindAll(){
+        List<ConcernForum> concernForums=concernForumService.findAllConcernForum();
+        List<ConcernForumAll> concernForumAlls=new ArrayList<>();
+        for (int i = 0; i < concernForums.size(); i++) {
+            Forum forum=forumService.findByIdForum(concernForums.get(i).getFid());
+            Account account=accountService.findByIdAccount(concernForums.get(i).getAid());
+            ConcernForumAll newsCollectAll=new ConcernForumAll();
+            newsCollectAll.setId(concernForums.get(i).getId());
+            newsCollectAll.setFid(concernForums.get(i).getFid());
+            newsCollectAll.setForumName(forum.getName());
+            newsCollectAll.setForumLogo(forum.getLogo());
+            newsCollectAll.setAid(concernForums.get(i).getAid());
+            newsCollectAll.setAccountName(account.getName());
+            newsCollectAll.setAccountLogo(account.getLogo());
+            newsCollectAll.setTime(concernForums.get(i).getTime());
+            concernForumAlls.add(newsCollectAll);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",concernForumAlls.size());
+        map.put("data",concernForumAlls);
+        return map;
+    }
+
 
     @RequestMapping("/NewsOnOrOff")
     @Transactional(propagation = Propagation.REQUIRED)

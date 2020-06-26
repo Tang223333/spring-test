@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+</head>
+<body>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-sm" lay-event="add">添加</a>
+        <a class="layui-btn layui-btn-sm" lay-event="update">修改</a>
+        <a class="layui-btn layui-btn-sm" lay-event="delete">删除</a>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<script>
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //…
+    });
+
+    $(function () {
+
+        //编辑
+        update = function(data){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.open({
+                    title: ['修改用户信息'],
+                    type: 2,
+                    content: 'page/userAccountUpdate.html',
+                    shadeClose: true,
+                    area: ['550px', '650px'],
+                    btn: ['确定', '取消'],
+                    success: function (layero,index) {
+                        var body = layui.layer.getChildFrame('body', index);
+                        body.find(".id").val(data.id);
+                        body.find(".username").val(data.name);
+                        body.find(".number").val(data.number);
+                        body.find(".address").val(data.address);
+                        body.find(".sex").val(data.sex);
+                        body.find(".birthday").val(data.birthday);
+                        body.find(".style").val(data.style);
+                        body.find(".accountName").val(data.accountName);
+                        body.find(".password").val(data.password);
+                        body.find(".email").val(data.email);
+                        body.find(".phone").val(data.phone);
+                        body.find(".type").val(data.type);
+                        body.find(".logo").val(data.logo);
+                        layui.form.render();
+                        layui.form.verify();
+                    },
+                    btn1: function(index, layero){
+                        var body = layui.layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        $.ajax({
+                            url:"UserAndAccount/update",
+                            type:'POST',
+                            data:{
+                                'id':body.find('.id').val(),
+                                'username':body.find('.username').val(),
+                                'number':body.find('.number').val(),
+                                'address':body.find('.address').val(),
+                                'sex':body.find('.sex').val(),
+                                'birthday':body.find('.birthday').val(),
+                                'style':body.find('.style').val(),
+                                'accountName':body.find('.accountName').val(),
+                                'password':body.find('.password').val(),
+                                'email':body.find('.email').val(),
+                                'phone':body.find('.phone').val(),
+                                'type':body.find('.type').val(),
+                                'logo':body.find('.logo').val(),
+                            },
+                            dataType:'json',
+                            success:function(data){
+                                layer.closeAll();
+                                if (data.error_code==0){
+                                    layer.msg(data.reason);
+                                }else {
+                                    layer.msg(data.reason);
+                                }
+                            }
+                        });
+                    },
+                    btn2: function(index, layero){
+                        layer.closeAll();
+                    },
+                    cancel:function () {
+                        window.location.reload();
+                    },
+                    end:function () {
+                        window.location.reload();
+                    }
+                });
+
+            });
+        }
+
+
+        //编辑
+        add = function(){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.open({
+                    title: ['添加用户信息'],
+                    type: 2,
+                    content: 'page/userAccountAdd.html',
+                    shadeClose: true,
+                    area: ['550px', '650px'],
+                    btn: ['确定', '取消'],
+                    btn1: function(index, layero){
+                        var body = layui.layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        $.ajax({
+                            url:"UserAndAccount/create",
+                            type:'POST',
+                            data:{
+                                'username':body.find('.username').val(),
+                                'number':body.find('.number').val(),
+                                'address':body.find('.address').val(),
+                                'sex':body.find('.sex').val(),
+                                'birthday':body.find('.birthday').val(),
+                                'style':body.find('.style').val(),
+                                'accountName':body.find('.accountName').val(),
+                                'password':body.find('.password').val(),
+                                'email':body.find('.email').val(),
+                                'phone':body.find('.phone').val(),
+                                'type':body.find('.type').val(),
+                                'logo':body.find('.logo').val(),
+                            },
+                            dataType:'json',
+                            success:function(data){
+                                layer.closeAll();
+                                if (data.error_code==0){
+                                    layer.msg(data.reason);
+                                }else {
+                                    layer.msg(data.reason);
+                                }
+                            }
+                        });
+                    },
+                    btn2: function(index, layero){
+                        layer.closeAll();
+                    },
+                    cancel:function () {
+                        window.location.reload();
+                    },
+                    end:function () {
+                        window.location.reload();
+                    }
+                });
+
+            });
+        }
+    });
+
+</script>
+
+
+<script>
+    layui.use(['table','element'], function(){
+        var table = layui.table
+            ,element=layui.element
+
+        table.render({
+            elem: '#test'
+            ,url:'UserAndAccount/findAll'
+            ,toolbar: '#toolbarDemo'
+            ,tool: '#barDemo'
+            ,title: '用户数据表'
+            ,totalRow: true
+            ,cols: [ [
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
+                ,{field:'name', title:'用户名', width:120, edit: 'text'}
+                ,{field:'number', title:'省份证号', width:120}
+                ,{field:'address', title:'居住地址', width:120}
+                ,{field:'sex', title:'性别', width:120}
+                ,{field:'birthday', title:'出生日期', width:120}
+                ,{field:'style', title:'个性签名', width:120}
+                ,{field:'accountName', title:'账户名', width:120}
+                ,{field:'password', title:'密码', width:120}
+                ,{field:'email', title:'邮箱', width:120}
+                ,{field:'time', title:'更新时间', width:120}
+                ,{field:'type', title:'账户类型', width:120}
+                ,{field:'status', title:'账户状态', width:120}
+                ,{field:'logo', title:'账户头像', width:120}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200},
+            ]]
+            ,page: true
+        });
+
+        //工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id)
+                ,data = checkStatus.data;
+            switch(obj.event){
+                case 'add':
+                    add();
+                    break;
+                case 'update':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时编辑一个');
+                    } else {
+                        var userdata =  data[0];
+                        update(userdata);
+                    }
+                    break;
+                case 'delete':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else {
+                        layer.confirm("是否确认删除？",function () {
+                            for(var i=0;i<data.length;i++){
+                                var uid = data[i].id;
+                                console.log(uid);
+                                $.ajax({
+                                    type:"post",
+                                    url:'UserAndAccount/delete',
+                                    data:{
+                                        'id':uid,
+                                    },
+                                    dataType:'json',
+                                    success:function(data){
+                                        layer.closeAll();
+                                        layer.msg(data.reason);
+                                        window.location.reload();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    break;
+            };
+        });
+
+        //监听工具条
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail'){
+                layer.alert('编辑行：<br>'+ JSON.stringify(data))
+            } else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                    console.log(data);
+                    var uid=data.id;
+                    console.log(uid);
+                    $.ajax({
+                        type:"post",
+                        url:'UserAndAccount/delete',
+                        data:{
+                            'id':uid,
+                        },
+                        dataType:'json',
+                        success:function(data){
+                            layer.closeAll();
+                            layer.msg(data.reason);
+                            window.location.reload();
+                        }
+                    });
+                });
+            } else if(obj.event === 'edit'){
+                    update(data);
+
+            }
+        });
+    });
+</script>
+</body>
+</html>

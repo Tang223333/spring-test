@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet"  media="all">
+</head>
+<body>
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+    </div>
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#test'
+            ,url:'GameDM/findAll'
+            ,toolbar: '#toolbarDemo'
+            ,tool: '#barDemo'
+            ,title: '新闻数据表'
+            ,totalRow: true
+            ,cols: [ [
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
+                ,{field:'name', title:'游戏名', width:120}
+                ,{field:'describes', title:'游戏描述', width:120}
+                ,{field:'pType', title:'游戏平台', width:120}
+                ,{field:'developer', title:'开发商', width:120}
+                ,{field:'publisher', title:'发行商', width:120}
+                ,{field:'team', title:'制作团队', width:120}
+                ,{field:'time', title:'发行时间', width:120}
+                ,{field:'status', title:'游戏状态', width:120}
+                ,{field:'videos', title:'游戏视频', width:120}
+                ,{field:'imgs', title:'游戏图片', width:120}
+                ,{field:'collects', title:'收藏数', width:120}
+                ,{field:'comments', title:'评论数', width:120}
+                ,{field:'goods', title:'好评数', width:120}
+                ,{field:'bads', title:'差评数', width:120}
+                ,{field:'grades', title:'评分', width:120}
+                ,{field:'systemDown', title:'最低操作系统', width:120}
+                ,{field:'handlerDown', title:'最低处理器', width:120}
+                ,{field:'ramDown', title:'最低内存', width:120}
+                ,{field:'gpuDown', title:'最低显卡', width:120}
+                ,{field:'storeDown', title:'最低存储', width:120}
+                ,{field:'deviceDown', title:'最低声卡', width:120}
+                ,{field:'systemUp', title:'最佳操作系统', width:120}
+                ,{field:'handlerUp', title:'最佳处理器', width:120}
+                ,{field:'ramUp', title:'最佳内存', width:120}
+                ,{field:'gpuUp', title:'最佳显卡', width:120}
+                ,{field:'storeUp', title:'最佳存储', width:120}
+                ,{field:'deviceUp', title:'最佳声卡', width:120}
+                ,{field:'care', title:'注意', width:120}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200},
+            ] ]
+            ,page: true
+        });
+
+        //工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选')
+                    break;
+            };
+        });
+
+        //监听工具条
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'detail'){
+                layer.msg('ID：'+ data.id + ' 的查看操作');
+            } else if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.alert('编辑行：<br>'+ JSON.stringify(data))
+            }
+        });
+    });
+</script>
+</body>
+</html>

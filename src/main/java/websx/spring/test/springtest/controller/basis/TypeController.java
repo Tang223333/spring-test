@@ -10,6 +10,7 @@ import websx.spring.test.springtest.service.impl.TypeService;
 import websx.spring.test.springtest.utils.JsonUtils;
 
 import javax.websocket.server.PathParam;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,17 @@ public class TypeController {
     public Map<String,Object> findByIdType(@PathParam("id") Long id){
         Type img = typeService.findByIdType(id);
         return JsonUtils.getJson(img,img!=null?0:1);
+    }
+
+    @RequestMapping("/findAll2")
+    public Map<String,Object> findAll2Type(){
+        List<Type> allType = typeService.findAllType();
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",allType.size());
+        map.put("data",allType);
+        return map;
     }
 
     @RequestMapping("/findAll")

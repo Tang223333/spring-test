@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 import websx.spring.test.springtest.entity.Account;
+import websx.spring.test.springtest.entity.Img;
 
 import java.util.List;
 
@@ -14,6 +15,9 @@ public interface IAccountMapper {
 
     @Select("select * from account;")
     List<Account> findAllAccount();
+
+    @Select("select * from account order by id limit #{page},#{limit};")
+    List<Account> findAll2Account(Integer page, Integer limit);
 
     @Select("select * from account where id=#{id};")
     Account findByIdAccount(Long id);

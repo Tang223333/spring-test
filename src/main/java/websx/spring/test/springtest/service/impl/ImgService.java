@@ -20,6 +20,12 @@ public class ImgService implements IImgService {
     }
 
     @Override
+    public List<Img> findAll2Img(Integer page,Integer limit) {
+        page=(page-1)*limit;
+        return iImgMapper.findAll2Img(page,limit);
+    }
+
+    @Override
     public Img findByIdImg(Long id) {
         return iImgMapper.findByIdImg(id);
     }

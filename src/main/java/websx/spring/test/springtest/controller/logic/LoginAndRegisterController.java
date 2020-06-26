@@ -44,9 +44,9 @@ public class LoginAndRegisterController {
             if (account.getPassword().equals(password)) {
                 model.addAttribute("msg","登录成功");
                 if (account.getType()!=1) {
-                    return "web/index_v5";
-                }else {
                     return "web/index";
+                }else {
+                    return "web/index_v5";
                 }
             }else {
                 model.addAttribute("msg","密码错误");
@@ -80,6 +80,7 @@ public class LoginAndRegisterController {
                     account.setName(name);
                     account.setUid(user.getId());
                     account.setType(1);
+                    account.setStatus(0);
                     account=accountService.saveAccount(account);
                     model.addAttribute("msg","创建成功");
                     return "web/login";

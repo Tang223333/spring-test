@@ -23,6 +23,12 @@ public class AccountService implements IAccountService {
     }
 
     @Override
+    public List<Account> findAll2Account(Integer page, Integer limit) {
+        page=(page-1)*limit;
+        return iAccountMapper.findAll2Account(page,limit);
+    }
+
+    @Override
     public Account findByIdAccount(Long id) {
         return iAccountMapper.findByIdAccount(id);
     }

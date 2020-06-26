@@ -8,6 +8,7 @@ import java.util.Date;
 @Builder
 @Data
 public class Invitation {
+
     private Long id;
     private Long fid;
     private Long aid;
@@ -20,4 +21,5 @@ public class Invitation {
     private Object imgs;
     private Object videos;
     private String ip;
+
 }

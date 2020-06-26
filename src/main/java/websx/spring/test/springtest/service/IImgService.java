@@ -12,6 +12,8 @@ public interface IImgService {
 
     List<Img> findAllImg();
 
+    List<Img> findAll2Img(Integer page,Integer limit);
+
     Img findByIdImg(Long id);
 
     List<Img> findByKeyImg(String iKeys);

@@ -15,6 +15,9 @@ public interface IImgMapper {
     @Select("select * from img;")
     List<Img> findAllImg();
 
+    @Select("select * from img order by id limit #{page},#{limit};")
+    List<Img> findAll2Img(Integer page,Integer limit);
+
     @Select("select * from img where id=#{id};")
     Img findByIdImg(Long id);
 

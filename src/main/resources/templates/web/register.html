@@ -17,6 +17,7 @@
     <link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet">
     <link th:href="@{/css/animate.min.css}" rel="stylesheet">
     <link th:href="@{/css/style.min862f.css}" rel="stylesheet">
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet">
     <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
 
 </head>
@@ -26,7 +27,7 @@
     <script th:inline="javascript" >
         var num= [[${msg}]];
         if (num != null) {
-            alert(num);
+            alter(num);
         }
     </script>
     <div>
@@ -70,6 +71,7 @@
     <script th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
     <script th:src="@{/js/plugins/validate/messages_zh.min.js}"></script>
     <script th:src="@{/js/demo/form-validate-demo.min.js}"></script>
+    <script th:src="@{/layui/layui.js}"></script>
     <script>
         $(document).ready(function(){$(".i-checks").iCheck({checkboxClass:"icheckbox_square-green",radioClass:"iradio_square-green",})});
     </script>
