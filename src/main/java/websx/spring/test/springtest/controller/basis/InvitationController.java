@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import websx.spring.test.springtest.entity.Forum;
 import websx.spring.test.springtest.entity.Invitation;
+import websx.spring.test.springtest.service.impl.ForumService;
 import websx.spring.test.springtest.service.impl.InvitationService;
 import websx.spring.test.springtest.utils.JsonUtils;
 
@@ -19,6 +21,8 @@ public class InvitationController {
 
     @Autowired
     private InvitationService invitationService;
+    @Autowired
+    private ForumService forumService;
 
     @RequestMapping("/findAll")
     public Map<String,Object> findAllInvitation(){
@@ -55,13 +59,23 @@ public class InvitationController {
     public Map<String,Object> saveInvitation(@PathParam("fid") Long fid,
                                              @PathParam("aid") Long aid,
                                              @PathParam("content") String content,
-                                             @PathParam("ip") String ip){
+                                             @PathParam("ip") String ip,
+                                             @PathParam("goods") Integer goods,
+                                             @PathParam("bads") Integer bads,
+                                             @PathParam("collects") Integer collects,
+                                             @PathParam("comments") Integer comments){
+        System.out.println("fadfasdf");
         Long i=new Date().getTime();
         Invitation invitation=invitationService.findByFidAidInvitation(fid,aid);
-        if (invitation != null) {
+        Forum forum=forumService.findByIdForum(fid);
+        if (forum!=null&&invitation != null) {
             invitation=null;
         }else {
-            invitation= Invitation.builder().fid(fid).aid(aid).content(content).ip(ip).imgs("img_"+i).videos("video_"+i).time(new Date()).goods(0).bads(0).collects(0).comments(0).build();
+            invitation= Invitation.builder()
+                    .fid(fid).aid(aid).content(content).ip(ip)
+                    .imgs("img_"+i).videos("video_"+i).time(new Date())
+                    .goods(goods!=null?goods:0).bads(bads!=null?bads:0)
+                    .collects(collects!=null?collects:0).comments(comments!=null?comments:0).build();
             invitation=invitationService.saveInvitation(invitation);
         }
         return JsonUtils.getJson(invitation,invitation!=null?0:1);
@@ -82,7 +96,8 @@ public class InvitationController {
             invitation= Invitation.builder().id(invitation.getId()).fid(fid!=null?fid:invitation.getFid()).aid(aid!=null?aid:invitation.getAid())
                     .content(content!=null?content:invitation.getContent()).ip(ip!=null?ip:invitation.getIp()).time(new Date())
                     .goods(goods!=null?goods:invitation.getGoods()).bads(bads!=null?bads:invitation.getBads())
-                    .collects(collects!=null?collects:invitation.getCollects()).comments(comments!=null?comments:invitation.getComments()).build();
+                    .collects(collects!=null?collects:invitation.getCollects()).comments(comments!=null?comments:invitation.getComments())
+                    .videos(invitation.getVideos()).imgs(invitation.getImgs()).build();
             invitation=invitationService.updateInvitation(invitation);
         }else {
         }

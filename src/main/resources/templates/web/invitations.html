@@ -3,16 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title></title>
+    <script th:src="@{/js/jquery.min.js}"></script>
     <link th:href="@{/layui/css/layui.css}" rel="stylesheet"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 </head>
 <body>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+        <a class="layui-btn layui-btn-sm" lay-event="add">添加</a>
+        <a class="layui-btn layui-btn-sm" lay-event="update">修改</a>
+        <a class="layui-btn layui-btn-sm" lay-event="delete">删除</a>
     </div>
 </script>
 <script type="text/html" id="barDemo">
@@ -21,9 +23,155 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
+<script>
+    aid=document.cookie.substring(4,5);
+    var account="";
+    $.ajax({
+        url: "account/findById",
+        type: 'POST',
+        data: {
+            'id': aid,
+        },
+        success:function (data) {
+            account=data;
+        },
+        error:function (data) {
 
-<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+        }
+    });
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
+
+        //…
+    });
+
+    $(function () {
+        //编辑
+        update = function(data){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.open({
+                    title: ['修改用户信息'],
+                    type: 2,
+                    content: 'page/invitationUpdate.html',
+                    shadeClose: true,
+                    area: ['550px', '550px'],
+                    btn: ['确定', '取消'],
+                    success: function (layero,index) {
+                        var body = layui.layer.getChildFrame('body', index);
+                        body.find(".id").val(data.id);
+                        body.find(".content").val(data.content);
+                        body.find(".goods").val(data.goods);
+                        body.find(".bads").val(data.bads);
+                        body.find(".collects").val(data.collects);
+                        body.find(".comments").val(data.comments);
+                        body.find(".time").val(data.time);
+                        body.find(".imgs").val(data.imgs);
+                        body.find(".videos").val(data.videos);
+                        body.find(".ip").val(data.ip);
+                        layui.form.render();
+                        layui.form.verify();
+                    },
+                    btn1: function(index, layero){
+                        var body = layui.layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        $.ajax({
+                            url:"invitation/update",
+                            type:'POST',
+                            data:{
+                                'id':body.find('.id').val(),
+                                'content':body.find('.content').val(),
+                                'goods':body.find('.goods').val(),
+                                'bads':body.find('.bads').val(),
+                                'collects':body.find('.collects').val(),
+                                'comments':body.find('.comments').val(),
+                                'time':body.find('.time').val(),
+                                'imgs':body.find('.imgs').val(),
+                                'videos':body.find('.videos').val(),
+                                'ip':body.find('.ip').val(),
+                            },
+                            dataType:'json',
+                            success:function(data){
+                                layer.closeAll();
+                                layer.msg(data.reason);
+                            },
+                            error:function (data) {
+                                layer.closeAll();
+                                layer.msg(data.reason);
+                            }
+                        });
+                    },
+                    btn2: function(index, layero){
+                        layer.closeAll();
+                    },
+                    cancel:function () {
+                        window.location.reload();
+                    },
+                    end:function () {
+                        window.location.reload();
+                    }
+                });
+
+            });
+        }
+
+
+        //编辑
+        add = function(){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.open({
+                    title: ['添加用户信息'],
+                    type: 2,
+                    content: 'page/invitationAdd.html',
+                    shadeClose: true,
+                    area: ['650px', '550px'],
+                    btn: ['确定', '取消'],
+                    btn1: function(index, layero){
+                        alert("店里")
+                        var body = layui.layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        $.ajax({
+                            url:"invitation/save",
+                            type:'POST',
+                            data:{
+                                'aid':account.data.id,
+                                'fid':body.find('.fid').val(),
+                                'content':body.find('.content').val(),
+                                'goods':body.find('.goods').val(),
+                                'bads':body.find('.bads').val(),
+                                'collects':body.find('.collects').val(),
+                                'comments':body.find('.comments').val(),
+                                'ip':body.find('.ip').val(),
+                            },
+                            dataType:'json',
+                            success:function(data){
+                                layer.closeAll();
+                                if (data.error_code==0){
+                                    layer.msg(data.reason);
+                                }else {
+                                    layer.msg(data.reason);
+                                }
+                            }
+                        });
+                    },
+                    btn2: function(index, layero){
+                        layer.closeAll();
+                    },
+                    cancel:function () {
+                        window.location.reload();
+                    },
+                    end:function () {
+                        window.location.reload();
+                    }
+                });
+
+            });
+        }
+    });
+
+</script>
 
 <script>
     layui.use('table', function(){
@@ -61,18 +209,46 @@
 
         //工具栏事件
         table.on('toolbar(test)', function(obj){
-            var checkStatus = table.checkStatus(obj.config.id);
+            var checkStatus = table.checkStatus(obj.config.id)
+                ,data = checkStatus.data;
             switch(obj.event){
-                case 'getCheckData':
-                    var data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
+                case 'add':
+                    add();
                     break;
-                case 'getCheckLength':
-                    var data = checkStatus.data;
-                    layer.msg('选中了：'+ data.length + ' 个');
+                case 'update':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时编辑一个');
+                    } else {
+                        var userdata =  data[0];
+                        update(userdata);
+                    }
                     break;
-                case 'isAll':
-                    layer.msg(checkStatus.isAll ? '全选': '未全选')
+                case 'delete':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else {
+                        layer.confirm("是否确认删除？",function () {
+                            for(var i=0;i<data.length;i++){
+                                var uid = data[i].id;
+                                console.log(uid);
+                                $.ajax({
+                                    type:"post",
+                                    url:'invitation/delete',
+                                    data:{
+                                        'id':uid,
+                                    },
+                                    dataType:'json',
+                                    success:function(data){
+                                        layer.closeAll();
+                                        layer.msg(data.reason);
+                                        window.location.reload();
+                                    }
+                                });
+                            }
+                        });
+                    }
                     break;
             };
         });
@@ -81,14 +257,30 @@
         table.on('tool(test)', function(obj){
             var data = obj.data;
             if(obj.event === 'detail'){
-                layer.msg('ID：'+ data.id + ' 的查看操作');
+                layer.alert('查看：<br>'+ JSON.stringify(data))
             } else if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     obj.del();
                     layer.close(index);
+                    console.log(data);
+                    var uid=data.id;
+                    console.log(uid);
+                    $.ajax({
+                        type:"post",
+                        url:'invitation/delete',
+                        data:{
+                            'id':uid,
+                        },
+                        dataType:'json',
+                        success:function(data){
+                            layer.closeAll();
+                            layer.msg(data.reason);
+                            window.location.reload();
+                        }
+                    });
                 });
             } else if(obj.event === 'edit'){
-                layer.alert('编辑行：<br>'+ JSON.stringify(data))
+                update(data);
             }
         });
     });

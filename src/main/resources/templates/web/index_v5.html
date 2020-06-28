@@ -21,9 +21,13 @@
 
 <body class="gray-bg top-navigation">
     <script th:inline="javascript" >
+        var s= [[${aid}]];
+        console.log(s);
+        document.cookie="aid="+s;
         var num= [[${msg}]];
+        console.log(num)
         if (num != null) {
-            alter(num);
+            alert(num);
         }
     </script>
     <div id="wrapper">

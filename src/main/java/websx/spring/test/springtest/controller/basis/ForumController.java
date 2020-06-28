@@ -1,6 +1,8 @@
 package websx.spring.test.springtest.controller.basis;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,19 +49,24 @@ public class ForumController{
     public Map<String,Object> saveForum(@PathParam("aid") Long aid,
                                         @PathParam("name") String name,
                                         @PathParam("logo") String logo,
-                                        @PathParam("ip") String ip){
+                                        @PathParam("ip") String ip,
+                                        @PathParam("concerns") Integer concerns,
+                                        @PathParam("invitations") Integer invitations,
+                                        @PathParam("views") Integer views){
+        System.out.println(logo);
         Forum forum=forumService.findByNameForum(name);
         if (forum != null) {
             forum=null;
         }else {
-            forum=Forum.builder().aid(aid).concerns(0).invitations(0).views(0)
-                    .name(name).logo(logo).ip(ip).build();
+            forum=Forum.builder().aid(aid).concerns(concerns!=null?concerns:0).invitations(invitations!=null?invitations:0)
+                    .views(views!=null?views:0).name(name).logo(logo).ip(ip).build();
             forum = forumService.saveForum(forum);
         }
         return JsonUtils.getJson(forum,forum!=null?0:1);
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @Transactional(propagation = Propagation.REQUIRED)
     public Map<String,Object> updateForum(@PathParam("id") Long id,
                                           @PathParam("aid") Long aid,
                                           @PathParam("concerns") Integer concerns,
@@ -67,12 +74,13 @@ public class ForumController{
                                           @PathParam("views") Integer views,
                                           @PathParam("name") String name,
                                           @PathParam("logo") String logo,
-                                          @PathParam("ip") String ip){
+                                          @PathParam("ip") String ip) throws Exception {
         Forum forum=forumService.findByIdForum(id);
         if (forum != null) {
             forum=Forum.builder().id(forum.getId()).aid(aid!=null?aid:forum.getAid()).concerns(concerns!=null?concerns:forum.getConcerns())
                     .invitations(invitations!=null?invitations:forum.getInvitations()).views(views!=null?views:forum.getViews())
                     .name(name!=null?name:forum.getName()).logo(logo!=null?logo:forum.getLogo()).ip(ip!=null?ip:forum.getIp()).build();
+            forum=forumService.updateForum(forum);
         }else {
             forum=null;
         }

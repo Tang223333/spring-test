@@ -48,7 +48,7 @@ public class GameController {
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public Map<String,Object> saveGame(@PathParam("name") String name,
                                        @PathParam("describes") String describes,
-                                       @PathParam("pType") Integer pType,
+                                       @PathParam("ptype") Integer pType,
                                        @PathParam("developer") String developer,
                                        @PathParam("publisher") String publisher,
                                        @PathParam("team") String team){
@@ -69,17 +69,20 @@ public class GameController {
     public Map<String,Object> updateGame(@PathParam("id") Long id,
                                          @PathParam("name") String name,
                                          @PathParam("describes") String describes,
-                                         @PathParam("pType") Integer pType,
+                                         @PathParam("ptype") Integer ptype,
+                                         @PathParam("status") Integer status,
                                          @PathParam("developer") String developer,
                                          @PathParam("publisher") String publisher,
                                          @PathParam("team") String team,
                                          @PathParam("time") Date time){
         Game game=gameService.findByIdGame(id);
+        System.out.println(ptype);
         if (game != null) {
-            game=Game.builder().id(game.getId()).name(name!=null?name:game.getName())
-                    .describes(describes!=null?describes:game.getDescribes()).pType(pType!=null?pType:game.getPType())
+            game=Game.builder().id(game.getId()).name(name!=null?name:game.getName()).status(status!=null?status:game.getStatus())
+                    .describes(describes!=null?describes:game.getDescribes()).pType(ptype!=null?ptype:game.getPType())
                     .developer(developer!=null?developer:game.getDeveloper()).publisher(publisher!=null?publisher:game.getPublisher())
-                    .team(team!=null?team:game.getTeam()).time(time!=null?time:game.getTime()).build();
+                    .team(team!=null?team:game.getTeam()).videos(game.getVideos()).imgs(game.getImgs()).status(game.getStatus()).types(game.getTypes()).time(time!=null?time:game.getTime()).build();
+            System.out.println(game);
             game=gameService.updateGame(game);
             return JsonUtils.getJson(game,(game!=null)?0:1);
         }else {

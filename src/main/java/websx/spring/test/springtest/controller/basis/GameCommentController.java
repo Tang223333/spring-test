@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import websx.spring.test.springtest.entity.Account;
 import websx.spring.test.springtest.entity.Game;
 import websx.spring.test.springtest.entity.GameComment;
+import websx.spring.test.springtest.service.impl.AccountService;
 import websx.spring.test.springtest.service.impl.GameCommentService;
+import websx.spring.test.springtest.service.impl.GameService;
 import websx.spring.test.springtest.utils.JsonUtils;
 
 import javax.websocket.server.PathParam;
@@ -20,6 +23,10 @@ public class GameCommentController {
 
     @Autowired
     private GameCommentService gameCommentService;
+    @Autowired
+    private GameService gameService;
+    @Autowired
+    private AccountService accountService;
 
     @RequestMapping("/findAll")
     public Map<String,Object> findAllGameComment(){
@@ -59,9 +66,17 @@ public class GameCommentController {
                                               @PathParam("goodOrBad") Integer goodOrBad,
                                               @PathParam("grade") Integer grade,
                                               @PathParam("ip") String ip){
-        GameComment gameComment= GameComment.builder().gid(gid).aid(aid).content(content).goodOrBad(goodOrBad).grade(grade).ip(ip).time(new Date()).build();
-        gameComment=gameCommentService.saveGameComment(gameComment);
-        return JsonUtils.getJson(gameComment,gameComment!=null?0:1);
+        Game game= gameService.findByIdGame(gid);
+        Account account=accountService.findByIdAccount(aid);
+        if (account!=null&&game!=null){
+            GameComment gameComment= GameComment.builder().aid(aid).gid(gid)
+                    .content(content).goodOrBad(goodOrBad!=null?goodOrBad:0)
+                    .grade(grade!=null?grade:0).ip(ip).time(new Date()).build();
+            gameComment=gameCommentService.saveGameComment(gameComment);
+            return JsonUtils.getJson(gameComment,gameComment!=null?0:1);
+        }else {
+            return JsonUtils.getJson("",1);
+        }
     }
 
     @RequestMapping(value = "/update",method = RequestMethod.POST)
@@ -74,7 +89,9 @@ public class GameCommentController {
                                                 @PathParam("ip") String ip){
         GameComment gameComment=gameCommentService.findByIdGameComment(id);
         if (gameComment != null) {
-            gameComment= GameComment.builder().id(gameComment.getId()).gid(gid).aid(aid).content(content).goodOrBad(goodOrBad).grade(grade).ip(ip).time(new Date()).build();
+            gameComment= GameComment.builder().id(gameComment.getId()).aid(aid!=null?aid:gameComment.getAid()).gid(gid!=null?gid:gameComment.getGid())
+                    .content(content!=null?content:gameComment.getContent()).goodOrBad(goodOrBad!=null?goodOrBad:gameComment.getGoodOrBad())
+                    .grade(grade!=null?grade:gameComment.getGrade()).ip(ip!=null?ip:gameComment.getIp()).time(new Date()).build();
             gameComment=gameCommentService.updateGameComment(gameComment);
             return JsonUtils.getJson(gameComment,gameComment!=null?0:1);
         }else {

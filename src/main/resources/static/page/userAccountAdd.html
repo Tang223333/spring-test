@@ -2,18 +2,28 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>添加用户</title>
+    <script src="../js/jquery.min.js"></script>
     <link rel="stylesheet" href="../layui/css/layui.css"/>
     <script src="../layui/layui.js"></script>
 </head>
 <body>
 
 <div class="login">
-    <div class="top">
-        <label>添加用户</label>
-    </div>
     <div class="form">
         <br>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label ">照片:</label>
+            <div class="layui-upload">
+                <form id="formImg" name="formImg" enctype="multipart/form-data">
+                    <input type="file" name="file" id="file"/>
+                </form>
+                <button id="submitImg" class="layui-btn" name="submitImg">上传</button>
+                <br/>
+                <img style="width: 200px;height: 200px" src="" alt="" id="imgShow" name="imgShow">
+            </div>
+        </div>
+
         <form class="layui-form" action="UserAndAccount/create" method="post">
 
             <div class="layui-form-item">
@@ -61,7 +71,7 @@
             </div>
 
             <div class="layui-form-item">
-                <label class="layui-form-label">姓名:</label>
+                <label class="layui-form-label">账户名:</label>
                 <div class="layui-input-block">
                     <input type="text" name="accountName" lay-verify="accountName"   placeholder="填写姓名" autocomplete="off" class="layui-input accountName">
                 </div>
@@ -103,14 +113,61 @@
 
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">图片:</label>
+                    <label class="layui-form-label">图片地址:</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="logo" lay-verify="logo" autocomplete="off" placeholder="http://fas.sdaf.com/1.img" class="layui-input logo">
+                        <input hidden="hidden" type="hidden" id="logo" name="logo" lay-verify="logo" class="layui-input logo">
                     </div>
                 </div>
             </div>
         </form>
-
+        <script type="text/javascript">
+            s= document.getElementById("logo").innerText;
+            console.log(s);
+            $("#file").change(function () {
+                var fileImg = $("#imgShow");
+                var explorer = navigator.userAgent;
+                var imgSrc = $(this)[0].value;
+                console.log(fileImg)
+                console.log(explorer)
+                console.log(imgSrc)
+                if (explorer.indexOf('MSIE') >= 0) {
+                    if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)) {
+                        imgSrc = "";
+                        fileImg.attr("src","/img/default.png");
+                        return false;
+                    }else{
+                        fileImg.attr("src",imgSrc);
+                    }
+                }else{
+                    if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)) {
+                        imgSrc = "";
+                        fileImg.attr("src","/img/default.png");
+                        return false;
+                    }else{
+                        var file = $(this)[0].files[0];
+                        var url = URL.createObjectURL(file);
+                        fileImg.attr("src",url);
+                    }
+                }
+            })
+            $("#submitImg").click(function () {
+                var formData = new FormData(document.getElementById("formImg"));
+                $.ajax({
+                    url:"/upload/alogo",
+                    type:'POST',
+                    data:formData,
+                    processData: false,   // jQuery不要去处理发送的数据
+                    contentType: false,   // jQuery不要去设置Content-Type请求头
+                    success:function(data){
+                        $("#logo").attr("value", data);
+                        alert("上传成功");
+                    },
+                    error:function (data) {
+                        alert("上传失败");
+                    }
+                });
+            })
+        </script>
     </div>
 </div>
 

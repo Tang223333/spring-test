@@ -3,16 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title></title>
+    <script th:src="@{/js/jquery.min.js}"></script>
     <link th:href="@{/layui/css/layui.css}" rel="stylesheet"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 </head>
 <body>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+        <a class="layui-btn layui-btn-sm" lay-event="add">添加</a>
+        <a class="layui-btn layui-btn-sm" lay-event="update">修改</a>
+        <a class="layui-btn layui-btn-sm" lay-event="delete">删除</a>
     </div>
 </script>
 <script type="text/html" id="barDemo">
@@ -21,9 +23,220 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
+<script>
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function(){
+        var element = layui.element;
 
-<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+        //…
+    });
+
+    $(function () {
+        //编辑
+        update = function(data){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.open({
+                    title: ['修改用户信息'],
+                    type: 2,
+                    content: 'page/gamesUpdate.html',
+                    shadeClose: true,
+                    area: ['550px', '550px'],
+                    btn: ['确定', '取消'],
+                    success: function (layero,index) {
+                        var body = layui.layer.getChildFrame('body', index);
+                        body.find(".id").val(data.id);
+                        body.find(".name").val(data.name);
+                        body.find(".describes").val(data.describes);
+                        body.find(".ptype").val(data.ptype);
+                        body.find(".developer").val(data.developer);
+                        body.find(".publisher").val(data.publisher);
+                        body.find(".team").val(data.team);
+                        body.find(".time").val(data.time);
+                        body.find(".status").val(data.status);
+                        body.find(".videos").val(data.videos);
+                        body.find(".imgs").val(data.imgs);
+                        body.find(".types").val(data.types);
+                        body.find(".collects").val(data.collects);
+                        body.find(".comments").val(data.comments);
+                        body.find(".goods").val(data.goods);
+                        body.find(".bads").val(data.bads);
+                        body.find(".grades").val(data.grades);
+                        body.find(".systemDown").val(data.systemDown);
+                        body.find(".handlerDown").val(data.handlerDown);
+                        body.find(".ramDown").val(data.ramDown);
+                        body.find(".gpuDown").val(data.gpuDown);
+                        body.find(".storeDown").val(data.storeDown);
+                        body.find(".deviceDown").val(data.deviceDown);
+                        body.find(".systemUp").val(data.systemUp);
+                        body.find(".handlerUp").val(data.handlerUp);
+                        body.find(".ramUp").val(data.ramUp);
+                        body.find(".gpuUp").val(data.gpuUp);
+                        body.find(".storeUp").val(data.storeUp);
+                        body.find(".deviceUp").val(data.deviceUp);
+                        body.find(".care").val(data.care);
+                        layui.form.render();
+                        layui.form.verify();
+                    },
+                    btn1: function(index, layero){
+                        var body = layui.layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        $.ajax({
+                            url:"game/update",
+                            type:'POST',
+                            data:{
+                                'id':body.find('.id').val(),
+                                'name':body.find('.name').val(),
+                                'describes':body.find('.describes').val(),
+                                'ptype':body.find('.ptype').val(),
+                                'developer':body.find('.developer').val(),
+                                'publisher':body.find('.publisher').val(),
+                                'team':body.find('.team').val(),
+                                'time':body.find('.time').val(),
+                                'status':body.find('.status').val(),
+                                'videos':body.find('.videos').val(),
+                                'imgs':body.find('.imgs').val(),
+                                'types':body.find('.types').val(),
+                            },
+                            dataType:'json',
+                            success:function(data){
+                                $.ajax({
+                                    url: "gameMutual/update",
+                                    type: 'POST',
+                                    data: {
+                                        'gid': body.find('.id').val(),
+                                        'collects':body.find('.collects').val(),
+                                        'comments':body.find('.comments').val(),
+                                        'goods':body.find('.goods').val(),
+                                        'bads':body.find('.bads').val(),
+                                        'grades':body.find('.grades').val(),
+                                    },
+                                    success:function (data) {
+
+                                        $.ajax({
+                                            url: "dispose/update",
+                                            type: 'POST',
+                                            data: {
+                                                'gid': body.find('.id').val(),
+                                                'systemDown':body.find('.systemDown').val(),
+                                                'handlerDown':body.find('.handlerDown').val(),
+                                                'ramDown':body.find('.ramDown').val(),
+                                                'gpuDown':body.find('.gpuDown').val(),
+                                                'storeDown':body.find('.storeDown').val(),
+                                                'deviceDown':body.find('.deviceDown').val(),
+                                                'systemUp':body.find('.systemUp').val(),
+                                                'handlerUp':body.find('.handlerUp').val(),
+                                                'ramUp':body.find('.ramUp').val(),
+                                                'gpuUp':body.find('.gpuUp').val(),
+                                                'storeUp':body.find('.storeUp').val(),
+                                                'deviceUp':body.find('.deviceUp').val(),
+                                                'care':body.find('.care').val(),
+                                            },
+                                            success:function (data) {
+                                                layer.closeAll();
+                                                layer.msg(data.reason);
+                                            },
+                                            error:function (data) {
+                                                layer.closeAll();
+                                                layer.msg(data.reason);
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    },
+                    btn2: function(index, layero){
+                        layer.closeAll();
+                    },
+                    cancel:function () {
+                        window.location.reload();
+                    },
+                    end:function () {
+                        window.location.reload();
+                    }
+                });
+
+            });
+        }
+
+
+        //编辑
+        add = function(){
+            layui.use('layer', function(){
+                var layer = layui.layer;
+                layer.open({
+                    title: ['添加用户信息'],
+                    type: 2,
+                    content: 'page/gamesAdd.html',
+                    shadeClose: true,
+                    area: ['650px', '550px'],
+                    btn: ['确定', '取消'],
+                    btn1: function(index, layero){
+                        var body = layui.layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']];
+                        $.ajax({
+                            url:"GameDM/create",
+                            type:'POST',
+                            data:{
+                                'name':body.find('.name').val(),
+                                'describes':body.find('.describes').val(),
+                                'ptype':body.find('.ptype').val(),
+                                'developer':body.find('.developer').val(),
+                                'publisher':body.find('.publisher').val(),
+                                'team':body.find('.team').val(),
+                                'time':body.find('.time').val(),
+                                'status':body.find('.status').val(),
+                                'videos':body.find('.videos').val(),
+                                'imgs':body.find('.imgs').val(),
+                                'types':body.find('.types').val(),
+                                'collects':body.find('.collects').val(),
+                                'comments':body.find('.comments').val(),
+                                'goods':body.find('.goods').val(),
+                                'bads':body.find('.bads').val(),
+                                'grades':body.find('.grades').val(),
+                                'systemDown':body.find('.systemDown').val(),
+                                'handlerDown':body.find('.handlerDown').val(),
+                                'ramDown':body.find('.ramDown').val(),
+                                'gpuDown':body.find('.gpuDown').val(),
+                                'storeDown':body.find('.storeDown').val(),
+                                'deviceDown':body.find('.deviceDown').val(),
+                                'systemUp':body.find('.systemUp').val(),
+                                'handlerUp':body.find('.handlerUp').val(),
+                                'ramUp':body.find('.ramUp').val(),
+                                'gpuUp':body.find('.gpuUp').val(),
+                                'storeUp':body.find('.storeUp').val(),
+                                'deviceUp':body.find('.deviceUp').val(),
+                                'care':body.find('.care').val(),
+                            },
+                            dataType:'json',
+                            success:function(data){
+                                layer.closeAll();
+                                if (data.error_code==0){
+                                    layer.msg(data.reason);
+                                }else {
+                                    layer.msg(data.reason);
+                                }
+                            }
+                        });
+                    },
+                    btn2: function(index, layero){
+                        layer.closeAll();
+                    },
+                    cancel:function () {
+                        window.location.reload();
+                    },
+                    end:function () {
+                        window.location.reload();
+                    }
+                });
+
+            });
+        }
+    });
+
+</script>
+
 
 <script>
     layui.use('table', function(){
@@ -36,12 +249,12 @@
             ,tool: '#barDemo'
             ,title: '新闻数据表'
             ,totalRow: true
-            ,cols: [ [
+            ,cols: [[
                 {type: 'checkbox', fixed: 'left'}
                 ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
                 ,{field:'name', title:'游戏名', width:120}
                 ,{field:'describes', title:'游戏描述', width:120}
-                ,{field:'pType', title:'游戏平台', width:120}
+                ,{field:'ptype', title:'游戏平台', width:120}
                 ,{field:'developer', title:'开发商', width:120}
                 ,{field:'publisher', title:'发行商', width:120}
                 ,{field:'team', title:'制作团队', width:120}
@@ -49,6 +262,7 @@
                 ,{field:'status', title:'游戏状态', width:120}
                 ,{field:'videos', title:'游戏视频', width:120}
                 ,{field:'imgs', title:'游戏图片', width:120}
+                ,{field:'types', title:'游戏类型', width:120}
                 ,{field:'collects', title:'收藏数', width:120}
                 ,{field:'comments', title:'评论数', width:120}
                 ,{field:'goods', title:'好评数', width:120}
@@ -74,18 +288,46 @@
 
         //工具栏事件
         table.on('toolbar(test)', function(obj){
-            var checkStatus = table.checkStatus(obj.config.id);
+            var checkStatus = table.checkStatus(obj.config.id)
+                ,data = checkStatus.data;
             switch(obj.event){
-                case 'getCheckData':
-                    var data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
+                case 'add':
+                    add();
                     break;
-                case 'getCheckLength':
-                    var data = checkStatus.data;
-                    layer.msg('选中了：'+ data.length + ' 个');
+                case 'update':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else if(data.length > 1){
+                        layer.msg('只能同时编辑一个');
+                    } else {
+                        var userdata =  data[0];
+                        update(userdata);
+                    }
                     break;
-                case 'isAll':
-                    layer.msg(checkStatus.isAll ? '全选': '未全选')
+                case 'delete':
+                    if(data.length === 0){
+                        layer.msg('请选择一行');
+                    } else {
+                        layer.confirm("是否确认删除？",function () {
+                            for(var i=0;i<data.length;i++){
+                                var uid = data[i].id;
+                                console.log(uid);
+                                $.ajax({
+                                    type:"post",
+                                    url:'GameDM/delete',
+                                    data:{
+                                        'id':uid,
+                                    },
+                                    dataType:'json',
+                                    success:function(data){
+                                        layer.closeAll();
+                                        layer.msg(data.reason);
+                                        window.location.reload();
+                                    }
+                                });
+                            }
+                        });
+                    }
                     break;
             };
         });
@@ -94,14 +336,30 @@
         table.on('tool(test)', function(obj){
             var data = obj.data;
             if(obj.event === 'detail'){
-                layer.msg('ID：'+ data.id + ' 的查看操作');
+                layer.alert('查看：<br>'+ JSON.stringify(data))
             } else if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     obj.del();
                     layer.close(index);
+                    console.log(data);
+                    var uid=data.id;
+                    console.log(uid);
+                    $.ajax({
+                        type:"post",
+                        url:'GameDM/delete',
+                        data:{
+                            'id':uid,
+                        },
+                        dataType:'json',
+                        success:function(data){
+                            layer.closeAll();
+                            layer.msg(data.reason);
+                            window.location.reload();
+                        }
+                    });
                 });
             } else if(obj.event === 'edit'){
-                layer.alert('编辑行：<br>'+ JSON.stringify(data))
+                update(data);
             }
         });
     });

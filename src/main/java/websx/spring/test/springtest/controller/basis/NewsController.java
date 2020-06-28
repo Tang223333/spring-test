@@ -86,7 +86,7 @@ public class NewsController {
         News news=newsService.findByIdNews(id);
         if (news != null) {
             news=News.builder().id(news.getId()).aid(aid!=null?aid:news.getAid()).title(title!=null?title:news.getTitle())
-                    .writer(writer!=null?writer:news.getWriter()).content(content!=null?content:news.getContent())
+                    .writer(writer!=null?writer:news.getWriter()).time(news.getTime()).videos(news.getVideos()).imgs(news.getImgs()).status(news.getStatus()).content(content!=null?content:news.getContent())
                     .ip(ip!=null?ip:news.getIp()).build();
             news = newsService.updateNews(news);
         }else {

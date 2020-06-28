@@ -53,6 +53,7 @@ public class GameDisposeMutualController extends BaseController {
             gameAll.setVideos(games.get(i).getVideos());
             gameAll.setImgs(games.get(i).getImgs());
             gameAll.setTypes(games.get(i).getTypes());
+            gameAll.setPType(games.get(i).getPType());
             gameAll.setCollects(gameMutual.getCollects());
             gameAll.setComments(gameMutual.getComments());
             gameAll.setGoods(gameMutual.getGoods());
@@ -85,7 +86,7 @@ public class GameDisposeMutualController extends BaseController {
     @Transactional(propagation = Propagation.REQUIRED)
     public Map<String,Object> create(@PathParam("name") String name,
                                      @PathParam("describes") String describes,
-                                     @PathParam("pType") Integer pType,
+                                     @PathParam("ptype") Integer pType,
                                      @PathParam("developer") String developer,
                                      @PathParam("publisher") String publisher,
                                      @PathParam("team") String team,
@@ -118,7 +119,7 @@ public class GameDisposeMutualController extends BaseController {
         }else {
             error_code=0;
             reason="请求成功";
-            game=Game.builder().name(name).describes(describes).pType(pType).publisher(publisher).developer(developer).team(team)
+            game=Game.builder().name(name).describes(describes).status(1).pType(1).publisher(publisher).developer(developer).team(team)
                     .time(new Date(new java.util.Date().getTime())).videos("video_"+i).imgs("img_"+i).types("type_"+i).status(1).build();
             game=gameService.saveGame(game);
             dispose.setGid(game.getId());
@@ -132,6 +133,7 @@ public class GameDisposeMutualController extends BaseController {
     @RequestMapping("/delete")
     @Transactional(propagation = Propagation.REQUIRED)
     public Map<String,Object> create(@PathParam("id") Long id){
+        System.out.println(id);
         Game game=gameService.findByIdGame(id);
         Dispose dispose=disposeService.findAllByGidDispose(game.getId());
         GameMutual gameMutual=gameMutualService.findByGidGameMutual(game.getId());

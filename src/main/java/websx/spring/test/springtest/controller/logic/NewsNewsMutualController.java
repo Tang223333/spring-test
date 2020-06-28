@@ -35,10 +35,20 @@ public class NewsNewsMutualController extends BaseController {
                                      @PathParam("title") String title,
                                      @PathParam("writer") String writer,
                                      @PathParam("content") String content,
-                                     @PathParam("ip") String ip){
+                                     @PathParam("ip") String ip,
+                                     @PathParam("status") Integer status,
+                                     @PathParam("goods") Double goods,
+                                     @PathParam("bads") Double bads,
+                                     @PathParam("views") Double views) throws Exception {
+        System.out.println(aid);
+        if (aid != null) {
+
+        }else {
+            throw new Exception();
+        }
         Long i=new Date().getTime();
         News news=newsService.findByTitleNews(title);
-        NewsMutual newsMutual=NewsMutual.builder().views((double) 0).goods((double) 0).bads((double) 0).build();
+        NewsMutual newsMutual=NewsMutual.builder().views(views!=null?views:(double)0).goods(goods!=null?goods:(double)0).bads(bads!=null?bads:(double)0).build();
         if (news != null) {
             error_code=1006;
             reason="新闻标题重复";
@@ -47,7 +57,7 @@ public class NewsNewsMutualController extends BaseController {
         }else {
             error_code=0;
             reason="请求成功";
-            news=News.builder().aid(aid).title(title).writer(writer).content(content).ip(ip).status(1).time(new Date()).videos("video_"+i).imgs("img_"+i).build();
+            news=News.builder().aid(aid).title(title).writer(writer).content(content).ip(ip).status(status!=null?status:1).time(new Date()).videos("video_"+i).imgs("img_"+i).build();
             news=newsService.saveNews(news);
             newsMutual.setNid(news.getId());
             newsMutual = newsMutualService.saveNewsMutual(newsMutual);

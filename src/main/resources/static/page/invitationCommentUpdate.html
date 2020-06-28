@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css"/>
+    <script src="../layui/layui.js"></script>
+</head>
+<body>
+
+<div class="login">
+    <div class="form">
+        <br>
+        <form class="layui-form" action="UserAndAccount/create" method="post">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">ID:</label>
+                <div class="layui-input-block">
+                    <input readonly="readonly" type="text" name="id" lay-verify="id"  class="layui-input id">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">内容:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="content" lay-verify="content"  class="layui-input content">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">IP:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="ip" lay-verify="ip" autocomplete="off" class="layui-input ip">
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#time'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+    });
+</script>
+</body>
+</html>

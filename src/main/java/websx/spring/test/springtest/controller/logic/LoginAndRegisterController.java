@@ -43,16 +43,19 @@ public class LoginAndRegisterController {
         if (account != null) {
             if (account.getPassword().equals(password)) {
                 model.addAttribute("msg","登录成功");
+                model.addAttribute("aid",account.getId());
                 if (account.getType()!=1) {
                     return "web/index";
                 }else {
                     return "web/index_v5";
                 }
             }else {
+                model.addAttribute("aid",0);
                 model.addAttribute("msg","密码错误");
                 return "web/login";
             }
         }else {
+            model.addAttribute("aid",0);
             model.addAttribute("msg","用户名或邮或箱手机号不存在");
             return "web/login";
         }

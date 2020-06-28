@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <title></title>
+    <script th:src="@{/js/jquery.min.js}"></script>
     <link th:href="@{/layui/css/layui.css}" rel="stylesheet"  media="all">
     <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
-    <script th:src="@{/js/jquery.min.js}"></script>
 </head>
 <body>
 <table class="layui-hide" id="test" lay-filter="test"></table>
@@ -42,7 +42,7 @@
                     type: 2,
                     content: 'page/userAccountUpdate.html',
                     shadeClose: true,
-                    area: ['550px', '650px'],
+                    area: ['550px', '550px'],
                     btn: ['确定', '取消'],
                     success: function (layero,index) {
                         var body = layui.layer.getChildFrame('body', index);
@@ -58,7 +58,7 @@
                         body.find(".email").val(data.email);
                         body.find(".phone").val(data.phone);
                         body.find(".type").val(data.type);
-                        body.find(".logo").val(data.logo);
+                        body.find(".spans").val(data.logo);
                         layui.form.render();
                         layui.form.verify();
                     },
@@ -118,7 +118,7 @@
                     type: 2,
                     content: 'page/userAccountAdd.html',
                     shadeClose: true,
-                    area: ['550px', '650px'],
+                    area: ['550px', '550px'],
                     btn: ['确定', '取消'],
                     btn1: function(index, layero){
                         var body = layui.layer.getChildFrame('body', index);
@@ -196,7 +196,9 @@
                 ,{field:'time', title:'更新时间', width:120}
                 ,{field:'type', title:'账户类型', width:120}
                 ,{field:'status', title:'账户状态', width:120}
-                ,{field:'logo', title:'账户头像', width:120}
+                ,{field:'logo', title:'账户头像', sort: false,
+                templet:function (d) { return '<div><img style="height: 30px;width: 30px" src='+d.logo+'></div>' }
+                }
                 ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:200},
             ]]
             ,page: true
@@ -252,7 +254,7 @@
         table.on('tool(test)', function(obj){
             var data = obj.data;
             if(obj.event === 'detail'){
-                layer.alert('编辑行：<br>'+ JSON.stringify(data))
+                layer.alert('查看：<br>'+ JSON.stringify(data))
             } else if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     obj.del();

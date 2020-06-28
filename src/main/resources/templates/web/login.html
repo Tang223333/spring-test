@@ -32,9 +32,10 @@
             </div>
             <h3>欢迎使用 Better</h3>
             <script th:inline="javascript" >
+                document.cookie="aid=0";
                 var num= [[${msg}]];
                 if (num != null) {
-                    alter(num);
+                    alert(num);
                 }
 
             </script>

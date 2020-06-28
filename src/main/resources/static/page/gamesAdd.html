@@ -1,0 +1,296 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css"/>
+    <script src="../layui/layui.js"></script>
+</head>
+<body>
+
+<div class="login">
+    <div class="form">
+        <br>
+        <form class="layui-form" action="UserAndAccount/create" method="post">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">游戏名:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" lay-verify="name"   autocomplete="off" class="layui-input name">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">游戏描述:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="describes" lay-verify="describes"   autocomplete="off" class="layui-input describes">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">游戏平台:</label>
+                <div class="layui-input-block">
+                    <input type="text" id="ptype" name="ptype" lay-verify="ptype"   autocomplete="off" class="layui-input ptype">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">开发商:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="developer" lay-verify="developer"    autocomplete="off" class="layui-input developer">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">发行商:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="publisher" lay-verify="publisher"  class="layui-input publisher">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">制作团队:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="team" lay-verify="team"   autocomplete="off" class="layui-input team">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">发行时间:</label>
+                <div class="layui-input-block">
+                    <input type="text" id="time" name="time" lay-verify="time"   class="layui-input time">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">游戏状态:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="status" lay-verify="status"  class="layui-input status">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">游戏视频:</label>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="videos" lay-verify="videos"   class="layui-input videos">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">游戏图片:</label>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="imgs" lay-verify="imgs" autocomplete="off" class="layui-input imgs">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">游戏类型:</label>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="types" lay-verify="types" autocomplete="off"  class="layui-input types">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">收藏数:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="collects" lay-verify="collects" autocomplete="off" placeholder="1" class="layui-input collects">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">评论数:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="comments" lay-verify="comments" autocomplete="off" placeholder="1" class="layui-input comments">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">评论数:</label>
+                    <div class="layui-input-inline">
+                        <input type="text"  name="goods" lay-verify="goods" class="layui-input goods">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">好评数:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="bads" lay-verify="bads" class="layui-input bads">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">评分:</label>
+                    <div class="layui-input-inline">
+                        <input type="text"  name="grades" lay-verify="grades" class="layui-input grades">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">低操作系统:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="systemDown" lay-verify="systemDown" class="layui-input systemDown">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">最低处理器:</label>
+                    <div class="layui-input-inline">
+                        <input type="text"  name="handlerDown" lay-verify="handlerDown" class="layui-input handlerDown">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">最低内存:</label>
+                    <div class="layui-input-inline">
+                        <input type="text"  name="ramDown" lay-verify="ramDown" class="layui-input ramDown">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">最低显卡:</label>
+                    <div class="layui-input-inline">
+                        <input type="text"  name="gpuDown" lay-verify="gpuDown" class="layui-input gpuDown">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">最低存储:</label>
+                    <div class="layui-input-inline">
+                        <input type="text"  name="storeDown" lay-verify="storeDown" class="layui-input storeDown">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">最低声卡:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="deviceDown" lay-verify="deviceDown" class="layui-input deviceDown">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">佳操作系统:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="systemUp" lay-verify="systemUp" class="layui-input systemUp">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">最佳处理器:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="handlerUp" lay-verify="handlerUp" class="layui-input handlerUp">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">最佳内存:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="ramUp" lay-verify="ramUp" class="layui-input ramUp">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">最佳显卡:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="gpuUp" lay-verify="gpuUp" class="layui-input gpuUp">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">最佳存储:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="storeUp" lay-verify="storeUp" class="layui-input storeUp">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">最佳声卡:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="deviceUp" lay-verify="deviceUp" class="layui-input deviceUp">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">注意:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="care" lay-verify="care" class="layui-input care">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#time'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+    });
+</script>
+</body>
+</html>
