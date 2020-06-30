@@ -56,8 +56,8 @@ public class ForumInvitationController {
 
     @RequestMapping("/findAllI")
     @Transactional(propagation = Propagation.REQUIRED)
-    public Map<String,Object> findAllI(){
-        List<Invitation> invitations=invitationService.findAllInvitation();
+    public Map<String,Object> findAllI(Integer page,Integer limit){
+        List<Invitation> invitations=invitationService.findAll2Invitation(page,limit);
         List<InvitationAll> invitationAlls=new ArrayList<>();
         for (int i = 0; i < invitations.size(); i++) {
             Account account=accountService.findByIdAccount(invitations.get(i).getAid());

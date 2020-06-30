@@ -4,16 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import websx.spring.test.springtest.entity.Forum;
-import websx.spring.test.springtest.entity.Invitation;
-import websx.spring.test.springtest.service.impl.ForumService;
-import websx.spring.test.springtest.service.impl.InvitationService;
+import websx.spring.test.springtest.entity.*;
+import websx.spring.test.springtest.service.impl.*;
 import websx.spring.test.springtest.utils.JsonUtils;
 
 import javax.websocket.server.PathParam;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequestMapping("/invitation")
 @RestController
@@ -23,9 +19,19 @@ public class InvitationController {
     private InvitationService invitationService;
     @Autowired
     private ForumService forumService;
+    @Autowired
+    private ImgService imgService;
+    @Autowired
+    private AccountService accountService;
 
     @RequestMapping("/findAll")
     public Map<String,Object> findAllInvitation(){
+        List<Invitation> allInvitationMutual = invitationService.findAllInvitation();
+        return JsonUtils.getJson(allInvitationMutual,allInvitationMutual!=null?0:1);
+    }
+
+    @RequestMapping("/findAll2")
+    public Map<String,Object> findAll2Invitation(){
         List<Invitation> allInvitationMutual = invitationService.findAllInvitation();
         return JsonUtils.getJson(allInvitationMutual,allInvitationMutual!=null?0:1);
     }
@@ -40,6 +46,43 @@ public class InvitationController {
     public Map<String,Object> findByFidInvitation(@PathParam("fid") Long fid){
         List<Invitation> Invitations = invitationService.findByFidInvitation(fid);
         return JsonUtils.getJson(Invitations,Invitations!=null?0:1);
+    }
+
+    @RequestMapping(value = "/findByFid2")
+    public Map<String,Object> findByFid2Invitation(@PathParam("fid") Long fid,Integer page){
+        System.out.println(fid);
+        System.out.println(page);
+        List<Invitation> invitations=invitationService.findByFidInvitation(fid);
+        List<Invitation> allInvitationMutual = invitationService.findByFid2Invitation(fid,page);
+        List<InvitationAll> invitationAlls=new ArrayList<>();
+        for (int i = 0; i < allInvitationMutual.size(); i++) {
+            Account account=accountService.findByIdAccount(allInvitationMutual.get(i).getAid());
+            Forum forum=forumService.findByIdForum(allInvitationMutual.get(i).getFid());
+            InvitationAll invitationAll=new InvitationAll();
+            invitationAll.setId(invitations.get(i).getId());
+            invitationAll.setFid(invitations.get(i).getFid());
+            invitationAll.setAid(invitations.get(i).getAid());
+            invitationAll.setForumName(forum.getName());
+            invitationAll.setForumLogo(forum.getLogo());
+            invitationAll.setAccountName(account.getName());
+            invitationAll.setAccountLogo(account.getLogo());
+            invitationAll.setContent(invitations.get(i).getContent());
+            invitationAll.setGoods(invitations.get(i).getGoods());
+            invitationAll.setBads(invitations.get(i).getBads());
+            invitationAll.setCollects(invitations.get(i).getCollects());
+            invitationAll.setComments(invitations.get(i).getComments());
+            invitationAll.setTime(invitations.get(i).getTime());
+            invitationAll.setImgs(invitations.get(i).getImgs());
+            invitationAll.setVideos(invitations.get(i).getVideos());
+            invitationAll.setIp(invitations.get(i).getIp());
+            invitationAlls.add(invitationAll);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",invitations.size());
+        map.put("data",invitationAlls);
+        return map;
     }
 
     @RequestMapping(value = "/findByAid",method = RequestMethod.POST)

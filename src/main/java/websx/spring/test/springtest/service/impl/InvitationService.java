@@ -20,6 +20,18 @@ public class InvitationService implements IInvitationService {
     }
 
     @Override
+    public List<Invitation> findAll22Invitation(Integer page) {
+        page=(page-1)*10;
+        return iInvitationMapper.findAll22Invitation(page);
+    }
+
+    @Override
+    public List<Invitation> findAll2Invitation(Integer page,Integer limit) {
+        page=(page-1)*limit;
+        return iInvitationMapper.findAll2Invitation(page,limit);
+    }
+
+    @Override
     public Invitation findByIdInvitation(Long id) {
         return iInvitationMapper.findByIdInvitation(id);
     }
@@ -27,6 +39,12 @@ public class InvitationService implements IInvitationService {
     @Override
     public List<Invitation> findByFidInvitation(Long fid) {
         return iInvitationMapper.findByFidInvitation(fid);
+    }
+
+    @Override
+    public List<Invitation> findByFid2Invitation(Long fid,Integer page) {
+        page=(page-1)*10;
+        return iInvitationMapper.findByFid2Invitation(fid,page);
     }
 
     @Override

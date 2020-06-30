@@ -20,6 +20,12 @@ public class ForumService implements IForumService {
     }
 
     @Override
+    public List<Forum> findAll2Forum(Integer page) {
+        page=(page-1)*10;
+        return iForumMapper.findAll2Forum(page);
+    }
+
+    @Override
     public Forum findByIdForum(Long id) {
         return iForumMapper.findByIdForum(id);
     }

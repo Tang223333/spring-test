@@ -11,6 +11,7 @@ import websx.spring.test.springtest.service.impl.ForumService;
 import websx.spring.test.springtest.utils.JsonUtils;
 
 import javax.websocket.server.PathParam;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,18 @@ public class ForumController{
     public Map<String,Object> findAllForum(){
         List<Forum> allForum = forumService.findAllForum();
         return JsonUtils.getJson(allForum,allForum!=null?0:1);
+    }
+
+    @RequestMapping("/findAll2")
+    public Map<String,Object> findAll2Forum(Integer page){
+        List<Forum> aalForumAll=forumService.findAllForum();
+        List<Forum> allForum = forumService.findAll2Forum(page);
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",aalForumAll.size());
+        map.put("data",allForum);
+        return map;
     }
 
     @RequestMapping(value = "/findById",method = RequestMethod.POST)

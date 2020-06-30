@@ -12,8 +12,11 @@ import java.util.List;
 @Repository
 public interface IGameMapper {
 
-    @Select("select * from game ;")
+    @Select("select * from game;")
     List<Game> findAllGame();
+
+    @Select("select * from game order by id limit 20;")
+    List<Game> find20Game();
 
     @Select("select * from game where id=#{id};")
     Game findByIdGame(Long id);
@@ -23,6 +26,15 @@ public interface IGameMapper {
 
     @Select("select * from game where name like #{name} ;")
     Game findByNameGame(String name);
+
+    @Select("select * from game where imgs=#{imgs} ;")
+    Game findByImgGame(String imgs);
+
+    @Select("select * from game where videos=#{videos} ;")
+    Game findByVideoGame(String videos);
+
+    @Select("select * from game where types=#{types} ;")
+    Game findByTypeGame(String types);
 
     @Insert("insert into game(name,describes,videos,imgs,types,pType,developer,publisher,team,time,status) values" +
             "(#{name},#{describes},#{videos},#{imgs},#{types},#{pType},#{developer},#{publisher},#{team},#{time},#{status});")

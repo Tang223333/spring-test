@@ -11,6 +11,8 @@ public interface IForumService {
 
     List<Forum> findAllForum();
 
+    List<Forum> findAll2Forum(Integer page);
+
     Forum findByIdForum(Long id);
 
     List<Forum> findByAidForum(Long aid);

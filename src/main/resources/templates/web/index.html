@@ -31,7 +31,10 @@
     <script th:inline="javascript" >
         var s= [[${aid}]];
         console.log(s);
-        document.cookie=s;
+        if (s != null) {
+            document.cookie=s;
+        }
+        console.log(document.cookie)
         var num= [[${msg}]];
         console.log(num)
         if (num != null) {
@@ -55,7 +58,8 @@
                             </a>
                         </div>
                         <script>
-                            aid=document.cookie.substring(4,5);
+                            console.log(document.cookie);
+                            aid=document.cookie;
                             $.ajax({
                                 url: "account/findById",
                                 type: 'POST',

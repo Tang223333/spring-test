@@ -139,6 +139,7 @@ public class UserAccountController extends BaseController {
     @RequestMapping("/findAll")
     @Transactional(propagation = Propagation.REQUIRED)
     public Map<String,Object> findAll(Integer page,Integer limit){
+        List<Account> accountsall=accountService.findAllAccount();
         List<Account> accounts=accountService.findAll2Account(page,limit);
         List<UserAccount> userAccounts=new ArrayList<>();
         for (int i = 0; i < accounts.size(); i++) {
@@ -164,7 +165,7 @@ public class UserAccountController extends BaseController {
         Map<String,Object> map=new HashMap<>();
         map.put("code",0);
         map.put("msg","");
-        map.put("count",accounts.size());
+        map.put("count",accountsall.size());
         map.put("data",userAccounts);
         return map;
     }

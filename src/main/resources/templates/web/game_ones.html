@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min14ed.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.min93e3.css}" rel="stylesheet">
+    <link th:href="@{/css/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/css/style.min862f.css}" rel="stylesheet">
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/content.min.js}"></script>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/HappyImage.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <style>
+        .top{
+            margin: auto;
+            width: 60%;
+        }
+        .bgcolor{
+            background: #242424;
+        }
+        a{
+            text-decoration: none;
+        }
+        .target {
+            width: 60%;
+            height: 400px;
+            display: inline-block;
+            overflow:hidden;
+            position:relative;
+            margin:20px auto;
+        }
+        .target img {
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+        }
+        .top_nr{
+            display: inline-block;
+            width: 39%;
+            height: 400px;
+            color: #ffffff;
+        }
+        .span-1{
+            width: 70px;
+            text-align: right;
+            display: inline-block;
+        }
+        .span_2{
+            width: 100%;
+            margin-left: 10px;
+        }
+        .btns{
+            background-color: #000000;
+            margin-left: 5px;
+        }
+        .tr1{
+            text-align: right;
+            width: 20%;
+        }
+
+    </style>
+</head>
+<body class="bgcolor">
+<div>
+    <div class="top">
+        <div class="target" id="target-1">
+            <div id="add_img">
+            </div>
+        </div>
+        <div class="top_nr">
+            <table>
+                <tr>
+                    <td class="tr1">游戏名：</td>
+                    <td id="game_name"></td>
+                </tr>
+                <tr><td>&nbsp;</td><td></td></tr>
+                <tr>
+                    <td class="tr1">游戏简介：</td>
+                    <td id="game_describes">走进位于南大西洋深海的Bahlam，一座上古众神的沉没之城。一场海难之后，冒险者与海洋考古学家Nikolay Bernstein在约11000米深的海底清醒过来。他身负重伤，而且在不知情的情况下和一个超自然球形小跟班关联在了一起。为调查自己流落至此的原因，我们的主角开始深入探索这座失落的地下城，同时也逐渐意识到，有一个不祥的存在盘踞在它阴暗的洞穴中。</td>
+                </tr>
+                <tr><td>&nbsp;</td><td></td></tr>
+                <tr>
+                    <td class="tr1">开发商：</td>
+                    <td id="game_developer"> Julian Laufer</td>
+                </tr>
+                <tr><td>&nbsp;</td><td></td></tr>
+                <tr>
+                    <td class="tr1">发行商：</td>
+                    <td id="game_publisher"> Headup</td>
+                </tr>
+                <tr><td>&nbsp;</td><td></td></tr>
+                <tr>
+                    <td class="tr1">制作团队：</td>
+                    <td id="game_team"> 朱利安·劳弗（Julian Laufer），游戏设计师和开发人员</td>
+                </tr>
+                <tr><td>&nbsp;</td><td></td></tr>
+                <tr>
+                    <td class="tr1"> 发行日期：</td>
+                    <td id="game_time">2017年2月14日</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<!--系统需求-->
+
+
+<div style="color: white;margin: auto;width: 60%;font-size: 14px;">
+    系统需求:
+    <hr width="100%" align="center">
+    <table width="100%">
+        <tr>
+            <td width="50%">最低配置:</td>
+            <td width="50%">推荐配置:</td>
+        </tr>
+        <tr></tr>
+        <tr></tr>
+        <tr>
+            <td><span class="span-1">操作系统:</span><span class="span_2" id="systemDowm">Windows 7, 8, 10 (32 and 64 bits)</span></td>
+            <td><span class="span-1">操作系统:</span><span class="span_2" id="systemUp">Windows 7, 8, 10 (64 bits)</span></td>
+        </tr>
+        <tr>
+            <td><span class="span-1">处理器:</span><span class="span_2" id="handlerDowm">INTEL, AMD 2 cores CPU at 2Ghz</span></td>
+            <td><span class="span-1">处理器:</span><span class="span_2" id="handlerUp">INTEL. AMD 4 cores CPU at 3Ghz</span></td>
+        </tr>
+        <tr>
+            <td><span class="span-1">内存:</span> <span class="span_2" id="ramDowm">4 GB RAM</span></td>
+            <td><span class="span-1">内存:</span> <span class="span_2" id="ramUp">8 GB RAM</span></td>
+        </tr>
+        <tr>
+            <td><span class="span-1">显卡:</span> <span class="span_2" id="gpuDowm">Intel HD3000, Radeon, Nvidia card with shader model 3, 1GB video ram.</span></td>
+            <td><span class="span-1">显卡:</span> <span class="span_2" id="gpuUp">Radeon 7950或更高, Nvidia GTX 670或更高，4GB显存。</span></td>
+        </tr>
+        <tr>
+            <td><span class="span-1">存储:</span><span class="span_2" id="storeDowm"> 9.0c</span></td>
+            <td><span class="span-1">存储:</span> <span class="span_2" id="storeUp">9.0c</span></td>
+        </tr>
+        <tr>
+            <td><span class="span-1">声卡:</span> <span class="span_2" id="deviceDowm">需要 4 GB 可用空间</span></td>
+            <td><span class="span-1">声卡:</span> <span class="span_2" id="deviceUp">需要 4 GB 可用空间</span></td>
+        </tr>
+        <tr >
+            <td ><span class="span-1">注意:</span> <span class="span_2" id="care1">最低分辨率: 1360x768,推荐全高清1920x1080</span></td>
+            <td ><span class="span-1">注意:</span> <span class="span_2" id="care2">最低分辨率: 1360x768,推荐全高清1920x1080</span></td>
+        </tr>
+    </table>
+
+</div>
+<br />
+<br />
+
+<div style="margin: auto;width: 60%;color: #ffffff;">
+    评论:
+    <hr width="100%" align="center">
+    <div id="add">
+
+    </div>
+</div>
+
+
+
+<div  style="color: white;margin: auto;width: 100%">
+
+</div>
+
+<div style="margin: auto;width: 60%;color: #ffffff;margin-top: 5px;">
+    <form>
+        <textarea id="nr" style="background-color: #000000;width:100%;height: auto;font-size: 18px;border: none"></textarea>
+    </form>
+    <button style="background-color: #000000;float: right;display: inline-block;" onclick="tianjia()">评论</button>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<script>
+    var gid= [[${gid}]];
+    if (gid != null) {
+        alert(gid);
+    }
+    $.ajax({
+        url: "GameDM/findOne",
+        type: 'POST',
+        data: {
+            id:gid,
+        },
+        success:function (data) {
+            document.getElementById("game_name").innerText=""+data.data.name;
+            document.getElementById("game_describes").innerText=""+data.data.describes;
+            document.getElementById("game_developer").innerText=""+data.data.developer;
+            document.getElementById("game_publisher").innerText=""+data.data.publisher;
+            document.getElementById("game_team").innerText=""+data.data.team;
+            document.getElementById("game_time").innerText=""+data.data.time;
+            document.getElementById("systemDowm").innerText=""+data.data.systemDown;
+            document.getElementById("systemUp").innerText=""+data.data.systemUp;
+            document.getElementById("handlerDowm").innerText=""+data.data.handlerDown;
+            document.getElementById("handlerUp").innerText=""+data.data.handlerUp;
+            document.getElementById("ramDowm").innerText=""+data.data.ramDown;
+            document.getElementById("ramUp").innerText=""+data.data.ramUp;
+            document.getElementById("gpuDowm").innerText=""+data.data.gpuDown;
+            document.getElementById("gpuUp").innerText=""+data.data.gpuUp;
+            document.getElementById("storeDowm").innerText=""+data.data.storeDown;
+            document.getElementById("storeUp").innerText=""+data.data.storeUp;
+            document.getElementById("deviceDowm").innerText=""+data.data.deviceDown;
+            document.getElementById("deviceUp").innerText=""+data.data.deviceUp;
+            document.getElementById("care1").innerText=""+data.data.care;
+            document.getElementById("care2").innerText=""+data.data.care;
+            var html=""+document.getElementById("add").innerHTML;
+            for (var i = 0; i < data.count.length; i++) {
+                html=html+"<div class='social-feed-box' style='background-color: #000000;'><div class='social-avatar' ><a href='#' class='pull-left'><img alt='image' src='"+data.count[i].accountLogo+"'></a><div class='media-body'><a >"+data.count[i].accountName+"</a></div></div>"
+                    +"<div class='social-body'><p>"+data.count[i].content+"</p></div>"
+                    +"<div class='social-body'><div class='pull-right' style='margin-top: -20px;'><p>"+data.count[i].time+"</p></div></div>"
+                    +"<div class='social-body'><div class='pull-right' style='margin-top: -20px;'>";
+                if(data.count[i].goodOrBad==1){
+                    html=html+"<button  class='btn btn-white btn-xs btns' >good</button>"
+                }else{
+                    html=html+"<button  class='btn btn-white btn-xs btns' >bad</button>"
+                }
+                html=html+"<button  class='btn btn-white btn-xs btns' >撤回</button></div></div></div>"
+            }
+            alert(html)
+            document.getElementById("add").innerHTML=html;
+            var html="";
+            for (var i = 0; i < data.data.imgs.length; i++) {
+                html=html+'<div><img src="'+data.data.imgs[i].value+'"></div>'
+            }
+            document.getElementById("add_img").innerHTML=html
+            $( "#target-1" ).HappyImage({
+                effect: "slide"
+            });
+        },
+        error:function (data) {
+
+        }
+    });
+</script>
+</body>
+</html>
+<script>
+
+
+    function  tianjia() {
+
+        var nr = document.getElementById("nr");
+        var zhi = nr.value;
+        alert(zhi);
+    }
+    function delTr(obj){
+        var parent = obj.parentNode.parentNode.parentNode.parentNode;
+        var chlid = obj.parentNode.parentNode.parentNode;
+        parent.removeChild(chlid);
+    }
+</script>

@@ -16,11 +16,17 @@ public interface IInvitationCommentMapper {
     @Select("select * from invitation_comment;")
     List<InvitationComment> findAllInvitationComment();
 
+    @Select("select * from invitation_comment order by id limit #{page},#{limit};")
+    List<InvitationComment> findAll2InvitationComment(Integer page,Integer limit);
+
     @Select("select * from invitation_comment where id=#{id};")
     InvitationComment findByIdInvitationComment(Long id);
 
     @Select("select * from invitation_comment where iid=#{iid};")
     List<InvitationComment> findByIidInvitationComment(Long iid);
+
+    @Select("select * from invitation_comment where iid=#{iid} order by id limit #{page},10;")
+    List<InvitationComment> findByIid2InvitationComment(Long iid,Integer page);
 
     @Select("select * from invitation_comment where aid=#{aid};")
     List<InvitationComment> findByAidInvitationComment(Long aid);

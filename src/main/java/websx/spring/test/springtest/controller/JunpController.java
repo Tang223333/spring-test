@@ -1,10 +1,28 @@
 package websx.spring.test.springtest.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import websx.spring.test.springtest.entity.Forum;
+import websx.spring.test.springtest.entity.Game;
+import websx.spring.test.springtest.entity.Invitation;
+import websx.spring.test.springtest.service.impl.ForumService;
+import websx.spring.test.springtest.service.impl.GameService;
+import websx.spring.test.springtest.service.impl.InvitationService;
+
+import javax.websocket.server.PathParam;
+import java.util.List;
 
 @Controller
 public class JunpController {
+
+    @Autowired
+    private GameService gameService;
+    @Autowired
+    private InvitationService invitationService;
+    @Autowired
+    private ForumService forumService;
 
     @RequestMapping("/login")
     public String toLogin(){
@@ -93,6 +111,38 @@ public class JunpController {
     @RequestMapping("/types")
     public String toTypes(){
         return "web/types";
+    }
+
+    @RequestMapping("/game_one")
+    public String toGameOne(Long id, Model model){
+        Game byIdGame = gameService.findByIdGame(id);
+        if (byIdGame != null) {
+            model.addAttribute("gid",byIdGame.getId());
+            return "web/game_ones";
+        }else {
+            return "web/index_v5";
+        }
+    }
+
+    @RequestMapping("/fenye")
+    public String toFenYe(){
+        return "web/fenye";
+    }
+
+    @RequestMapping("/forum")
+    public String toForum(){
+        return "web/forum_main";
+    }
+
+    @RequestMapping("/invitation")
+    public String toInvitation(@PathParam("fid") Long fid, Model model){
+        Forum forum=forumService.findByIdForum(fid);
+        if (forum != null) {
+            model.addAttribute("fid",forum.getId());
+            return "web/blog";
+        }else {
+            return "web/forum_main";
+        }
     }
 
 }

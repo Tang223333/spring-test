@@ -33,8 +33,14 @@ public class InvitationCommentController {
     }
 
     @RequestMapping(value = "/findByIid",method = RequestMethod.POST)
-    public Map<String,Object> findByGidInvitationComment(@PathParam("iid") Long iid){
+    public Map<String,Object> findByIidInvitationComment(@PathParam("iid") Long iid){
         List<InvitationComment> InvitationComments = invitationCommentService.findByIidInvitationComment(iid);
+        return JsonUtils.getJson(InvitationComments,InvitationComments!=null?0:1);
+    }
+
+    @RequestMapping(value = "/findByIid")
+    public Map<String,Object> findByIid2InvitationComment(Long iid,Integer page){
+        List<InvitationComment> InvitationComments = invitationCommentService.findByIid2InvitationComment(iid,page);
         return JsonUtils.getJson(InvitationComments,InvitationComments!=null?0:1);
     }
 

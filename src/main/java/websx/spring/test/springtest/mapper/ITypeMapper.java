@@ -21,6 +21,12 @@ public interface ITypeMapper {
     @Select("select * from type where tKeys=#{tKeys};")
     List<Type> findAllKeyType(String tKeys);
 
+    @Select("select * from type where value=#{value};")
+    List<Type> findByValueType(String value);
+
+    @Select("select * from type where value=#{value} order by id limit #{page},5;")
+    List<Type> findByValueType2(String value,Integer page);
+
     @Insert("insert into type(tKeys,value) values" +
             "(#{tKeys},#{value});")
     void saveType(Type type);

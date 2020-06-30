@@ -12,9 +12,13 @@ public interface IInvitationCommentService {
 
     List<InvitationComment> findAllInvitationComment();
 
+    List<InvitationComment> findAll2InvitationComment(Integer page,Integer limit);
+
     InvitationComment findByIdInvitationComment(Long id);
 
     List<InvitationComment> findByIidInvitationComment(Long iid);
+
+    List<InvitationComment> findByIid2InvitationComment(Long iid,Integer page);
 
     List<InvitationComment> findByAidInvitationComment(Long aid);
 

@@ -31,6 +31,17 @@ public class TypeService implements ITypeService {
     }
 
     @Override
+    public List<Type> findByValueType(String value) {
+        return iTypeMapper.findByValueType(value);
+    }
+
+    @Override
+    public List<Type> findByValueType2(String value,Integer page) {
+        page=(page-1)*5;
+        return iTypeMapper.findByValueType2(value,page);
+    }
+
+    @Override
     public Type saveType(Type type) {
         iTypeMapper.saveType(type);
         type=iTypeMapper.findAllType().get(iTypeMapper.findAllType().size()-1);

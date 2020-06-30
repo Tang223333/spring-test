@@ -16,11 +16,20 @@ public interface IInvitationMapper {
     @Select("select * from invitation;")
     List<Invitation> findAllInvitation();
 
+    @Select("select * from invitation order by id limit #{page},10;")
+    List<Invitation> findAll22Invitation(Integer page);
+
+    @Select("select * from invitation order by id limit #{page},#{limit};")
+    List<Invitation> findAll2Invitation(Integer page,Integer limit);
+
     @Select("select * from invitation where id=#{id};")
     Invitation findByIdInvitation(Long id);
 
     @Select("select * from invitation where fid=#{fid};")
     List<Invitation> findByFidInvitation(Long fid);
+
+    @Select("select * from invitation where fid=#{fid} order by id limit #{page},10;")
+    List<Invitation> findByFid2Invitation(Long fid,Integer page);
 
     @Select("select * from invitation where aid=#{aid};")
     List<Invitation> findByAidInvitation(Long aid);

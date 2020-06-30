@@ -66,8 +66,8 @@ public class CommentController extends BaseController {
 
     @RequestMapping("/InvitationCFindALl")
     @Transactional(propagation = Propagation.REQUIRED)
-    public Map<String,Object> InvitationCFindAll(){
-        List<InvitationComment> invitationComments=invitationCommentService.findAllInvitationComment();
+    public Map<String,Object> InvitationCFindAll(Integer page,Integer limit){
+        List<InvitationComment> invitationComments=invitationCommentService.findAll2InvitationComment(page,limit);
         List<InvitationCommentAll> invitationCommentAlls=new ArrayList<>();
         for (int i = 0; i < invitationComments.size(); i++) {
             Account account=accountService.findByIdAccount(invitationComments.get(i).getAid());

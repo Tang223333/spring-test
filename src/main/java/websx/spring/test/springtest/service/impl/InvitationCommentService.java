@@ -21,6 +21,12 @@ public class InvitationCommentService implements IInvitationCommentService {
     }
 
     @Override
+    public List<InvitationComment> findAll2InvitationComment(Integer page,Integer limit) {
+        page=(page-1)*limit;
+        return iInvitationCommentMapper.findAll2InvitationComment(page,limit);
+    }
+
+    @Override
     public InvitationComment findByIdInvitationComment(Long id) {
         return iInvitationCommentMapper.findByIdInvitationComment(id);
     }
@@ -28,6 +34,12 @@ public class InvitationCommentService implements IInvitationCommentService {
     @Override
     public List<InvitationComment> findByIidInvitationComment(Long iid) {
         return iInvitationCommentMapper.findByIidInvitationComment(iid);
+    }
+
+    @Override
+    public List<InvitationComment> findByIid2InvitationComment(Long iid,Integer page) {
+        page=(page-1)*10;
+        return iInvitationCommentMapper.findByIid2InvitationComment(iid,page);
     }
 
     @Override

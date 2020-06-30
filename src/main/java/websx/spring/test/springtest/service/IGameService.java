@@ -11,11 +11,19 @@ public interface IGameService {
 
     List<Game> findAllGame();
 
+    List<Game> find20Game();
+
     Game findByIdGame(Long id);
 
     List<Game> findByLikeNameGame(String name);
 
     Game findByNameGame(String name);
+
+    Game findByImgGame(String imgs);
+
+    Game findByVideoGame(String videos);
+
+    Game findByTypeGame(String types);
 
     Game saveGame(Game game);
 

@@ -6,13 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import websx.spring.test.springtest.controller.BaseController;
-import websx.spring.test.springtest.entity.Dispose;
-import websx.spring.test.springtest.entity.Game;
-import websx.spring.test.springtest.entity.GameAll;
-import websx.spring.test.springtest.entity.GameMutual;
-import websx.spring.test.springtest.service.impl.DisposeService;
-import websx.spring.test.springtest.service.impl.GameMutualService;
-import websx.spring.test.springtest.service.impl.GameService;
+import websx.spring.test.springtest.entity.*;
+import websx.spring.test.springtest.service.impl.*;
+import websx.spring.test.springtest.utils.JsonUtils;
 import websx.spring.test.springtest.utils.JsonUtils2;
 
 import javax.websocket.server.PathParam;
@@ -32,6 +28,30 @@ public class GameDisposeMutualController extends BaseController {
     private DisposeService disposeService;
     @Autowired
     private GameMutualService gameMutualService;
+    @Autowired
+    private GameCommentService gameCommentService;
+    @Autowired
+    private ImgService imgService;
+    @Autowired
+    private AccountService accountService;
+    @Autowired
+    private VideoService videoService;
+    @Autowired
+    private TypeService typeService;
+
+    @RequestMapping("/find20")
+    public Map<String,Object> find20(){
+        List<Game> games=gameService.find20Game();
+        for (int i = 0; i < games.size(); i++) {
+            List<Img> imgs=imgService.findByKeyImg(games.get(i).getImgs()+"");
+            if (imgs.size()>0&&imgs!=null) {
+                games.get(i).setImgs(imgs.get(0).getValue());
+            }else {
+                games.get(i).setImgs("");
+            }
+        }
+        return JsonUtils.getJson(games,(games!=null)?0:1);
+    }
 
     @RequestMapping("/findAll")
     @Transactional(propagation = Propagation.REQUIRED)
@@ -79,6 +99,72 @@ public class GameDisposeMutualController extends BaseController {
         map.put("msg","");
         map.put("count",gameAlls.size());
         map.put("data",gameAlls);
+        return map;
+    }
+
+    @RequestMapping("/findOne")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> findOne(Long id){
+        Game games=gameService.findByIdGame(id);
+        GameAll gameAll=new GameAll();
+        GameMutual gameMutual=gameMutualService.findByGidGameMutual(games.getId());
+        Dispose dispose=disposeService.findAllByGidDispose(games.getId());
+        List<Img> imgs=imgService.findByKeyImg(games.getImgs()+"");
+        List<Video> videos=videoService.findByKeyVideo(games.getVideos()+"");
+        List<Type> types=typeService.findByKeyType(games.getTypes()+"");
+        gameAll.setId(games.getId());
+        gameAll.setName(games.getName());
+        gameAll.setDescribes(games.getDescribes());
+        gameAll.setDeveloper(games.getDeveloper());
+        gameAll.setPublisher(games.getPublisher());
+        gameAll.setTeam(games.getTeam());
+        gameAll.setTime(games.getTime());
+        gameAll.setStatus(games.getStatus());
+        gameAll.setVideos(videos);
+        gameAll.setImgs(imgs);
+        gameAll.setTypes(types);
+        gameAll.setPType(games.getPType());
+        gameAll.setCollects(gameMutual.getCollects());
+        gameAll.setComments(gameMutual.getComments());
+        gameAll.setGoods(gameMutual.getGoods());
+        gameAll.setBads(gameMutual.getBads());
+        gameAll.setGrades(gameMutual.getGrades());
+        gameAll.setSystemDown(dispose.getSystemDown());
+        gameAll.setHandlerDown(dispose.getHandlerDown());
+        gameAll.setRamDown(dispose.getRamDown());
+        gameAll.setGpuDown(dispose.getGpuDown());
+        gameAll.setStoreDown(dispose.getStoreDown());
+        gameAll.setDeviceDown(dispose.getDeviceDown());
+        gameAll.setSystemUp(dispose.getSystemUp());
+        gameAll.setHandlerUp(dispose.getHandlerUp());
+        gameAll.setRamUp(dispose.getRamUp());
+        gameAll.setGpuUp(dispose.getGpuUp());
+        gameAll.setStoreUp(dispose.getStoreUp());
+        gameAll.setDeviceUp(dispose.getDeviceUp());
+        gameAll.setCare(dispose.getCare());
+        Map<String,Object> map=new HashMap<>();
+        List<GameComment> gameComments=gameCommentService.findByGidGameComment(id);
+        List<GameCommentAll> gameCommentAlls=new ArrayList<>();
+        for (int i = 0; i < gameComments.size(); i++) {
+            GameCommentAll gameCommentAll=new GameCommentAll();
+            Account account=accountService.findByIdAccount(gameComments.get(i).getAid());
+            gameCommentAll.setId(gameComments.get(i).getId());
+            gameCommentAll.setGid(gameAll.getId());
+            gameCommentAll.setGameName(gameAll.getName());
+            gameCommentAll.setAid(account.getId());
+            gameCommentAll.setAccountName(account.getName());
+            gameCommentAll.setAccountLogo(account.getLogo());
+            gameCommentAll.setContent(gameComments.get(i).getContent());
+            gameCommentAll.setGoodOrBad(gameComments.get(i).getGoodOrBad());
+            gameCommentAll.setGrade(gameComments.get(i).getGrade());
+            gameCommentAll.setIp(gameComments.get(i).getIp());
+            gameCommentAll.setTime(gameComments.get(i).getTime());
+            gameCommentAlls.add(gameCommentAll);
+        }
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",gameCommentAlls);
+        map.put("data",gameAll);
         return map;
     }
 

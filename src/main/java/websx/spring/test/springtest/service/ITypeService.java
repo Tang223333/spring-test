@@ -15,6 +15,10 @@ public interface ITypeService {
 
     List<Type> findByKeyType(String tKeys);
 
+    List<Type> findByValueType(String value);
+
+    List<Type> findByValueType2(String value,Integer page);
+
     Type saveType(Type type);
 
     Type deleteByIdType(Long id);

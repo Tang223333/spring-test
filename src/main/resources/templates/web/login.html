@@ -32,7 +32,9 @@
             </div>
             <h3>欢迎使用 Better</h3>
             <script th:inline="javascript" >
-                document.cookie="aid=0";
+                document.cookie=0;
+                v=document.cookie;
+                console.log(v);
                 var num= [[${msg}]];
                 if (num != null) {
                     alert(num);

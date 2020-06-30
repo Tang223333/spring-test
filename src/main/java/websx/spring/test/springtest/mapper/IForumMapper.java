@@ -15,6 +15,9 @@ public interface IForumMapper {
     @Select("select * from forum;")
     List<Forum> findAllForum();
 
+    @Select("select * from forum  order by id limit #{page},10;")
+    List<Forum> findAll2Forum(Integer page);
+
     @Select("select * from forum where id=#{id};")
     Forum findByIdForum(Long id);
 

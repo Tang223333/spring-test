@@ -20,6 +20,11 @@ public class GameService implements IGameService {
     }
 
     @Override
+    public List<Game> find20Game() {
+        return iGameMapper.find20Game();
+    }
+
+    @Override
     public Game findByIdGame(Long id) {
         return iGameMapper.findByIdGame(id);
     }
@@ -32,6 +37,21 @@ public class GameService implements IGameService {
     @Override
     public Game findByNameGame(String name) {
         return iGameMapper.findByNameGame(name);
+    }
+
+    @Override
+    public Game findByImgGame(String imgs) {
+        return iGameMapper.findByImgGame(imgs);
+    }
+
+    @Override
+    public Game findByVideoGame(String videos) {
+        return iGameMapper.findByVideoGame(videos);
+    }
+
+    @Override
+    public Game findByTypeGame(String types) {
+        return iGameMapper.findByTypeGame(types);
     }
 
     @Override

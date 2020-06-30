@@ -12,9 +12,15 @@ public interface IInvitationService {
 
     List<Invitation> findAllInvitation();
 
+    List<Invitation> findAll22Invitation(Integer page);
+
+    List<Invitation> findAll2Invitation(Integer page,Integer limit);
+
     Invitation findByIdInvitation(Long id);
 
     List<Invitation> findByFidInvitation(Long fid);
+
+    List<Invitation> findByFid2Invitation(Long fid,Integer page);
 
     List<Invitation> findByAidInvitation(Long aid);
 
