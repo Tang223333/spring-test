@@ -169,7 +169,11 @@ public class CommentController extends BaseController {
         GameMutual gameMutual=null;
         GameComment gameComment=null;
         try {
+            System.out.println(gid);
+            System.out.println(aid);
+            System.out.println(content);
             gameComment=gameCommentService.findByAidGidGameComment(aid,gid);
+            System.out.println(gameComment);
             gameMutual = gameMutualService.findByGidGameMutual(gid);
             if (gameComment != null) {
                 throw new Exception();
@@ -177,18 +181,7 @@ public class CommentController extends BaseController {
                 gameComment= GameComment.builder().gid(gid).aid(aid).content(content).ip(ip).time(new Date()).goodOrBad(goodOrBad).grade(grade).build();
                 gameComment=gameCommentService.saveGameComment(gameComment);
                 gameMutual.setComments(gameMutual.getComments()+1);
-                List<GameComment> gameComments=gameCommentService.findAllGameComment();
-                int gradeAll=0;
-                for (int i = 0; i < gameComments.size(); i++) {
-                    gradeAll+=gameComments.get(i).getGrade();
-                }
-               gradeAll=gradeAll/gameComments.size();
-                gameMutual.setGrades(gradeAll);
-                if (goodOrBad>0) {
-                    gameMutual.setGoods(gameMutual.getGoods()+1);
-                }else {
-                    gameMutual.setBads(gameMutual.getBads()+1);
-                }
+
                 reason="评论发送成功";
             }
             gameMutual=gameMutualService.updateGameMutual(gameMutual);
@@ -210,22 +203,12 @@ public class CommentController extends BaseController {
         GameMutual gameMutual=null;
         GameComment gameComment=null;
         try {
+            System.out.println(gid);
+            System.out.println(aid);
             gameComment=gameCommentService.findByAidGidGameComment(aid,gid);
             gameMutual = gameMutualService.findByGidGameMutual(gid);
             if (gameComment != null) {
                 gameComment=gameCommentService.deleteGameComment(gameComment.getId());
-                List<GameComment> gameComments=gameCommentService.findAllGameComment();
-                int gradeAll=0;
-                for (int i = 0; i < gameComments.size(); i++) {
-                    gradeAll+=gameComments.get(i).getGrade();
-                }
-                gradeAll=gradeAll/gameComments.size();
-                gameMutual.setGrades(gradeAll);
-                if (gameComment.getGoodOrBad()>0) {
-                    gameMutual.setGoods(gameMutual.getGoods()-1);
-                }else {
-                    gameMutual.setBads(gameMutual.getBads()-1);
-                }
                 reason="评论撤回成功";
             }else {
                 throw new Exception();

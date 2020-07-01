@@ -70,6 +70,7 @@ public class CollectConcernController extends BaseController {
         List<InvitationCommentAll> invitationCommentAlls=new ArrayList<>();
         for (int i = 0; i < invitationComments.size(); i++) {
             InvitationCommentAll invitationCommentAll=new InvitationCommentAll();
+            account=accountService.findByIdAccount(invitationComments.get(i).getAid());
             invitationCommentAll.setId(invitationComments.get(i).getId());
             invitationCommentAll.setIid(invitationComments.get(i).getIid());
             invitationCommentAll.setInvitationContent(invitation.getContent());

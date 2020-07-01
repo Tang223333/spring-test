@@ -48,6 +48,13 @@
                         </div>
                     </div>
                     </div>
+
+                    <div style="margin: auto;width: 100%;color: #ffffff;margin-top: 5px;">
+                        <form>
+                            <textarea id="nr" style="background-color: #000000;width:100%;height: auto;font-size: 18px;border: none"></textarea>
+                        </form>
+                        <button style="background-color: #000000;float: right;display: inline-block;" onclick="tianjia()">评论</button>
+                    </div>
                     <div style="text-align: center;margin:10px auto;">
                         <div id="pager" class="pager clearfix" >
                         </div>
@@ -75,13 +82,14 @@
                 document.getElementById("neirong").innerText=alldata.data1.content
                 var html="";
                 for (var i = 0; i < alldata.data2.length; i++) {
+                    console.log(alldata.data2[i].accountLogo)
                     html=html+'<div class="social-feed-box btns"><div class="social-avatar">'
-                        +'<a onclick="ff2('+i+')" class="pull-left"><img src="img/01.jpg"></a>'
+                        +'<a onclick="ff2('+i+')" class="pull-left"><img src="'+alldata.data2[i].accountLogo+'"></a>'
                         +'<div class="media-body"><a onclick="ff2('+i+')">'+alldata.data2[i].accountName+'</a>'
                         +'<small class="text-muted">'+alldata.data2[i].time+'</small></div></div>'
                         +'<div class="social-body"> <p>'+alldata.data2[i].content+'</p></div>'
                         +'<div class="pull-right" style="margin-top: -25px; margin-right: 5px;">'
-                        +'<button  class="btn btn-white btn-xs btns">撤回</button></div></div>';
+                        +'<button onclick="delTr('+i+')"  class="btn btn-white btn-xs btns">撤回</button></div></div>';
                 }
                 if(alldata.data2.length<1){
                     html=html+"<p>没得</p>"
@@ -114,6 +122,40 @@
             pages=currentPage;
             fa()
         }
+    }
+
+    function  tianjia() {
+        var nr = document.getElementById("nr");
+        var zhi = nr.value;
+        console.log(alldata);
+        $.ajax({
+            url: "Comment/InvitationCommentOn",
+            type: 'POST',
+            data: {
+                iid: iids,
+                aid: document.cookie,
+                content: zhi,
+            },
+            success: function (data) {
+                alert(data.reason)
+                window.location.reload();
+            }
+        });
+    }
+
+    function delTr(s){
+        $.ajax({
+            url: "Comment/InvitationCommentOff",
+            type: 'POST',
+            data: {
+                iid: iids,
+                aid: document.cookie,
+            },
+            success: function (data) {
+                alert(data.reason)
+                window.location.reload();
+            }
+        });
     }
 </script>
 </body>

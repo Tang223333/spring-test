@@ -65,6 +65,55 @@
     </style>
 </head>
 <body class="bgcolor">
+<!--导航条-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Better</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" style="margin-left: 50%;">
+                <li class="active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">游戏 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">首页</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/fenye">分类</a></li>
+                    </ul>
+                </li>
+                <li><a href="/forum">论坛</a></li>
+                <li><a href="/news_main">新闻</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a onclick="goto()" id="sg" >收藏关注</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a onclick="ud()">账户信息</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a onclick="alter2()">密码修改</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="navbar-form navbar-left" href="">
+                <div class="form-group">
+                    <input type="text" id="gameName" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" onclick="go()" class="btn btn-default">Go</button>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">退出</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 <div>
     <div class="top">
         <div class="target" id="target-1">
@@ -187,14 +236,16 @@
 <br />
 <br />
 <script>
-    var gid= [[${gid}]];
+    var gids= [[${gid}]];
+    var alldata="";
     $.ajax({
         url: "GameDM/findOne",
         type: 'POST',
         data: {
-            id:gid,
+            id:gids,
         },
         success:function (data) {
+            alldata=data;
             document.getElementById("game_name").innerText=""+data.data.name;
             document.getElementById("game_describes").innerText=""+data.data.describes;
             document.getElementById("game_developer").innerText=""+data.data.developer;
@@ -221,12 +272,7 @@
                     +"<div class='social-body'><p>"+data.count[i].content+"</p></div>"
                     +"<div class='social-body'><div class='pull-right' style='margin-top: -20px;'><p>"+data.count[i].time+"</p></div></div>"
                     +"<div class='social-body'><div class='pull-right' style='margin-top: -20px;'>";
-                if(data.count[i].goodOrBad==1){
-                    html=html+"<button  class='btn btn-white btn-xs btns' >good</button>"
-                }else{
-                    html=html+"<button  class='btn btn-white btn-xs btns' >bad</button>"
-                }
-                html=html+"<button  class='btn btn-white btn-xs btns' >撤回</button></div></div></div>"
+                html=html+"<button onclick='delTr("+i+")'  class='btn btn-white btn-xs btns' >撤回</button></div></div></div>"
             }
             document.getElementById("add").innerHTML=html;
             var html="";
@@ -242,20 +288,41 @@
 
         }
     });
-</script>
-</body>
-</html>
-<script>
-
 
     function  tianjia() {
 
         var nr = document.getElementById("nr");
         var zhi = nr.value;
+        alert(zhi+" "+alldata.data.gid+"  "+document.cookie);
+        $.ajax({
+            url: "Comment/GameCommentOn",
+            type: 'POST',
+            data: {
+                gid: gids,
+                aid: document.cookie,
+                content: zhi,
+            },
+            success: function (data) {
+                alert(data.reason)
+                window.location.reload();
+            }
+        });
     }
-    function delTr(obj){
-        var parent = obj.parentNode.parentNode.parentNode.parentNode;
-        var chlid = obj.parentNode.parentNode.parentNode;
-        parent.removeChild(chlid);
+
+    function delTr(s){
+        $.ajax({
+            url: "Comment/GameCommentOff",
+            type: 'POST',
+            data: {
+                gid: gids,
+                aid: document.cookie,
+            },
+            success: function (data) {
+                alert(data.reason)
+                window.location.reload();
+            }
+        });
     }
 </script>
+</body>
+</html>

@@ -39,6 +39,16 @@ public class JunpController {
         return "web/index";
     }
 
+    @RequestMapping("/index_v5")
+    public String toIndexV5(){
+        return "web/index_v5";
+    }
+
+    @RequestMapping("/index_v5_main")
+    public String toIndexV5Main(){
+        return "web/index_v5_main";
+    }
+
     @RequestMapping("/404")
     public String to404(){
         return "web/404";
