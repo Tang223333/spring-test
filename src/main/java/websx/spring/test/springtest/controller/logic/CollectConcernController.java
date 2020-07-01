@@ -39,11 +39,91 @@ public class CollectConcernController extends BaseController {
     private AccountService accountService;
     @Autowired
     private GameService gameService;
+    @Autowired
+    private InvitationCommentService invitationCommentService;
+    @Autowired
+    private ImgService imgService;
+
+    @RequestMapping("/InvitationComment")
+    public Map<String,Object> InvitationComment(@PathParam("iid") Long iid,Integer page){
+        Invitation invitation=invitationService.findByIdInvitation(iid);
+        Account account=accountService.findByIdAccount(invitation.getAid());
+        Forum forum=forumService.findByIdForum(invitation.getFid());
+        InvitationAll invitationAll=new InvitationAll();
+        invitationAll.setId(invitation.getId());
+        invitationAll.setFid(invitation.getFid());
+        invitationAll.setAid(invitation.getAid());
+        invitationAll.setForumName(forum.getName());
+        invitationAll.setForumLogo(forum.getLogo());
+        invitationAll.setAccountName(account.getName());
+        invitationAll.setAccountLogo(account.getLogo());
+        invitationAll.setContent(invitation.getContent());
+        invitationAll.setGoods(invitation.getGoods());
+        invitationAll.setBads(invitation.getBads());
+        invitationAll.setCollects(invitation.getCollects());
+        invitationAll.setComments(invitation.getComments());
+        invitationAll.setTime(invitation.getTime());
+        invitationAll.setImgs(invitation.getImgs());
+        invitationAll.setVideos(invitation.getVideos());
+        invitationAll.setIp(invitation.getIp());
+        List<InvitationComment> invitationComments=invitationCommentService.findByIid2InvitationComment(iid,page);
+        List<InvitationCommentAll> invitationCommentAlls=new ArrayList<>();
+        for (int i = 0; i < invitationComments.size(); i++) {
+            InvitationCommentAll invitationCommentAll=new InvitationCommentAll();
+            invitationCommentAll.setId(invitationComments.get(i).getId());
+            invitationCommentAll.setIid(invitationComments.get(i).getIid());
+            invitationCommentAll.setInvitationContent(invitation.getContent());
+            invitationCommentAll.setAid(invitationComments.get(i).getAid());
+            invitationCommentAll.setAccountName(account.getName());
+            invitationCommentAll.setAccountLogo(account.getLogo());
+            invitationCommentAll.setContent(invitationComments.get(i).getContent());
+            invitationCommentAll.setImgs(invitationComments.get(i).getImgs());
+            invitationCommentAll.setVideos(invitationComments.get(i).getVideos());
+            invitationCommentAll.setIp(invitationComments.get(i).getIp());
+            invitationCommentAll.setTime(invitationComments.get(i).getTime());
+            invitationCommentAlls.add(invitationCommentAll);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",invitationComments.size());
+        map.put("data1",invitationAll);
+        map.put("data2",invitationCommentAlls);
+        return map;
+    }
 
     @RequestMapping("/newsCfindAll")
     @Transactional(propagation = Propagation.REQUIRED)
     public Map<String,Object> newsCfindAll(){
         List<NewsCollect> newsCollects=newsCollectService.findAllNewsCollect();
+        List<NewsCollectAll> newsCollectAlls=new ArrayList<>();
+        for (int i = 0; i < newsCollects.size(); i++) {
+            News news=newsService.findByIdNews(newsCollects.get(i).getNid());
+            Account account=accountService.findByIdAccount(newsCollects.get(i).getAid());
+            NewsCollectAll newsCollect=new NewsCollectAll();
+            newsCollect.setId(newsCollects.get(i).getId());
+            newsCollect.setNid(newsCollects.get(i).getNid());
+            newsCollect.setNewsTitle(news.getTitle());
+            newsCollect.setNewsWriter(news.getWriter());
+            newsCollect.setNewsContent(news.getContent());
+            newsCollect.setAid(newsCollects.get(i).getAid());
+            newsCollect.setAccountName(account.getName());
+            newsCollect.setAccountLogo(account.getLogo());
+            newsCollect.setTime(newsCollects.get(i).getTime());
+            newsCollectAlls.add(newsCollect);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",newsCollectAlls.size());
+        map.put("data",newsCollectAlls);
+        return map;
+    }
+
+    @RequestMapping("/newsCfindByAid")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> newsCfindByAid(@PathParam("aid") Long aid){
+        List<NewsCollect> newsCollects=newsCollectService.findByAidNewsCollect(aid);
         List<NewsCollectAll> newsCollectAlls=new ArrayList<>();
         for (int i = 0; i < newsCollects.size(); i++) {
             News news=newsService.findByIdNews(newsCollects.get(i).getNid());
@@ -97,6 +177,66 @@ public class CollectConcernController extends BaseController {
         return map;
     }
 
+    @RequestMapping("/gameCfindByAid")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> gameCfindByAid(@PathParam("aid") Long aid){
+        List<GameCollect> gameCollects=gameCollectService.findByAidGameCollect(aid);
+        List<GameCollectAll> gameCollectAlls=new ArrayList<>();
+        for (int i = 0; i < gameCollects.size(); i++) {
+            Game game=gameService.findByIdGame(gameCollects.get(i).getGid());
+            Account account=accountService.findByIdAccount(gameCollects.get(i).getAid());
+            GameCollectAll gameCollectAll=new GameCollectAll();
+            List<Img> imgs=imgService.findByKeyImg(game.getImgs()+"");
+            if (imgs!=null&&imgs.size()>0){
+                gameCollectAll.setImg(imgs.get(0).getValue());
+            }
+            gameCollectAll.setId(gameCollects.get(i).getId());
+            gameCollectAll.setGid(gameCollects.get(i).getGid());
+            gameCollectAll.setGameName(game.getName());
+            gameCollectAll.setGameDescribes(game.getDescribes());
+            gameCollectAll.setGameDeveloper(game.getDeveloper());
+            gameCollectAll.setGamePublisher(game.getPublisher());
+            gameCollectAll.setGameTeam(game.getTeam());
+            gameCollectAll.setAid(gameCollects.get(i).getAid());
+            gameCollectAll.setAccountName(account.getName());
+            gameCollectAll.setAccountLogo(account.getLogo());
+            gameCollectAll.setTime(gameCollects.get(i).getTime());
+            gameCollectAlls.add(gameCollectAll);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",gameCollectAlls.size());
+        map.put("data",gameCollectAlls);
+        return map;
+    }
+
+    @RequestMapping("/invitationCfindByAid")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> invitationCfindByAid(@PathParam("aid") Long aid){
+        List<InvitationCollect> invitationCollects=invitationCollectService.findByAidInvitationCollect(aid);
+        List<InvitationCollectAll> invitationCollectAlls=new ArrayList<>();
+        for (int i = 0; i < invitationCollects.size(); i++) {
+            Invitation invitation=invitationService.findByIdInvitation(invitationCollects.get(i).getIid());
+            Account account=accountService.findByIdAccount(invitationCollects.get(i).getAid());
+            InvitationCollectAll invitationCollectAll=new InvitationCollectAll();
+            invitationCollectAll.setId(invitationCollects.get(i).getId());
+            invitationCollectAll.setIid(invitationCollects.get(i).getIid());
+            invitationCollectAll.setInvitationContent(invitation.getContent());
+            invitationCollectAll.setAid(invitationCollects.get(i).getAid());
+            invitationCollectAll.setAccountName(account.getName());
+            invitationCollectAll.setAccountLogo(account.getLogo());
+            invitationCollectAll.setTime(invitationCollects.get(i).getTime());
+            invitationCollectAlls.add(invitationCollectAll);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",invitationCollectAlls.size());
+        map.put("data",invitationCollectAlls);
+        return map;
+    }
+
     @RequestMapping("/invitationCfindAll")
     @Transactional(propagation = Propagation.REQUIRED)
     public Map<String,Object> invitationCfindAll(){
@@ -127,6 +267,33 @@ public class CollectConcernController extends BaseController {
     @Transactional(propagation = Propagation.REQUIRED)
     public Map<String,Object> forumCfindAll(){
         List<ConcernForum> concernForums=concernForumService.findAllConcernForum();
+        List<ConcernForumAll> concernForumAlls=new ArrayList<>();
+        for (int i = 0; i < concernForums.size(); i++) {
+            Forum forum=forumService.findByIdForum(concernForums.get(i).getFid());
+            Account account=accountService.findByIdAccount(concernForums.get(i).getAid());
+            ConcernForumAll newsCollectAll=new ConcernForumAll();
+            newsCollectAll.setId(concernForums.get(i).getId());
+            newsCollectAll.setFid(concernForums.get(i).getFid());
+            newsCollectAll.setForumName(forum.getName());
+            newsCollectAll.setForumLogo(forum.getLogo());
+            newsCollectAll.setAid(concernForums.get(i).getAid());
+            newsCollectAll.setAccountName(account.getName());
+            newsCollectAll.setAccountLogo(account.getLogo());
+            newsCollectAll.setTime(concernForums.get(i).getTime());
+            concernForumAlls.add(newsCollectAll);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",concernForumAlls.size());
+        map.put("data",concernForumAlls);
+        return map;
+    }
+
+    @RequestMapping("/forumCfindByAid")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> forumCfindByAid(@PathParam("aid") Long aid){
+        List<ConcernForum> concernForums=concernForumService.findByAidConcernForum(aid);
         List<ConcernForumAll> concernForumAlls=new ArrayList<>();
         for (int i = 0; i < concernForums.size(); i++) {
             Forum forum=forumService.findByIdForum(concernForums.get(i).getFid());

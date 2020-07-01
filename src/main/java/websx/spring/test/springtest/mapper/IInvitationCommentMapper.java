@@ -25,6 +25,7 @@ public interface IInvitationCommentMapper {
     @Select("select * from invitation_comment where iid=#{iid};")
     List<InvitationComment> findByIidInvitationComment(Long iid);
 
+
     @Select("select * from invitation_comment where iid=#{iid} order by id limit #{page},10;")
     List<InvitationComment> findByIid2InvitationComment(Long iid,Integer page);
 

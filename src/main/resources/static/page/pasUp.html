@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>添加用户</title>
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css"/>
+    <script src="../layui/layui.js"></script>
+</head>
+<body>
+
+<div class="login">
+    <div class="form">
+
+
+        <form class="form-horizontal m-t"  role="form" method="post" action="http://localhost:8080/toRegister">
+            <div class="layui-form-item">
+                <label class="layui-form-label">ID:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="id" lay-verify="id" readonly="readonly" autocomplete="off" class="layui-input id">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">旧密码:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="oldPas" lay-verify="oldPas"  autocomplete="off" class="layui-input oldPas">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">新密码:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="newPas" lay-verify="newPas" autocomplete="off" class="layui-input newPas">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">确认新密码:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="newPas2" lay-verify="newPas2" autocomplete="off" class="layui-input newPas2">
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit;
+
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+            ,password: [
+                /^[\S]{6,12}$/
+                ,'密码必须6到12位，且不能出现空格'
+            ]
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+    });
+</script>
+</body>
+</html>

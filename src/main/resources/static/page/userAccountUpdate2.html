@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>添加用户</title>
+    <script src="../js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css"/>
+    <script src="../layui/layui.js"></script>
+</head>
+<body>
+
+<div class="login">
+    <div class="form">
+        <br>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">原图地址:</label>
+            <div class="layui-input-block">
+                <input readonly="readonly" id="spans" name="spans" class="layui-input spans"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label ">修改照片:</label>
+            <div class="layui-upload">
+                <form id="formImg" name="formImg" enctype="multipart/form-data">
+                    <input  type="file" name="file" id="file" value="修改图片"/>
+                </form>
+                <br/>
+                <button id="submitImg" class="layui-btn" name="submitImg">上传</button>
+                <br/>
+                <img style="width: 200px;height: 200px" src="" alt="" id="imgShow" name="imgShow">
+            </div>
+        </div>
+
+        <form class="layui-form" action="/UserAndAccount/update" method="post">
+            <div class="layui-form-item">
+                <label class="layui-form-label">ID:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="id" lay-verify="id" readonly="readonly" autocomplete="off" class="layui-input id">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">姓名:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" lay-verify="username"   placeholder="填写姓名" autocomplete="off" class="layui-input username">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">身份证号:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="number" lay-verify="number"   placeholder="请填写身份证号" autocomplete="off" class="layui-input number">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">住址:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="address" lay-verify="address"   placeholder="请填写住址" autocomplete="off" class="layui-input address">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sex" id="sex" lay-verify="sex"   placeholder="1为男，2为女" autocomplete="off" class="layui-input sex">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">出生日期:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="birthday" id="date" lay-verify="date" placeholder="选择出生日期" autocomplete="off" class="layui-input birthday">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">个性签名:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="style" lay-verify="style"   placeholder="个性签名" autocomplete="off" class="layui-input style">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">账户名:</label>
+                <div class="layui-input-block">
+                    <input type="text" name="accountName" lay-verify="accountName"   placeholder="填写姓名" autocomplete="off" class="layui-input accountName">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">邮箱:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="email" lay-verify="email" autocomplete="off" placeholder="example@exp.com" class="layui-input email">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">手机号:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="phone" lay-verify="phone" autocomplete="off" placeholder="15402325164" class="layui-input phone">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">账户类型:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="type" lay-verify="type" autocomplete="off" placeholder="1" class="layui-input type">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">图片地址:</label>
+                    <div class="layui-input-inline">
+                        <input hidden="hidden" type="hidden" name="logo" id="logo" lay-verify="logo" class="layui-input logo">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <script type="text/javascript">
+            s= document.getElementById("logo").innerText;
+            console.log(s);
+            $("#imgShow").attr("src",s);
+            $("#file").change(function () {
+                var fileImg = $("#imgShow");
+                var explorer = navigator.userAgent;
+                var imgSrc = $(this)[0].value;
+                console.log(fileImg)
+                console.log(explorer)
+                console.log(imgSrc)
+                if (explorer.indexOf('MSIE') >= 0) {
+                    if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)) {
+                        imgSrc = "";
+                        fileImg.attr("src","/img/default.png");
+                        return false;
+                    }else{
+                        fileImg.attr("src",imgSrc);
+                    }
+                }else{
+                    if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)) {
+                        imgSrc = "";
+                        fileImg.attr("src","/img/default.png");
+                        return false;
+                    }else{
+                        var file = $(this)[0].files[0];
+                        var url = URL.createObjectURL(file);
+                        fileImg.attr("src",url);
+                    }
+                }
+            })
+            $("#submitImg").click(function () {
+                var formData = new FormData(document.getElementById("formImg"));
+                console.log(formData);
+                $.ajax({
+                    url:"/upload/alogo",
+                    type:'POST',
+                    data:formData,
+                    processData: false,   // jQuery不要去处理发送的数据
+                    contentType: false,   // jQuery不要去设置Content-Type请求头
+                    success:function(data){
+                        $("#logo").attr("value", data);
+                        alert("上传成功");
+                    },
+                    error:function (data) {
+                        console.log("错误");
+                        alert("上传失败");
+                    }
+                });
+            })
+        </script>
+    </div>
+</div>
+
+
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+            ,number:[
+                /^[1-9]\d{5}(18|19|20|(3\d))\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+                ,'省份证号格式不正确'
+            ]
+            ,password: [
+                /^[\S]{6,12}$/
+                ,'密码必须6到12位，且不能出现空格'
+            ]
+            ,username:[
+                /^[\S]{2,}$/
+                ,'用户名长度必须大于2，且不能出现空格'
+            ]
+            ,type:[
+                /^1$/
+                ,'类型只有1-3'
+            ]
+            ,sex:[
+                /^[1-2]$/
+                ,'1为男，2为女'
+            ]
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+    });
+</script>
+</body>
+</html>

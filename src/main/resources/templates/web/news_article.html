@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min14ed.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.min93e3.css}" rel="stylesheet">
+    <link th:href="@{/css/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/css/style.min862f.css}" rel="stylesheet">
+    <link th:href="@{/css/page.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/content.min.js}"></script>
+    <script th:src="@{/js/jquery.z-pager.js}" type="text/javascript" charset="utf-8"></script>
+    <style>
+        *{
+            color: #ffffff;
+        }
+        .btns{
+            background-color: #000000;
+        }
+    </style>
+    <script>
+        var nids=[[${nid}]]
+        alert(nids);
+    </script>
+</head>
+
+<body class="gray-bg" style="background-color: #242424;">
+<div class="wrapper wrapper-content  animated fadeInRight article">
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1" >
+            <div class="ibox" >
+                <div class="ibox-content" style="background-color: #000000;">
+                    <div class="text-center article-title" >
+                        <h1 id="title">
+                            自行车都智能化了，你可知道它的历史？
+                        </h1>
+                        <p ><span id="zuoze">&nbsp;</span></p>
+                        <p id="neirong">ahgoiah</p>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var alldata="";
+    function fa(){
+        $.ajax({
+            url: "/NewsNM/findOne",
+            type: 'POST',
+            data: {
+                nid:nids,
+            },
+            success:function (data) {
+                alldata=data;
+                console.log(alldata);
+                document.getElementById("title").innerText=alldata.data.title
+                if(!alldata.data.writer==""){
+                    document.getElementById("zuoze").innerHTML="作者:"+alldata.data.writer
+                }
+                document.getElementById("neirong").innerText=alldata.data.content
+            },
+            error:function (data) {
+            }
+        });
+    }
+    fa();
+</script>
+</body>
+</html>
+

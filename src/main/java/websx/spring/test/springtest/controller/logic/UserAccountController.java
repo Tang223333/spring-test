@@ -88,9 +88,32 @@ public class UserAccountController extends BaseController {
         return JsonUtils2.getJson2(user,account,error_code,reason);
     }
 
+    @RequestMapping("/findByAid")
+    public Map<String,Object> findByAid(@PathParam("aid") Long aid){
+        Account account=accountService.findByIdAccount(aid);
+        User user=userService.findByIdUser(account.getUid());
+        UserAccount userAccount=new UserAccount();
+        userAccount.setId(user.getId());
+        userAccount.setName(user.getName());
+        userAccount.setNumber(user.getNumber());
+        userAccount.setAddress(user.getAddress());
+        userAccount.setSex(user.getSex());
+        userAccount.setBirthday(user.getBirthday());
+        userAccount.setAccountName(account.getName());
+        userAccount.setStyle(user.getStyle());
+        userAccount.setPassword(account.getPassword());
+        userAccount.setEmail(account.getEmail());
+        userAccount.setPhone(account.getPhone());
+        userAccount.setTime(account.getTime());
+        userAccount.setType(account.getType());
+        userAccount.setStatus(account.getStatus());
+        userAccount.setLogo(account.getLogo());
+        return JsonUtils.getJson(userAccount,userAccount==null?1:0);
+    }
+
     @RequestMapping("/update")
     @Transactional(propagation = Propagation.REQUIRED)
-    public Map<String,Object> create(@PathParam("id") Long  id,
+    public Map<String,Object> create(@PathParam("id") Long id,
                                      @PathParam("username") String  username,
                                      @PathParam("number") String number,
                                      @PathParam("address") String address,

@@ -4,12 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import websx.spring.test.springtest.entity.Forum;
-import websx.spring.test.springtest.entity.Game;
-import websx.spring.test.springtest.entity.Invitation;
-import websx.spring.test.springtest.service.impl.ForumService;
-import websx.spring.test.springtest.service.impl.GameService;
-import websx.spring.test.springtest.service.impl.InvitationService;
+import websx.spring.test.springtest.entity.*;
+import websx.spring.test.springtest.service.impl.*;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
@@ -23,6 +19,10 @@ public class JunpController {
     private InvitationService invitationService;
     @Autowired
     private ForumService forumService;
+    @Autowired
+    private NewsService newsService;
+    @Autowired
+    private AccountService accountService;
 
     @RequestMapping("/login")
     public String toLogin(){
@@ -142,6 +142,40 @@ public class JunpController {
             return "web/blog";
         }else {
             return "web/forum_main";
+        }
+    }
+
+    @RequestMapping("/invitation_one")
+    public String toInvitationOne(@PathParam("iid") Long iid, Model model){
+        Invitation invitation=invitationService.findByIdInvitation(iid);
+        if (invitation != null) {
+            model.addAttribute("iid",invitation.getId());
+            return "web/article";
+        }else {
+            return "web/blog";
+        }
+    }
+
+    @RequestMapping("/news_main")
+    public String toNewsMain(@PathParam("nid") Long nid,Model model){
+        News news=newsService.findByIdNews(nid);
+        if (news != null) {
+            model.addAttribute("nid",news.getId());
+            return "web/news_article";
+        }else {
+            return "web/news_main";
+        }
+    }
+
+    @RequestMapping("/CollectConcern")
+    public String toCollectConcern(@PathParam("aid") Long aid,Model model){
+        Account account=accountService.findByIdAccount(aid);
+        if (account != null) {
+            System.out.println(account.getId());
+            model.addAttribute("aid",account.getId());
+            return "web/CollectConcern";
+        }else {
+            return "web/index_v5";
         }
     }
 

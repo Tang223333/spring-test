@@ -8,6 +8,7 @@ import websx.spring.test.springtest.entity.Account;
 import websx.spring.test.springtest.service.impl.AccountService;
 import websx.spring.test.springtest.service.impl.UserService;
 import websx.spring.test.springtest.utils.JsonUtils;
+import websx.spring.test.springtest.utils.JsonUtils2;
 
 import javax.websocket.server.PathParam;
 import java.util.List;
@@ -21,6 +22,29 @@ public class AccountController {
     private AccountService accountService;
     @Autowired
     private UserService userService;
+
+    @RequestMapping(value = "/pasUp",method = RequestMethod.POST)
+    public Map<String,Object>  pasUp(@PathParam("id") Long id,
+                                     @PathParam("oldPas") String oldPas,
+                                     @PathParam("newPas") String newPas,
+                                     @PathParam("newPas2") String newPas2){
+        Account account=accountService.findByIdAccount(id);
+        if (oldPas.equals("")||newPas.equals("")||newPas2.equals("")) {
+            return JsonUtils2.getJson(account,1,"晴天写完数据");
+        }else {
+            if (newPas.equals(newPas2)){
+                if (account.getPassword().equals(oldPas)){
+                    account.setPassword(newPas2);
+                    account=accountService.updateAccount(account);
+                    return JsonUtils2.getJson(account,0,"密码修改成功");
+                }else {
+                    return JsonUtils2.getJson(account,1,"旧密码错误");
+                }
+            }else {
+                return JsonUtils2.getJson(account,1,"两次密码不同");
+            }
+        }
+    }
 
     @RequestMapping("/findAll")
     public Map<String,Object> findAllAccount(){

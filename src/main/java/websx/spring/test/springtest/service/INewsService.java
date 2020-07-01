@@ -11,6 +11,8 @@ public interface INewsService {
 
     List<News> findAllNews();
 
+    List<News> findAll2News(Integer page);
+
     News findByIdNews(Long id);
 
     List<News> findByAidNews(Long aid);

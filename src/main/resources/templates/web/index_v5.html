@@ -9,11 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>H+ 后台主题UI框架 - 首页示例四</title>
+    <title>主页</title>
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
+    <link th:href="@{/layui/css/layui.css}" rel="stylesheet"  media="all">
+    <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
     <style>
         .zhuti1{
             width: 20%;
@@ -43,16 +45,8 @@
 
 <script th:inline="javascript" >
     var s= [[${aid}]];
-    console.log(s);
-    if (s != null) {
-        document.cookie=s;
-    }
-    console.log(document.cookie)
+    document.cookie=s;
     var num= [[${msg}]];
-    console.log(num)
-    if (num != null) {
-        alert(num);
-    }
 </script>
 
 <!--导航条-->
@@ -80,16 +74,15 @@
                     </ul>
                 </li>
                 <li><a href="/forum">论坛</a></li>
-                <li><a href="#">新闻</a></li>
+                <li><a href="/news_main">新闻</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">个人收藏</a></li>
-                        <li><a href="#">个人关注</a></li>
+                        <li><a onclick="goto()" id="sg" >收藏关注</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">账户信息</a></li>
+                        <li><a onclick="ud()">账户信息</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">密码修改</a></li>
+                        <li><a onclick="alter2()">密码修改</a></li>
                     </ul>
                 </li>
             </ul>
@@ -367,6 +360,146 @@
         }else{
             alert("没得")
         }
+    }
+
+    function goto() {
+        window.location.href="CollectConcern?aid="+s;
+    }
+
+    function ud() {
+        $.ajax({
+            url: "/UserAndAccount/findByAid",
+            type: 'POST',
+            data: {
+                aid:s,
+            },
+            success:function (data) {
+                layui.use('layer', function(){
+                    var layer = layui.layer;
+                    layer.open({
+                        title: ['修改用户信息'],
+                        type: 2,
+                        content: 'page/userAccountUpdate2.html',
+                        shadeClose: true,
+                        area: ['550px', '550px'],
+                        btn: ['确定', '取消'],
+                        success: function (layero,index) {
+                            var body = layui.layer.getChildFrame('body', index);
+                            body.find(".id").val(data.data.id);
+                            body.find(".username").val(data.data.name);
+                            body.find(".number").val(data.data.number);
+                            body.find(".address").val(data.data.address);
+                            body.find(".sex").val(data.data.sex);
+                            body.find(".birthday").val(data.data.birthday);
+                            body.find(".style").val(data.data.style);
+                            body.find(".accountName").val(data.data.accountName);
+                            body.find(".email").val(data.data.email);
+                            body.find(".phone").val(data.data.phone);
+                            body.find(".type").val(data.data.type);
+                            body.find(".spans").val(data.data.logo);
+                            layui.form.render();
+                            layui.form.verify();
+                        },
+                        btn1: function(index, layero){
+                            var body = layui.layer.getChildFrame('body', index);
+                            var iframeWin = window[layero.find('iframe')[0]['name']];
+                            alert("请确定填完所有信息哦")
+                            $.ajax({
+                                url:"UserAndAccount/update",
+                                type:'POST',
+                                data:{
+                                    'id':body.find('.id').val(),
+                                    'username':body.find('.username').val(),
+                                    'number':body.find('.number').val(),
+                                    'address':body.find('.address').val(),
+                                    'sex':body.find('.sex').val(),
+                                    'birthday':body.find('.birthday').val(),
+                                    'style':body.find('.style').val(),
+                                    'accountName':body.find('.accountName').val(),
+                                    'email':body.find('.email').val(),
+                                    'phone':body.find('.phone').val(),
+                                    'type':body.find('.type').val(),
+                                    'logo':body.find('.logo').val(),
+                                },
+                                dataType:'json',
+                                success:function(data){
+                                    layer.closeAll();
+                                    if (data.error_code==0){
+                                        layer.msg(data.reason);
+                                    }else {
+                                        layer.msg(data.reason);
+                                    }
+                                }
+                            });
+                        },
+                        btn2: function(index, layero){
+                            layer.closeAll();
+                        },
+                        cancel:function () {
+                            window.location.reload();
+                        },
+                        end:function () {
+                            window.location.reload();
+                        }
+                    });
+                });
+            },
+            error:function (data) {
+            }
+        });
+    }
+
+    function alter2() {
+        layui.use('layer', function(){
+            var layer = layui.layer;
+            layer.open({
+                title: ['修改用户信息'],
+                type: 2,
+                content: 'page/pasUp.html',
+                shadeClose: true,
+                area: ['550px', '550px'],
+                btn: ['确定', '取消'],
+                success: function (layero,index) {
+                    var body = layui.layer.getChildFrame('body', index);
+                    console.log(s);
+                    body.find(".id").val(s);
+                    layui.form.render();
+                    layui.form.verify();
+                },
+                btn1: function(index, layero){
+                    var body = layui.layer.getChildFrame('body', index);
+                    var iframeWin = window[layero.find('iframe')[0]['name']];
+                    $.ajax({
+                        url:"account/pasUp",
+                        type:'POST',
+                        data:{
+                            'id':body.find('.id').val(),
+                            'oldPas':body.find('.oldPas').val(),
+                            'newPas':body.find('.newPas').val(),
+                            'newPas2':body.find('.newPas2').val(),
+                        },
+                        dataType:'json',
+                        success:function(data){
+                            layer.closeAll();
+                            if (data.error_code==0){
+                                layer.msg(data.reason);
+                            }else {
+                                layer.msg(data.reason);
+                            }
+                        }
+                    });
+                },
+                btn2: function(index, layero){
+                    layer.closeAll();
+                },
+                cancel:function () {
+                    window.location.reload();
+                },
+                end:function () {
+                    window.location.reload();
+                }
+            });
+        });
     }
 
 </script>

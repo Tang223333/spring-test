@@ -12,6 +12,8 @@ public class GameCollectAll {
     private String gameDeveloper;
     private String gamePublisher;
     private String gameTeam;
+    private String gameDescribes;
+    private String img;
     private Long aid;
     private String accountName;
     private String accountLogo;

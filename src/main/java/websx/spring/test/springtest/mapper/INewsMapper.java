@@ -15,6 +15,9 @@ public interface INewsMapper {
     @Select("select * from news;")
     List<News> findAllNews();
 
+    @Select("select * from news order by id limit #{page},10;")
+    List<News> findAll2News(Integer page);
+
     @Select("select * from news where id=#{id};")
     News findByIdNews(Long id);
 

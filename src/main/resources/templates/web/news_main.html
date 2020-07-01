@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min14ed.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.min93e3.css}" rel="stylesheet">
+    <link th:href="@{/css/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/css/style.min862f.css}" rel="stylesheet">
+    <link th:href="@{/css/page.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/content.min.js}"></script>
+    <script th:src="@{/js/jquery.z-pager.js}" type="text/javascript" charset="utf-8"></script>
+    <style>
+        *{
+            color: #ffffff;
+        }
+    </style>
+    <script>
+        var pages=1;
+    </script>
+
+</head>
+
+<body class="gray-bg" style="background-color: #242424;">
+<div class="row">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="wrapper wrapper-content animated fadeInRight">
+
+                    <div class="ibox-content m-b-sm border-bottom" style="background-color: #000000;">
+                        <div class="p-xs">
+                            <h2>欢迎来到Better新闻</h2>
+                            <span>你可以了解最新游戏资讯。</span>
+                        </div>
+                    </div>
+                    <div id="add" class="ibox-content forum-container" style="background-color: #000000;">
+
+                    </div>
+                </div>
+                <div style="text-align: center;margin:10px auto;">
+                    <div id="pager" class="pager clearfix">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var dataAll="";
+    function fa(){
+        $.ajax({
+            url: "/",
+            type: 'POST',
+            data: {
+                page:pages,
+            },
+            success:function (data) {
+                dataAll=data;
+                var html="";
+                for (var i = 0; i < data.data.length; i++) {
+                    html=html+'<div class="forum-item active" >'
+                        +'<div class="row">'
+                        +'<div class="col-sm-9">'
+                        +'<div class="forum-icon">'
+                        +'<img style="width: 40px; height: 40px;" src="img/01.jpg" /></div>'
+                        +'<a onclick="ff('+i+')" class="forum-item-title">'+data.data[i].title+'</a>'
+                        +'<div class="forum-sub-title">'+data.data[i].name+'</div></div>'
+                        +'<div class="col-sm-1 forum-info">'
+                        +'<span class="views-number">'+data.data[i].views+'</span>'
+                        +'<div><small>浏览</small></div></div>'
+                        +'<div class="col-sm-1 forum-info">'
+                        +'<span class="views-number">'+data.data[i].goods+'</span>'
+                        +'<div><small>话题</small></div></div>'
+                        +'<div class="col-sm-1 forum-info">'
+                        +'<span class="views-number">'+data.data[i].bads+'</span>'
+                        +'<div><small>帖子</small></div></div></div></div>';
+                }
+                document.getElementById("add").innerHTML=html;
+                if(pages==1){
+                    $("#pager").zPager({
+                        totalData: dataAll.count,
+                        pageData:10,
+                        htmlBox: $('#wraper'),
+                        btnShow: true,
+                        ajaxSetData: false
+
+                    });
+                }
+            },
+            error:function (data) {
+
+            }
+        });
+    }
+
+    function ff(s){
+        alert(dataAll.data[s].name);
+        window.location.href="news_main?nid="+dataAll.data[s].id;
+    }
+
+    function currentPage(currentPage){
+        if(pages==currentPage){
+
+        }else{
+            pages=currentPage
+            fa();
+        }
+    }
+
+    fa();
+</script>
+</body>
+
+
+</html>

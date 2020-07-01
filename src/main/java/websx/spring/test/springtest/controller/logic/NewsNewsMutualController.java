@@ -99,6 +99,36 @@ public class NewsNewsMutualController extends BaseController {
         return map;
     }
 
+    @RequestMapping("/findOne")
+    @Transactional(propagation = Propagation.REQUIRED)
+    public Map<String,Object> findOne(@PathParam("nid") Long nid){
+        News news=newsService.findByIdNews(nid);
+        NewsMutual newsMutual=newsMutualService.findByNidNewsMutual(news.getId());
+        Account account=accountService.findByIdAccount(news.getAid());
+        NewsAll newsAll=new NewsAll();
+        newsAll.setId(news.getId());
+        newsAll.setAid(news.getAid());
+        newsAll.setName(account.getName());
+        newsAll.setLogo(account.getLogo());
+        newsAll.setTitle(news.getTitle());
+        newsAll.setWriter(news.getWriter());
+        newsAll.setTime(news.getTime());
+        newsAll.setContent(news.getContent());
+        newsAll.setVideos(news.getVideos());
+        newsAll.setImgs(news.getImgs());
+        newsAll.setIp(news.getIp());
+        newsAll.setStatus(news.getStatus());
+        newsAll.setViews(newsMutual.getViews());
+        newsAll.setGoods(newsMutual.getGoods());
+        newsAll.setBads(newsMutual.getBads());
+        Map<String,Object> map=new HashMap<>();
+        map.put("code",0);
+        map.put("msg","");
+        map.put("count",1);
+        map.put("data",newsAll);
+        return map;
+    }
+
     @RequestMapping("/delete")
     @Transactional(propagation = Propagation.REQUIRED)
     public Map<String,Object> create(@PathParam("id") Long id){

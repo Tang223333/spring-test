@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min14ed.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.min93e3.css}" rel="stylesheet">
+    <link th:href="@{/css/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/css/style.min862f.css}" rel="stylesheet">
+    <link th:href="@{/css/page.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/content.min.js}"></script>
+    <script th:src="@{/js/jquery.z-pager.js}" type="text/javascript" charset="utf-8"></script>
+    <style>
+        *{
+            color: #ffffff;
+        }
+        .btns{
+            background-color: #000000;
+        }
+    </style>
+    <script>
+        var pages=1;
+        var iids=[[${iid}]]
+        alert(iids);
+    </script>
+
+</head>
+
+<body class="gray-bg" style="background-color: #242424;">
+<div class="wrapper wrapper-content  animated fadeInRight article">
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1" >
+            <div class="ibox" >
+                <div class="ibox-content" style="background-color: #000000;">
+                    <div class="text-center article-title" >
+                        <h1 id="title">
+                            自行车都智能化了，你可知道它的历史？
+                        </h1>
+                        <p >作者：<span id="zuoze">123</span></p>
+                        <p id="neirong">ahgoiah</p>
+                    </div>
+
+                    <div class="row">
+                        <h2>评论：</h2>
+                        <div class="col-lg-12" id="add">
+                        </div>
+                    </div>
+                    <div style="text-align: center;margin:10px auto;">
+                        <div id="pager" class="pager clearfix" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var alldata="";
+    function fa(){
+        $.ajax({
+            url: "/CollectConcern/InvitationComment",
+            type: 'POST',
+            data: {
+                iid:iids,
+                page:pages,
+            },
+            success:function (data) {
+                alldata=data;
+                console.log(alldata);
+                document.getElementById("title").innerText=alldata.data1.forumName
+                document.getElementById("zuoze").innerText=alldata.data1.accountName
+                document.getElementById("neirong").innerText=alldata.data1.content
+                var html="";
+                for (var i = 0; i < alldata.data2.length; i++) {
+                    html=html+'<div class="social-feed-box btns"><div class="social-avatar">'
+                        +'<a onclick="ff2('+i+')" class="pull-left"><img src="img/01.jpg"></a>'
+                        +'<div class="media-body"><a onclick="ff2('+i+')">'+alldata.data2[i].accountName+'</a>'
+                        +'<small class="text-muted">'+alldata.data2[i].time+'</small></div></div>'
+                        +'<div class="social-body"> <p>'+alldata.data2[i].content+'</p></div>'
+                        +'<div class="pull-right" style="margin-top: -25px; margin-right: 5px;">'
+                        +'<button  class="btn btn-white btn-xs btns">撤回</button></div></div>';
+                }
+                if(alldata.data2.length<1){
+                    html=html+"<p>没得</p>"
+                }
+                document.getElementById("add").innerHTML=html;
+                if(pages==1){
+                    $("#pager").zPager({
+                        totalData: alldata.count,
+                        htmlBox: $('#wraper'),
+                        btnShow: true,
+                        ajaxSetData: false
+                    });
+                }
+            },
+            error:function (data) {
+            }
+        });
+    }
+
+    fa();
+
+    function ff2(s){
+        alert(alldata.data2[s].content);
+    }
+
+    function currentPage(currentPage){
+        if(pages==currentPage){
+
+        }else{
+            pages=currentPage;
+            fa()
+        }
+    }
+</script>
+</body>
+</html>

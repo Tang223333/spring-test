@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min14ed.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.min93e3.css}" rel="stylesheet">
+    <link th:href="@{/css/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/css/style.min862f.css}" rel="stylesheet">
+    <link th:href="@{/css/page.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/content.min.js}"></script>
+    <script th:src="@{/js/jquery.z-pager.js}" type="text/javascript" charset="utf-8"></script>
+    <style>
+        .bg{
+            background-color: #C4C4C4;
+            padding: 10px;
+            color: #FFFFEE;
+        }
+        .btns{
+            background-color: #000000;
+        }
+    </style>
+    <script>
+        var pages=1;
+        var tab=1;
+        var aids=[[${aid}]]
+    </script>
+
+</head>
+
+<body class="gray-bg" style="background-color: #242424;">
+<div class="wrapper wrapper-content animated fadeIn">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a onclick="f1()" style="background-color: #000000;" data-toggle="tab" href="#tab-1" aria-expanded="true">收藏游戏</a>
+                    </li>
+                    <li class=""><a onclick="f2()" style="background-color: #000000;" data-toggle="tab" href="#tab-2" aria-expanded="false">收藏评论</a>
+                    </li>
+                    <li class=""><a onclick="f3()" style="background-color: #000000;" data-toggle="tab" href="#tab-3" aria-expanded="false">收藏新闻</a>
+                    </li>
+                    <li class=""><a onclick="f4()" style="background-color: #000000;" data-toggle="tab" href="#tab-4" aria-expanded="false">关注论坛</a>
+                    </li>
+                </ul>
+                <div class="tab-content" style="margin-top: 10px;">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="bg"  style="background-color: #000000;" id="add1">
+
+                        </div>
+                        <div style="text-align: center;margin:10px auto;">
+                            <div id="pager1" class="pager clearfix">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane">
+                        <div class="bg"  style="background-color: #000000;" id="add2">
+
+                        </div>
+                        <div style="text-align: center;margin:10px auto;">
+                            <div id="pager2" class="pager clearfix">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-3" class="tab-pane">
+                        <div class="bg"  style="background-color: #000000;"id="add3">
+
+                        </div>
+                        <div style="text-align: center;margin:10px auto;">
+                            <div id="pager3" class="pager clearfix">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-4" class="tab-pane">
+                        <div class="bg"  style="background-color: #000000;"id="add4">
+
+                        </div>
+                        <div style="text-align: center;margin:10px auto;">
+                            <div id="page4" class="pager clearfix">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var alldata1="";
+    var alldata2="";
+    var alldata3="";
+    var alldata4="";
+    function f1(){
+        tab=1;
+        pages=1;
+        $.ajax({
+            url: "/CollectConcern/gameCfindByAid",
+            type: 'POST',
+            data: {
+                aid:aids,
+            },
+            success:function (data) {
+                console.log(pages)
+                alldata1=data;
+                console.log(alldata1);
+                var html="";
+                for (var i = 0; i < alldata1.data.length; i++) {
+                    html=html+'<li onclick="ff1('+i+')" class="list-group-item lili" style="margin-top: 2px;">'
+                        +'<div style="width: 100%; height: 200px;">'
+                        +'<div style="width: 20%; height: 100%;  display: inline-block; overflow: hidden">'
+                        +'<img src="'+alldata1.data[i].img+'" style="width: 200px;height:160px;" class="rounded"/>'
+                        +'</div>'
+                        +'<div style="margin-left: 10px;width: 78%; height: 100%; display: inline-block;overflow: hidden;">'
+                        +'<h4>'+alldata1.data[i].gameName+'</h4>'
+                        +'<p>'+alldata1.data[i].gameDeveloper+'</p>'
+                        +'<p>'+alldata1.data[i].gamePublisher+'</p>'
+                        +'<p>'+alldata1.data[i].gameTeam+'（Julian Laufer），游戏设计师和开发人员</p>'
+                        +'<p>'+alldata1.data[i].gameDescribes+'</p>'
+                        +'</div></div></li>';
+                }
+                if(alldata1.data.length<1){
+                    html=html+"<p>没得</p>"
+                }
+                document.getElementById("add1").innerHTML=html;
+                if(pages==1){
+                    $("#pager1").zPager({
+                        totalData: alldata1.data.length,
+                        htmlBox: $('#wraper'),
+                        btnShow: true,
+                        ajaxSetData: false
+                    });
+                }
+            },
+            error:function (data) {
+            }
+        });
+
+    }
+
+    function f2(){
+        tab=2;
+        pages=1;
+        $.ajax({
+            url: "/CollectConcern/invitationCfindByAid",
+            type: 'POST',
+            data: {
+                aid:aids,
+            },
+            success:function (data) {
+                console.log(pages)
+                alldata2=data;
+                console.log(alldata2);
+                var html="";
+                console.log(alldata2.data.length);
+                for (var i = 0; i < alldata2.data.length; i++) {
+                    html=html+"<div onclick='ff2("+i+")' class='social-feed-box' style='background-color: #000000;'><div class='social-avatar' ><a href='#' class='pull-left'><img alt='image' src='"+alldata2.data[i].accountLogo+"'></a><div class='media-body'><a >"+alldata2.data[i].accountName+"</a></div></div>"
+                        +"<div class='social-body'><p>"+alldata2.data[i].invitationContent+"</p></div>"
+                        +"<div class='social-body'><div class='pull-right' style='margin-top: -20px;'><p>"+alldata2.data[i].time+"</p></div></div>"
+                        +"<div class='social-body'><div class='pull-right' style='margin-top: -20px;'>";
+                    html=html+"<button  class='btn btn-white btn-xs btns' >撤回</button></div></div></div>"
+                }
+                if(alldata2.data.length<1){
+                    html=html+"<p>没得</p>"
+                }
+                document.getElementById("add2").innerHTML=html;
+                if(pages==1){
+                    $("#pager2").zPager({
+                        totalData: alldata2.data.length,
+                        htmlBox: $('#wraper'),
+                        btnShow: true,
+                        ajaxSetData: false
+                    });
+                }
+            },
+            error:function (data) {
+            }
+        });
+    }
+
+    function f3(){
+        tab=3;
+        pages=1;
+        $.ajax({
+            url: "/CollectConcern/newsCfindByAid",
+            type: 'POST',
+            data: {
+                aid:aids,
+            },
+            success:function (data) {
+                console.log(pages)
+                alldata3=data;
+                console.log(alldata3);
+                var html="";
+                console.log(alldata3.data.length);
+                for (var i = 0; i < alldata3.data.length; i++) {
+                    html=html+'<div onclick="ff3('+i+')" class="ibox-content" style="background-color: #000000;">'
+                        +'<a class="btn-link">'
+                        +'<h2>'+alldata3.data[i].newsTitle+'</h2></a>'
+                        +' <div class="small m-b-xs"><img width="30px" height="30px" src="'+alldata3.data[i].accountLogo+'"/> <strong>'+alldata3.data[i].accountName+'</strong> </div>'
+                        +'<p>'+alldata3.data[i].time+'</p>'
+                        +'<div class="row"><div class="col-md" style="margin-right: 30px;">'
+                        +'</div></div></div></div>';
+                }
+                if(alldata3.data.length<1){
+                    html=html+"<p>没得</p>"
+                }
+                document.getElementById("add3").innerHTML=html;
+                if(pages==1){
+                    $("#pager3").zPager({
+                        totalData: alldata3.data.length,
+                        htmlBox: $('#wraper'),
+                        btnShow: true,
+                        ajaxSetData: false
+                    });
+                }
+            },
+            error:function (data) {
+            }
+        });
+    }
+
+    function f4(){
+        tab=4;
+        pages=1;
+        $.ajax({
+            url: "/CollectConcern/forumCfindByAid",
+            type: 'POST',
+            data: {
+                aid:aids,
+            },
+            success:function (data) {
+                alldata4=data;
+                var html="";
+                for (var i = 0; i < alldata4.data.length; i++) {
+                    html=html+'<div class="forum-item active" >'
+                        +'<div class="row">'
+                        +'<div class="col-sm-9">'
+                        +'<div class="forum-icon">'
+                        +'<img style="width: 40px; height: 40px;" src="'+alldata4.data[i].accountLogo+'" /></div>'
+                        +'<a onclick="ff4('+i+')" class="forum-item-title">'+alldata4.data[i].forumName+'</a>'
+                        +'<div class="forum-sub-title">'+alldata4.data[i].accountName+'</div></div>'
+                        +'</div></div></div></div>';
+                }
+                document.getElementById("add4").innerHTML=html;
+                if(pages==1){
+                    $("#page4").zPager({
+                        totalData: alldata4.data.length,
+                        pageData:10,
+                        htmlBox: $('#wraper'),
+                        btnShow: true,
+                        ajaxSetData: false
+
+                    });
+                }
+            },
+            error:function (data) {
+            }
+        });
+    }
+
+    function currentPage(currentPage){
+        if(pages==currentPage){
+
+        }else{
+            pages=currentPage;
+            if(tab==1){
+                f1();
+            }
+            if(tab==2){
+                f2();
+            }
+            if(tab==3){
+                f3();
+            }
+            if(tab==4){
+                f4();
+            }
+        }
+    }
+
+
+    function ff1(i){
+        alert(alldata1.data[i].gid)
+        window.location.href="game_one?id="+alldata1.data[i].gid;
+    }
+
+    function ff2(i){
+        alert(alldata2.data[i].iid)
+        window.location.href="invitation_one?iid="+alldata2.data[i].iid;
+    }
+
+    function ff3(i){
+        alert(alldata3.data[i].nid)
+        window.location.href="news_main?nid="+alldata3.data[i].nid;
+    }
+
+    function ff4(i){
+        alert(alldata4.data[i].fid)
+        window.location.href="invitation?fid="+alldata4.data[i].fid;
+    }
+
+    f1();
+</script>
+</body>
+
+</html>

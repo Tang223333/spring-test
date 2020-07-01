@@ -21,6 +21,12 @@ public class NewsService implements INewsService {
     }
 
     @Override
+    public List<News> findAll2News(Integer page) {
+        page=(page-1)*10;
+        return iNewsMapper.findAll2News(page);
+    }
+
+    @Override
     public News findByIdNews(Long id) {
         return iNewsMapper.findByIdNews(id);
     }
