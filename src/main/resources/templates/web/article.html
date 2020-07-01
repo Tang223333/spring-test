@@ -133,7 +133,7 @@
             type: 'POST',
             data: {
                 iid: iids,
-                aid: document.cookie,
+                aid: parent.f(),
                 content: zhi,
             },
             success: function (data) {
@@ -149,7 +149,7 @@
             type: 'POST',
             data: {
                 iid: iids,
-                aid: document.cookie,
+                aid: parent.f(),
             },
             success: function (data) {
                 alert(data.reason)

@@ -33,8 +33,9 @@
     </style>
     <script th:inline="javascript" >
         var s= [[${aid}]];
-        document.cookie=s;
+        s=parent.f();
         var num= [[${msg}]];
+        console.log("fadgasv")
     </script>
 </head>
 <body style="background: #242424">

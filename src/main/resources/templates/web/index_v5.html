@@ -38,17 +38,17 @@
         }
 
     </style>
-
+    <script th:inline="javascript" >
+        var s= [[${aid}]];
+        document.cookie=s;
+        var num= [[${msg}]];
+        function f() {
+            return s;
+        }
+    </script>
 </head>
 
 <body style="background: #242424">
-
-<script th:inline="javascript" >
-    var s= [[${aid}]];
-    document.cookie=s;
-    var num= [[${msg}]];
-</script>
-
 <!--导航条-->
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -65,20 +65,20 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" style="margin-left: 50%;">
-                <li class="active">
+                <li id="li1" class="active" onclick="li(1)">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">游戏 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">首页</a></li>
+                        <li><a href="/index_v5_main" target="iframe0">首页</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="/fenye">分类</a></li>
+                        <li><a href="/fenye" target="iframe0">分类</a></li>
                     </ul>
                 </li>
-                <li><a href="/forum">论坛</a></li>
-                <li><a href="/news_main">新闻</a></li>
-                <li class="dropdown">
+                <li id="li2" onclick="li(2)"><a href="/forum" target="iframe0">论坛</a></li>
+                <li id="li3" onclick="li(3)"><a href="/news_main" target="iframe0">新闻</a></li>
+                <li id="li4" onclick="li(4)" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a onclick="goto()" id="sg" >收藏关注</a></li>
+                        <li><a id="sg" href="/CollectConcern" target="iframe0">收藏关注</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a onclick="ud()">账户信息</a></li>
                         <li role="separator" class="divider"></li>
@@ -86,6 +86,35 @@
                     </ul>
                 </li>
             </ul>
+            <script>
+                console.log(document.cookie);
+                function li(s){
+                    if(s==1){
+                        document.getElementById("li1").classList.add("active")
+                        document.getElementById("li2").classList.remove("active")
+                        document.getElementById("li3").classList.remove("active")
+                        document.getElementById("li4").classList.remove("active")
+                    }
+                    if(s==2){
+                        document.getElementById("li1").classList.remove("active")
+                        document.getElementById("li2").classList.add("active")
+                        document.getElementById("li3").classList.remove("active")
+                        document.getElementById("li4").classList.remove("active")
+                    }
+                    if(s==3){
+                        document.getElementById("li1").classList.remove("active")
+                        document.getElementById("li2").classList.remove("active")
+                        document.getElementById("li3").classList.add("active")
+                        document.getElementById("li4").classList.remove("active")
+                    }
+                    if(s==4){
+                        document.getElementById("li1").classList.remove("active")
+                        document.getElementById("li2").classList.remove("active")
+                        document.getElementById("li3").classList.remove("active")
+                        document.getElementById("li4").classList.add("active")
+                    }
+                }
+            </script>
             <div class="navbar-form navbar-left" href="">
                 <div class="form-group">
                     <input type="text" id="gameName" class="form-control" placeholder="Search">
@@ -93,275 +122,20 @@
                 <button type="submit" onclick="go()" class="btn btn-default">Go</button>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">退出</a></li>
+                <li><a href="/login">退出</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-    <!--轮播图-->
-    <div style="height: 700px;width: 100%;overflow: hidden">
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-            </ol>
 
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-                <div class="item active">
-                    <img src="img/01.jpg" alt="...">
-
-                </div>
-                <div class="item">
-                    <img src="img/02.jpg" alt="...">
-
-                </div>
-                <div class="item">
-                    <img src="img/03.jpg" alt="...">
-
-                </div>
-            </div>
-
-            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </div>
-<p style="margin: 20px 50px;font-size: 18px;color: white ">有那些好玩的</p>
-<!--主体第一部分-->
-<div class="container-fluid ">
-    <!--2.定义行-->
-    <div class="row">
-        <div class="col-lg-3 zhuti1" onclick="sel(0)" >
-            <div class="col-lg-3 tupian">
-                <img id="img_1" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_1">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(1)" >
-            <div class="col-lg-3 tupian">
-                <img id="img_2" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_2">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(2)">
-            <div class="col-lg-3 tupian">
-                <img id="img_3" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_3">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(3)" >
-            <div class="col-lg-3 tupian">
-                <img id="img_4" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_4">想加什么加</p>
-            </div>
-        </div>
-    </div>
+<div class="row J_mainContent" id="content-main" style="width: 100%; height: 650px;">
+    <iframe  name="iframe0" width="100%" height="100%" src="/index_v5_main" frameborder="0"  seamless></iframe>
 </div>
-
-<div class="container-fluid ">
-    <!--2.定义行-->
-    <div class="row">
-        <div class="col-lg-3 zhuti1" onclick="sel(4)" >
-            <div class="col-lg-3 tupian">
-                <img id="img_5" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_5">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(5)" >
-            <div class="col-lg-3 tupian">
-                <img id="img_6" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_6">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(6)" >
-            <div class="col-lg-3 tupian">
-                <img id="img_7" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_7">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(7)" >
-            <div class="col-lg-3 tupian">
-                <img id="img_8" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_8">想加什么加</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid ">
-    <!--2.定义行-->
-    <div class="row">
-        <div class="col-lg-3 zhuti1" onclick="sel(8)" >
-            <div class="col-lg-3 tupian">
-                <img id="img_9" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_9">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(9)" >
-            <div class="col-lg-3 tupian">
-                <img id="img_10" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_10">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(10)">
-            <div class="col-lg-3 tupian">
-                <img id="img_11" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_11">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(11)">
-            <div class="col-lg-3 tupian">
-                <img id="img_12" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_12">想加什么加</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid ">
-    <!--2.定义行-->
-    <div class="row">
-        <div class="col-lg-3 zhuti1" onclick="sel(12)" >
-            <div class="col-lg-3 tupian">
-                <img id="img_13" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_13">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(13)" >
-            <div class="col-lg-3 tupian">
-                <img id="img_14" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_14">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(14)">
-            <div class="col-lg-3 tupian">
-                <img id="img_15" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_15">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(15)">
-            <div class="col-lg-3 tupian">
-                <img id="img_16" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_16">想加什么加</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid ">
-    <!--2.定义行-->
-    <div class="row">
-        <div class="col-lg-3 zhuti1" onclick="sel(16)">
-            <div class="col-lg-3 tupian">
-                <img id="img_17" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_17">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(17)">
-            <div class="col-lg-3 tupian">
-                <img id="img_18" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_18">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(18)">
-            <div class="col-lg-3 tupian">
-                <img id="img_19" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_19">想加什么加</p>
-            </div>
-        </div>
-        <div class="col-lg-3 zhuti1" onclick="sel(19)">
-            <div class="col-lg-3 tupian">
-                <img id="img_20" src="img/1.png" class="tupian"/>
-            </div>
-            <div class="col-lg-3 wenzi">
-                <p id="p_20">想加什么加</p>
-            </div>
-        </div>
-    </div>
+<div class="footer">
+    <div class="pull-right">&copy; 2014-2015 <a  target="_blank">zihan's blog</a></div>
 </div>
 
 <script>
-    var	data="";
-    $.ajax({
-        url: "GameDM/find20",
-        type: 'GET',
-        success:function (s) {
-            data=s;
-            for (var i = 0; i < data.data.length; i++) {
-                if(data.data[i].imgs==""){
-                    $("#img_"+(i+1)).attr("src", "img/wu.jpg")
-                    s=data.data[i].name;
-                    document.getElementById("p_"+(i+1)).innerText=s
-                }else{
-                    $("#img_"+(i+1)).attr("src", ""+data.data[i].imgs+"")
-                    s=data.data[i].name
-                    document.getElementById("p_"+(i+1)).innerText=s
-                }
-            }
-        },
-        error:function (data) {
-
-        }
-    });
-
-    function sel(index){
-        console.log(data.data.length)
-        if(index<(data.data.length)){
-            window.location.href="game_one?id="+data.data[index].id;
-        }else{
-            alert("没得")
-        }
-    }
-
-    function goto() {
-        window.location.href="CollectConcern?aid="+s;
-    }
 
     function ud() {
         $.ajax({
@@ -519,6 +293,5 @@
     }
 
 </script>
-
 </body>
 </html>

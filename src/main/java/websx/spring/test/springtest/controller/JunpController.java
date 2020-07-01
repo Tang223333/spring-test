@@ -178,15 +178,8 @@ public class JunpController {
     }
 
     @RequestMapping("/CollectConcern")
-    public String toCollectConcern(@PathParam("aid") Long aid,Model model){
-        Account account=accountService.findByIdAccount(aid);
-        if (account != null) {
-            System.out.println(account.getId());
-            model.addAttribute("aid",account.getId());
-            return "web/CollectConcern";
-        }else {
-            return "web/index_v5";
-        }
+    public String toCollectConcern(){
+         return "web/CollectConcern";
     }
 
 }
