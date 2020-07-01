@@ -41,7 +41,7 @@ public class GameController {
 
     @RequestMapping(value = "/findByName",method = RequestMethod.POST)
     public Map<String,Object> findByNameGame(@PathParam("name") String name){
-        List<Game> games = gameService.findByLikeNameGame(name);
+        Game games = gameService.findByNameGame(name);
         return JsonUtils.getJson(games,(games!=null)?0:1);
     }
 

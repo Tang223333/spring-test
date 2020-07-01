@@ -52,7 +52,7 @@
     var dataAll="";
     function fa(){
         $.ajax({
-            url: "/",
+            url: "/news/findAll2",
             type: 'POST',
             data: {
                 page:pages,
@@ -97,7 +97,6 @@
     }
 
     function ff(s){
-        alert(dataAll.data[s].name);
         window.location.href="news_main?nid="+dataAll.data[s].id;
     }
 

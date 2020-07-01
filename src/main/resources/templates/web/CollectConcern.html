@@ -232,7 +232,9 @@
                 aid:aids,
             },
             success:function (data) {
+                console.log(pages)
                 alldata4=data;
+                console.log(alldata4);
                 var html="";
                 for (var i = 0; i < alldata4.data.length; i++) {
                     html=html+'<div class="forum-item active" >'
@@ -283,22 +285,26 @@
 
 
     function ff1(i){
-        alert(alldata1.data[i].gid)
+
+
         window.location.href="game_one?id="+alldata1.data[i].gid;
     }
 
     function ff2(i){
-        alert(alldata2.data[i].iid)
+
+
         window.location.href="invitation_one?iid="+alldata2.data[i].iid;
     }
 
     function ff3(i){
-        alert(alldata3.data[i].nid)
+
+
         window.location.href="news_main?nid="+alldata3.data[i].nid;
     }
 
     function ff4(i){
-        alert(alldata4.data[i].fid)
+
+
         window.location.href="invitation?fid="+alldata4.data[i].fid;
     }
 

@@ -188,9 +188,6 @@
 <br />
 <script>
     var gid= [[${gid}]];
-    if (gid != null) {
-        alert(gid);
-    }
     $.ajax({
         url: "GameDM/findOne",
         type: 'POST',
@@ -231,7 +228,6 @@
                 }
                 html=html+"<button  class='btn btn-white btn-xs btns' >撤回</button></div></div></div>"
             }
-            alert(html)
             document.getElementById("add").innerHTML=html;
             var html="";
             for (var i = 0; i < data.data.imgs.length; i++) {
@@ -256,7 +252,6 @@
 
         var nr = document.getElementById("nr");
         var zhi = nr.value;
-        alert(zhi);
     }
     function delTr(obj){
         var parent = obj.parentNode.parentNode.parentNode.parentNode;

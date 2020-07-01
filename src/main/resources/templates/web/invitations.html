@@ -129,7 +129,6 @@
                     area: ['650px', '550px'],
                     btn: ['确定', '取消'],
                     btn1: function(index, layero){
-                        alert("店里")
                         var body = layui.layer.getChildFrame('body', index);
                         var iframeWin = window[layero.find('iframe')[0]['name']];
                         $.ajax({
