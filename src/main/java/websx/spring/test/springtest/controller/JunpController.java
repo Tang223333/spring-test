@@ -39,6 +39,11 @@ public class JunpController {
         return "web/index";
     }
 
+    @RequestMapping("/indexMain")
+    public String toIndexMain(){
+        return "web/index_main";
+    }
+
     @RequestMapping("/index_v5")
     public String toIndexV5(@PathParam("id") Long id,Model model){
         model.addAttribute("aid",id);

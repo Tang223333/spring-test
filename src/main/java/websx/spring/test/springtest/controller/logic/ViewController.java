@@ -12,6 +12,7 @@ import websx.spring.test.springtest.utils.JsonUtils2;
 
 import javax.websocket.server.PathParam;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +45,69 @@ public class ViewController extends BaseController {
     private ForumService forumService;
     @Autowired
     private ConcernForumService concernForumService;
+
+    @RequestMapping("/Main")
+    public Map<String,Object> viewMain(){
+        List<User> users=userService.findAllUser();
+        List<Main> mainUser=new ArrayList<>();
+        for (int i = users.size()-1; i >(i<0?0:users.size()-6) ; i--) {
+            Main main=new Main();
+            main.setOne(users.get(i).getName());
+            main.setTwo(users.get(i).getBirthday()+"");
+            main.setThree(users.get(i).getStyle());
+            mainUser.add(main);
+        }
+        List<Game> games=gameService.findAllGame();
+        List<Main> mainGame=new ArrayList<>();
+        for (int i = games.size()-1; i >(i<0?0:games.size()-6) ; i--) {
+            Main main=new Main();
+            main.setOne(games.get(i).getName());
+            main.setTwo(games.get(i).getTime()+"");
+            main.setThree(games.get(i).getDescribes());
+            mainGame.add(main);
+        }
+        List<Invitation> invitations=invitationService.findAllInvitation();
+        List<Main> mainInvitation=new ArrayList<>();
+        for (int i = invitations.size()-1; i >(i<0?0:invitations.size()-6) ; i--) {
+            Main main=new Main();
+            Account account=accountService.findByIdAccount(invitations.get(i).getAid());
+            main.setOne(account.getName());
+            main.setTwo(invitations.get(i).getTime()+"");
+            main.setThree(invitations.get(i).getContent());
+            mainInvitation.add(main);
+        }
+
+        List<GameComment> gameComments=gameCommentService.findAllGameComment();
+        List<InvitationComment> invitationComments=invitationCommentService.findAllInvitationComment();
+        System.out.println(invitationComments.size());
+        List<Main> mainComment=new ArrayList<>();
+        for (int i = gameComments.size()-1; i >(i<0?0:gameComments.size()-3); i--) {
+            Main main=new Main();
+            Account account=accountService.findByIdAccount(gameComments.get(i).getAid());
+            main.setOne(account.getName());
+            main.setTwo(gameComments.get(i).getTime()+"");
+            main.setThree(gameComments.get(i).getContent());
+            mainComment.add(main);
+        }
+        for (int i = invitationComments.size()-1; i > (i<0?0:invitationComments.size()-4) ; i--) {
+            Main main=new Main();
+            Account account=accountService.findByIdAccount(invitationComments.get(i).getAid());
+            main.setOne(account.getName());
+            main.setTwo(invitationComments.get(i).getTime()+"");
+            main.setThree(invitationComments.get(i).getContent());
+            mainComment.add(main);
+        }
+        Map<String,Object> map=new HashMap<>();
+        map.put("count1",users.size());
+        map.put("users",mainUser);
+        map.put("count2",games.size());
+        map.put("games",mainGame);
+        map.put("count3",invitations.size());
+        map.put("invitations",mainInvitation);
+        map.put("count4",(gameComments.size()+invitationComments.size()));
+        map.put("comments",mainComment);
+        return map;
+    }
 
     @RequestMapping("/UserAndAccount")
     @Transactional(propagation = Propagation.REQUIRED)
