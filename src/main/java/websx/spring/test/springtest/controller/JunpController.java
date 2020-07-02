@@ -40,7 +40,8 @@ public class JunpController {
     }
 
     @RequestMapping("/index_v5")
-    public String toIndexV5(){
+    public String toIndexV5(@PathParam("id") Long id,Model model){
+        model.addAttribute("aid",id);
         return "web/index_v5";
     }
 

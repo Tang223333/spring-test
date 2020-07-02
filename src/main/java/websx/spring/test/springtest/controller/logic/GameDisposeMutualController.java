@@ -147,13 +147,15 @@ public class GameDisposeMutualController extends BaseController {
         List<GameCommentAll> gameCommentAlls=new ArrayList<>();
         for (int i = 0; i < gameComments.size(); i++) {
             GameCommentAll gameCommentAll=new GameCommentAll();
-            Account account=accountService.findByIdAccount(gameComments.get(i).getAid());
             gameCommentAll.setId(gameComments.get(i).getId());
             gameCommentAll.setGid(gameAll.getId());
             gameCommentAll.setGameName(gameAll.getName());
-            gameCommentAll.setAid(account.getId());
-            gameCommentAll.setAccountName(account.getName());
-            gameCommentAll.setAccountLogo(account.getLogo());
+            Account account=accountService.findByIdAccount(gameComments.get(i).getAid());
+            if (account!=null){
+                gameCommentAll.setAid(account.getId());
+                gameCommentAll.setAccountName(account.getName());
+                gameCommentAll.setAccountLogo(account.getLogo());
+            }
             gameCommentAll.setContent(gameComments.get(i).getContent());
             gameCommentAll.setGoodOrBad(gameComments.get(i).getGoodOrBad());
             gameCommentAll.setGrade(gameComments.get(i).getGrade());

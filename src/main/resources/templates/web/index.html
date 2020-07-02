@@ -50,7 +50,7 @@
             <div class="sidebar-collapse">
                 <ul class="nav" id="side-menu">
                     <li class="nav-header">
-                        <div class="dropdown profile-element">
+                        <div class="dropdown profile-element" onclick="goUser()">
                             <span><img style="width: 50px;height: 50px" alt="image" id="img" class="img-circle" src="" /></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
@@ -59,6 +59,9 @@
                             </a>
                         </div>
                         <script>
+                            function goUser(){
+                                window.location.href="/index_v5?id="+s;
+                            }
                             console.log(document.cookie);
                             aid=document.cookie;
                             $.ajax({

@@ -36,6 +36,11 @@
         .juzhong{
             margin:auto;
         }
+        html,body{
+            width: 100%;
+
+            height: 100%;
+        }
 
     </style>
     <script th:inline="javascript" >
@@ -48,92 +53,89 @@
     </script>
 </head>
 
-<body style="background: #242424">
-<!--导航条-->
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Better</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav" style="margin-left: 50%;">
-                <li id="li1" class="active" onclick="li(1)">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">游戏 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/index_v5_main" target="iframe0">首页</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="/fenye" target="iframe0">分类</a></li>
-                    </ul>
-                </li>
-                <li id="li2" onclick="li(2)"><a href="/forum" target="iframe0">论坛</a></li>
-                <li id="li3" onclick="li(3)"><a href="/news_main" target="iframe0">新闻</a></li>
-                <li id="li4" onclick="li(4)" class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a id="sg" href="/CollectConcern" target="iframe0">收藏关注</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a onclick="ud()">账户信息</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a onclick="alter2()">密码修改</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <script>
-                console.log(document.cookie);
-                function li(s){
-                    if(s==1){
-                        document.getElementById("li1").classList.add("active")
-                        document.getElementById("li2").classList.remove("active")
-                        document.getElementById("li3").classList.remove("active")
-                        document.getElementById("li4").classList.remove("active")
-                    }
-                    if(s==2){
-                        document.getElementById("li1").classList.remove("active")
-                        document.getElementById("li2").classList.add("active")
-                        document.getElementById("li3").classList.remove("active")
-                        document.getElementById("li4").classList.remove("active")
-                    }
-                    if(s==3){
-                        document.getElementById("li1").classList.remove("active")
-                        document.getElementById("li2").classList.remove("active")
-                        document.getElementById("li3").classList.add("active")
-                        document.getElementById("li4").classList.remove("active")
-                    }
-                    if(s==4){
-                        document.getElementById("li1").classList.remove("active")
-                        document.getElementById("li2").classList.remove("active")
-                        document.getElementById("li3").classList.remove("active")
-                        document.getElementById("li4").classList.add("active")
-                    }
-                }
-            </script>
-            <div class="navbar-form navbar-left" href="">
-                <div class="form-group">
-                    <input type="text" id="gameName" class="form-control" placeholder="Search">
-                </div>
-                <button type="submit" onclick="go()" class="btn btn-default">Go</button>
+<body style="background: #242424;">
+<div style="height: 8%">
+    <!--导航条-->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Better</a>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login">退出</a></li>
-            </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-</nav>
 
-<div class="row J_mainContent" id="content-main" style="width: 100%; height: 650px;">
-    <iframe  name="iframe0" width="100%" height="100%" src="/index_v5_main" frameborder="0"  seamless></iframe>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav" style="margin-left: 50%;">
+                    <li id="li1" class="active" onclick="li(1)">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">游戏 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/index_v5_main" target="iframe0">首页</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/fenye" target="iframe0">分类</a></li>
+                        </ul>
+                    </li>
+                    <li id="li2" onclick="li(2)"><a href="/forum" target="iframe0">论坛</a></li>
+                    <li id="li3" onclick="li(3)"><a href="/news_main" target="iframe0">新闻</a></li>
+                    <li id="li4" onclick="li(4)" class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a id="sg" href="/CollectConcern" target="iframe0">收藏关注</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a onclick="ud()">账户信息</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a onclick="alter2()">密码修改</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <script>
+                    console.log(document.cookie);
+                    function li(s){
+                        if(s==1){
+                            document.getElementById("li1").classList.add("active")
+                            document.getElementById("li2").classList.remove("active")
+                            document.getElementById("li3").classList.remove("active")
+                            document.getElementById("li4").classList.remove("active")
+                        }
+                        if(s==2){
+                            document.getElementById("li1").classList.remove("active")
+                            document.getElementById("li2").classList.add("active")
+                            document.getElementById("li3").classList.remove("active")
+                            document.getElementById("li4").classList.remove("active")
+                        }
+                        if(s==3){
+                            document.getElementById("li1").classList.remove("active")
+                            document.getElementById("li2").classList.remove("active")
+                            document.getElementById("li3").classList.add("active")
+                            document.getElementById("li4").classList.remove("active")
+                        }
+                        if(s==4){
+                            document.getElementById("li1").classList.remove("active")
+                            document.getElementById("li2").classList.remove("active")
+                            document.getElementById("li3").classList.remove("active")
+                            document.getElementById("li4").classList.add("active")
+                        }
+                    }
+                </script>
+                <div class="navbar-form navbar-left" href="">
+                    <div class="form-group">
+                        <input type="text" id="gameName" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" onclick="go()" class="btn btn-default">Go</button>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/login">退出</a></li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
 </div>
-<div class="footer">
-    <div class="pull-right">&copy; 2014-2015 <a  target="_blank">zihan's blog</a></div>
-</div>
+
+<iframe  name="iframe0" width="100%" height="90%" src="/index_v5_main"  frameborder="0"  ></iframe>
 
 <script>
 
