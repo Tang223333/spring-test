@@ -10,7 +10,7 @@ import java.sql.Date;
 @Data
 public class Game {
     private Long id;
-    private String name;
+    private String name;//
     private String describes;
     private Object videos;
     private Object imgs;
