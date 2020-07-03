@@ -135,7 +135,7 @@
     </nav>
 </div>
 
-<iframe  name="iframe0" width="100%" height="90%" src="/index_v5_main"  frameborder="0"  ></iframe>
+<iframe id="iframe0" name="iframe0" width="100%" height="90%" src="/index_v5_main"  frameborder="0"  ></iframe>
 
 <script>
 
@@ -286,7 +286,7 @@
             success:function(data){
                 console.log(data)
                 if (data.error_code==0){
-                    window.location.href="game_one?id="+data.data.id;
+                    document.getElementById("iframe0").src="game_one?id="+data.data.id;
                 }else {
                     alert("没找到");
                 }
