@@ -187,7 +187,10 @@
 <br />
 <br />
 <script>
-    console.log(window.parent.f())
+    var aids=document.cookie;
+    if (aids == null) {
+        aids=window.parent.f()
+    }
     var gids= [[${gid}]];
     var alldata="";
     $.ajax({
@@ -245,13 +248,12 @@
 
         var nr = document.getElementById("nr");
         var zhi = nr.value;
-        alert(zhi+" "+alldata.data.gid+"  "+parent.f());
         $.ajax({
             url: "Comment/GameCommentOn",
             type: 'POST',
             data: {
                 gid: gids,
-                aid: parent.f(),
+                aid: aids,
                 content: zhi,
             },
             success: function (data) {
@@ -267,7 +269,7 @@
             type: 'POST',
             data: {
                 gid: gids,
-                aid: parent.f(),
+                aid: aids,
             },
             success: function (data) {
                 alert(data.reason)
